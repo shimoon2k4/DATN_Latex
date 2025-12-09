@@ -1,0 +1,292 @@
+\section{Thành viên tham dự}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Student’s name} & \textbf{Student’s ID} \\ \hline
+Lâm Hoàng Tân           & 2213892                \\ \hline
+Trương Nguyễn Hoàng Anh & 2210147                \\ \hline
+Hoàng Sỹ Xuân Sơn       & 2212937                \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Nội dung công việc}
+Trong tuần này, nhóm tập trung vào hai nhiệm vụ chính: Tối ưu hóa Firmware (để khắc phục các vấn đề kỹ thuật) và Thực nghiệm đo đạc thực tế (Range Test).
+
+\begin{itemize}
+    \item \textbf{Tối ưu hóa Firmware:}
+    \begin{itemize}
+        \item Chuyển đổi kiến trúc firmware sang FreeRTOS để xử lý đa nhiệm (GPS, Cảm biến, LoRa).
+        \item Áp dụng kỹ thuật nén gói tin (Binary Packing) giảm kích thước gói tin từ >100 bytes xuống 15 bytes, giúp giảm Air-time.
+        \item Xây dựng cơ chế Shared Memory an toàn với Mutex.
+    \end{itemize}
+    \item \textbf{Thử nghiệm thực địa:}
+    \begin{itemize}
+        \item Thực hiện đo đạc tại KTX Khu A ĐHQG TP.HCM.
+        \item Đánh giá các chỉ số PLR, RSSI, SNR tại các mốc 100m, 500m và 1km.
+    \end{itemize}
+\end{itemize}
+
+\section{Kết quả hiện thực}
+
+\subsection{Tối ưu hóa kiến trúc phần mềm (Software Architecture Refactoring)}
+\begin{itemize}
+    \item \textbf{Phát hiện vấn đề:} Qua rà soát mã nguồn cũ, nhóm phát hiện nguy cơ xung đột dữ liệu (Race Condition) khi nhiều tác vụ (Task đọc cảm biến, Task gửi LoRa) cùng truy cập vào các biến toàn cục lưu trữ trạng thái hệ thống. Điều này tiềm ẩn rủi ro gây sai lệch dữ liệu hoặc treo vi điều khiển khi hoạt động lâu dài.
+    \item \textbf{Giải pháp thiết kế (Đã hiện thực):}
+    \begin{itemize}
+        \item Chuyển đổi sang mô hình quản lý bộ nhớ tập trung (\textbf{Shared Memory}) thông qua cấu trúc \texttt{SensorData}.
+        \item Tích hợp cơ chế khóa an toàn \textbf{Mutex (Mutual Exclusion)} của FreeRTOS để kiểm soát quyền truy cập, đảm bảo tính toàn vẹn dữ liệu (Data Integrity) giữa các luồng xử lý song song.
+    \end{itemize}
+    \item \textbf{Trạng thái:} Đã hoàn tất việc tái cấu trúc mã nguồn (Coding phase) và đang trong quá trình kiểm thử độ ổn định (Stability Test) trên phần cứng thực tế.
+\end{itemize}
+
+\subsection{Kiểm tra Khoảng cách Truyền dẫn}
+
+\subsubsection{Kịch bản và Thiết lập}
+\begin{itemize}
+    \item \textbf{Địa điểm:} Ký túc xá Khu A - Đại học Quốc gia Thành phố Hồ Chí Minh.
+    \item \textbf{Thiết lập:} Node TX (ESP32 + Ra-08H TX) và Gateway RX (Ra-08H RX) được đặt tại các khoảng cách cố định: 100m, 500m và 1km.
+    \item \textbf{Cấu hình:} Spreading Factor (SF) lần lượt là 7, 11. Bandwidth 125kHz.
+    \item \textbf{Thông số đo:} Thu thập 20-100 gói tin/lần test để đo \texttt{Packet Loss Ratio (PLR)}, trung bình \texttt{RSSI}, trung bình \texttt{SNR}.
+\end{itemize}
+
+\subsubsection{Phân tích Dữ liệu Thu được}
+Dưới đây là bảng kết quả thực nghiệm với cấu hình \textbf{SF = 7}:
+
+\begin{table}[H]
+\centering
+\caption{Tóm tắt Kết quả Range Test (SF = 7)}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\textbf{Khoảng cách} & \textbf{Số gói gửi} & \textbf{PLR (\%)} & \textbf{Avg RSSI (dBm)} & \textbf{Avg SNR (dB)} \\ \hline
+100 m (LOS) & 20 & 0\% & -73 & 5 \\ \hline
+500 m & 20 & $>$95\% (Fail) & N/A & N/A \\ \hline
+\end{tabular}
+\end{table}
+
+\noindent \textbf{Nhận xét:}
+\begin{itemize}
+    \item \textbf{100m (Line-of-Sight):}
+        \begin{itemize}
+            \item \textbf{PLR = 0\%:} Tín hiệu rất mạnh và ổn định. Cấu hình này đáp ứng tốt cho các ứng dụng yêu cầu tốc độ truyền tải nhanh (Air Time ngắn) trong phạm vi gần ($\le 100 \text{ m}$).
+            \item \textbf{Avg RSSI (-73 dBm) và Avg SNR (8.5 dB):} Chất lượng tín hiệu lý tưởng.
+        \end{itemize}
+    \item \textbf{500m:}
+        \begin{itemize}
+            \item \textbf{PLR > 95\% (Thất bại hoàn toàn):} Sự suy hao lớn do vật cản (NLOS) và môi trường phức tạp làm cho cường độ tín hiệu tại bộ thu giảm xuống dưới ngưỡng nhạy của SF=7, dẫn đến mất gói hàng loạt và không thu được dữ liệu RSSI/SNR.
+        \end{itemize}
+\end{itemize}
+
+Dưới đây là bảng kết quả thực nghiệm với cấu hình \textbf{SF = 11}:
+
+\begin{table}[H]
+\centering
+\caption{Tóm tắt Kết quả Range Test (SF = 11)}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\textbf{Khoảng cách} & \textbf{Số gói gửi} & \textbf{PLR (\%)} & \textbf{Avg RSSI (dBm)} & \textbf{Avg SNR (dB)} \\ \hline
+100 m (LOS) & 20 & 0\% & -80 & 8.5 \\ \hline
+500 m (NLOS) & 20 & 5\% & -105 & 3.1 \\ \hline
+1000 m & 20 & $>$95\% (Fail) & N/A & N/A \\ \hline
+\end{tabular}
+\end{table}
+
+\noindent \textbf{Nhận xét:}
+\begin{itemize}
+    \item \textbf{100m (Line-of-Sight):} Tín hiệu mạnh và ổn định. PLR = 0\%, không mất gói tin nào.
+    \item \textbf{500m (Non-Line-of-Sight):} Do môi trường KTX có nhiều tòa nhà che chắn, mức suy hao lớn hơn. PLR bắt đầu xuất hiện (5\%), đôi lúc xảy ra hiện tượng Timeout nhưng hệ thống vẫn duy trì được kết nối. Điều này cho thấy cần cân nhắc vị trí lắp đặt anten cao hơn trong thực tế.
+    \item \textbf{1000m:} Hệ thống gặp lỗi Timeout liên tục, không thể gửi dữ liệu ổn định.
+    \item \textbf{Độ trễ:} Độ trễ end-to-end (từ ESP32 $\rightarrow$ Firestore) dao động từ 1.2s - 2.5s, đáp ứng yêu cầu giám sát thời gian thực.
+\end{itemize}
+
+\subsubsection{Hình ảnh thực nghiệm}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{images//week/100m.png}
+    \caption{Kết quả tại 100m: Dữ liệu nhận liên tục, RSSI tốt (-80dBm)}
+    \label{fig:placeholder}
+\end{figure}
+
+\begin{figure}[H] 
+    \centering
+    \includegraphics[width=0.7\linewidth]{images//week/500m.png}
+    \caption{Kết quả tại 500m: Xuất hiện thông báo Timeout (OnRxTimeout) xen kẽ dữ liệu thành công}
+    \label{fig:placeholder}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{images//week/1km.png}
+    \caption{Kết quả tại 1km: Hệ thống báo lỗi OnRxTimeout liên tục, mất kết nối hoàn toàn}
+    \label{fig:placeholder}
+\end{figure}
+
+\subsection{Thiết kế giao diện người dùng}
+
+Ứng dụng hiện tại đã hoàn thiện việc hiện thực các màn hình giao diện chính. Toàn bộ cấu trúc được tổ chức rõ ràng trong thư mục \texttt{lib}, bao gồm các nhóm chức năng như giao diện đăng nhập, trang chủ, bản đồ vận chuyển, chi tiết chuyến vận chuyển và hồ sơ người dùng. Cây thư mục thể hiện đầy đủ các màn hình đã được xây dựng như sau:
+
+\begin{verbatim}
+lib
+|-- main.dart
+|
+|-- theme
+|   |-- app_theme.dart
+|   |-- app_style.dart
+|
+|-- components
+|   |-- transport_card.dart
+|   |-- section_card.dart
+|   |-- bottom_nav.dart
+|
+|-- screens
+|   |-- login
+|   |   |-- login_screen.dart
+|   |   |-- forgot_password.dart
+|   |   |-- reset_success.dart
+|   |
+|   |-- home
+|   |   |-- home_screen.dart
+|   |
+|   |-- map
+|   |   |-- transport_map_screen.dart
+|   |
+|   |-- transport
+|   |   |-- transport_detail.dart
+|   |
+|   |-- profile
+|       |-- profile_screen.dart
+\end{verbatim}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{6cm}|p{9cm}|}
+\hline
+\rowcolor{gray!15}
+\textbf{Thư mục} & \textbf{Mục đích} \\ \hline
+
+\texttt{theme/} &
+Chứa toàn bộ cấu hình về giao diện chung như màu sắc, kiểu chữ, khoảng cách và style dùng lại xuyên suốt ứng dụng. \\ \hline
+
+\texttt{components/} &
+Tập hợp các widget tuỳ chỉnh (custom widgets) được tái sử dụng nhiều nơi, giúp giảm trùng lặp và chuẩn hoá UI. \\ \hline
+
+\texttt{screens/} &
+Chứa tất cả các màn hình (page/screen) của ứng dụng, được chia nhỏ theo từng nhóm chức năng (login, home, transport...). \\ \hline
+
+\texttt{screens/login/} &
+Nhóm các màn hình phục vụ quy trình xác thực: đăng nhập, quên mật khẩu, đặt lại mật khẩu. \\ \hline
+
+\texttt{screens/home/} &
+Chứa giao diện trang chủ, nơi hiển thị tổng quan thông tin vận chuyển và các mục chính của hệ thống. \\ \hline
+
+\texttt{screens/map/} &
+Các màn hình liên quan đến bản đồ, theo dõi vị trí thiết bị và lộ trình vận chuyển. \\ \hline
+
+\texttt{screens/transport/} &
+Nhóm màn hình quản lý và xem chi tiết từng chuyến vận chuyển. \\ \hline
+
+\texttt{screens/profile/} &
+Chứa giao diện hồ sơ người dùng và các tùy chỉnh cài đặt cá nhân. \\ \hline
+
+\end{tabular}
+\caption{Giải thích mục đích các thư mục con trong \texttt{lib/}}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{6cm}|p{9cm}|}
+\hline
+\rowcolor{gray!15}
+\textbf{Tên file} & \textbf{Mô tả} \\ \hline
+
+\texttt{main.dart} &
+Điểm khởi chạy chính của ứng dụng Flutter, cấu hình theme và điều hướng ban đầu. \\ \hline
+
+\texttt{app\_theme.dart} &
+Khai báo chủ đề tổng thể của app (màu nền, màu chữ, AppBarTheme, v.v.). \\ \hline
+
+\texttt{app\_style.dart} &
+Định nghĩa các text style và component style tái sử dụng trong nhiều màn hình. \\ \hline
+
+\texttt{transport\_card.dart} &
+Widget hiển thị một mục vận chuyển (transport item) dưới dạng thẻ. \\ \hline
+
+\texttt{section\_card.dart} &
+Card cho từng mục nhỏ trong giao diện trang chủ (home section). \\ \hline
+
+\texttt{bottom\_nav.dart} &
+Thanh điều hướng dưới (BottomNavigationBar) dùng cho các tab chính. \\ \hline
+
+\texttt{login\_screen.dart} &
+Màn hình đăng nhập chính của người dùng. \\ \hline
+
+\texttt{forgot\_password.dart} &
+Màn hình cho phép người dùng yêu cầu đặt lại mật khẩu. \\ \hline
+
+\texttt{reset\_success.dart} &
+Thông báo khi đặt lại mật khẩu thành công. \\ \hline
+
+
+\texttt{home\_screen.dart} &
+Giao diện tổng hợp thông tin: trạng thái vận chuyển, thiết bị, cảnh báo, v.v. \\ \hline
+
+\texttt{transport\_map\_screen.dart} &
+Màn hình theo dõi vị trí vận chuyển trên bản đồ. \\ \hline
+
+\texttt{transport\_detail.dart} &
+Hiển thị thông tin chi tiết của một chuyến vận chuyển cụ thể. \\ \hline
+
+\texttt{profile\_screen.dart} &
+Màn hình thông tin cá nhân và các tùy chọn cài đặt tài khoản. \\ \hline
+
+\end{tabular}
+\caption{Chức năng chính của các file}
+\end{table}
+
+
+\section{Tổng kết tuần}
+
+\subsection{Đánh giá chung}
+Nhóm đã hoàn thành việc xây dựng firmware tối ưu (Binary payload, FreeRTOS) và tiến hành đo đạc thực tế. Kết quả khả quan ở cự ly 500m trong môi trường đô thị phức tạp (KTX Khu A). Tuy nhiên, mốc 1km vẫn chưa đạt được với cấu hình hiện tại.
+
+\subsection{Vấn đề tồn đọng}
+\begin{itemize}
+    \item \textbf{Giới hạn vật lý 1km:} Với SF=7 và anten mặc định, tín hiệu không thể xuyên qua mật độ bê tông dày đặc của khu vực KTX ở khoảng cách 1km.
+    \item \textbf{Timeout:} Hiện tượng timeout xuất hiện rải rác ở 500m và dày đặc ở 1km.
+\end{itemize}
+
+\section{Kế hoạch tuần tới}
+
+\subsection*{Mục tiêu}
+\begin{itemize}
+    \item \textbf{Mục tiêu Tổng quan:} Hoàn thiện luồng dữ liệu end-to-end có tích hợp cảm biến thực tế (sử dụng ESP32 làm Node) và xác thực khả năng hoạt động song song của nhiều thiết bị.
+\end{itemize}
+
+\subsection*{Nhiệm vụ Cụ thể}
+\begin{enumerate}
+    \item \textbf{Hoàn thiện Kịch bản Thử nghiệm LoRa}:
+    \begin{itemize}
+    \item \textbf{Range Test Mở rộng:} Tiến hành thêm các bài kiểm tra Range Test (nếu cần) hoặc lặp lại các bài kiểm tra quan trọng (\texttt{SF=12}) trong điều kiện khác nhau để tăng tính chắc chắn của kết quả.
+    \item \textbf{Phân tích Cuối cùng:} Tổng hợp toàn bộ dữ liệu Range Test (\texttt{SF=7, 11, 12}) để đưa ra \textbf{Quyết định Cấu hình LoRa (SF)} chính thức cho Prototype, cân bằng giữa phạm vi, độ trễ và độ tin cậy.
+    \item \textbf{Tối ưu Hóa:} Cài đặt cấu hình LoRa đã chọn vào firmware Node TX và RX.
+\end{itemize}
+\item \textbf{Hoàn thiện Tính năng Giao diện Người dùng}
+\begin{itemize}
+    \item \textbf{Cảnh báo (Alerts/Notifications):} Triển khai logic và giao diện hiển thị cảnh báo khi các thông số vượt ngưỡng (ví dụ: nhiệt độ cao, pin yếu).
+    \item \textbf{Hiển thị Vị trí (Maps):} Lập trình tích hợp bản đồ để hiển thị vị trí thiết bị theo thời gian thực (real-time GPS location).
+    \item \textbf{Refactor UI/UX:} Rà soát và tối ưu hóa trải nghiệm người dùng (UX) và giao diện người dùng (UI) cho các màn hình đã thiết kế.
+\end{itemize}
+    \item \textbf{Xác thực toàn bộ pipeline (Cảm biến $\rightarrow$ DB $\rightarrow$ Dashboard).}
+    \begin{itemize}
+        \item \textbf{Kiểm tra Dữ liệu Thực:} Đảm bảo dữ liệu từ cảm biến được ghi đúng và đầy đủ lên \textbf{Firestore (DB)}.
+        \item \textbf{Kiểm tra Ứng dụng Di động:} Xác thực \textbf{Mobile App Dashboard} có thể lắng nghe (listen) và hiển thị dữ liệu từ cảm biến mới nhất một cách chính xác và thời gian thực.
+    \end{itemize}
+    \item \textbf{Kiểm thử hiệu năng (độ trễ, độ ổn định)}
+    \begin{itemize}
+        \item Đo đạc \textbf{Độ trễ} (Latency) toàn hệ thống (Cảm biến $\rightarrow$ Firestore $\rightarrow$ App) trong điều kiện vận hành thực tế.
+        \item Kiểm tra \textbf{Độ ổn định} của hệ thống (Uptime, Packet Loss Ratio) trong một khoảng thời gian dài để đánh giá tính bền vững của các kết nối LoRa và Backend.
+    \end{itemize}
+    
+\end{enumerate}

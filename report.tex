@@ -1,0 +1,102 @@
+\documentclass[a4paper]{extbook}
+\usepackage{hcmut}
+
+\begin{document}
+
+%--- bìa ---%
+\begin{titlepage}
+\include{frontmatter/front-page}
+\end{titlepage}
+
+\pagenumbering{roman}
+\setcounter{page}{1}
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\newpage
+
+\newpage
+\thispagestyle{empty} % không đánh số trang
+\vspace*{\fill} % đẩy nội dung xuống giữa trang theo chiều dọc
+\begin{flushright}
+\textit{Đồ án này xin được dành tặng cho Cha/Mẹ và các Thầy/Cô}\\
+\textit{tại Trường Đại học Bách khoa – ĐHQG-HCM.}
+\end{flushright}
+\vspace*{\fill}
+\newpage
+
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\newpage
+
+%--- mục lục ---%
+\tableofcontents
+
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\newpage
+
+%--- danh sách hình ---%
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\newpage
+
+%--- danh sách bảng ---%
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\newpage
+
+\include{frontmatter/commitment}
+
+\include{frontmatter/acknowledgement}
+
+\include{frontmatter/abstract}
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%--- chương 1 ---%
+\include{chapter/1}
+
+%--- chương 2 ---%
+\include{chapter/2}
+
+%--- chương 3 ---%
+\include{chapter/3}
+
+%--- chương 4 ---%
+\include{chapter/4}
+
+%--- chương 5 ---%
+\include{chapter/5}
+
+%--- chương 6 ---%
+\include{chapter/6}
+
+%--- chương 7 ---%
+\include{chapter/7}
+
+%--- phụ lục ---%
+\appendix
+\chapter*{Phụ lục A}
+\addcontentsline{toc}{chapter}{Phụ lục A}
+
+\include{appendix/a}
+
+%--- tài liệu tham khảo ---%
+\include{backmatter/references}
+
+%--- thuật ngữ ---%
+\include{backmatter/glossary}
+
+\end{document}

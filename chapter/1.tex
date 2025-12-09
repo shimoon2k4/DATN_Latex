@@ -1,0 +1,31 @@
+\chapter{Giới thiệu}
+Chương này trình bày tổng quan về đề tài, bao gồm bối cảnh, các vấn đề thực tiễn đặt ra và lý do cần thiết phải xây dựng hệ thống giám sát vận chuyển đạn dược ứng dụng IoT. Bên cạnh đó, chương cũng nêu rõ mục tiêu nghiên cứu, phạm vi triển khai và cấu trúc tổng thể của báo cáo. Những nội dung này đóng vai trò định hướng cho toàn bộ đề tài, giúp người đọc hiểu được mục đích, giới hạn và cách thức tổ chức của các phần tiếp theo.
+\section{Bối cảnh của đề tài}
+Trong bối cảnh hiện nay, nhu cầu hiện đại hóa các hoạt động quản lý và đảm bảo an toàn trong lĩnh vực quân sự ngày càng trở nên cấp thiết. Trong đó, công tác vận chuyển đạn dược là một quy trình có độ rủi ro cao, đòi hỏi sự giám sát chặt chẽ về vị trí, tình trạng môi trường và an toàn kỹ thuật trong suốt quá trình di chuyển. Tuy nhiên, phần lớn hoạt động theo dõi hiện nay vẫn phụ thuộc vào ghi chép thủ công hoặc các phương pháp quản lý truyền thống, dẫn đến hạn chế trong khả năng giám sát theo thời gian thực, chậm trễ trong xử lý sự cố và thiếu tính minh bạch trong quản lý hành trình.
+
+Sự phát triển của IoT đã mở ra khả năng tự động hóa giám sát, thu thập dữ liệu liên tục và truyền tải thông tin theo thời gian thực. IoT cho phép tích hợp các cảm biến đo rung, nhiệt độ, vị trí và các tín hiệu khác vào một hệ thống tập trung, hỗ trợ đơn vị quản lý phát hiện bất thường và đưa ra cảnh báo kịp thời. Điều này góp phần nâng cao tính an toàn, độ tin cậy và hiệu quả trong quy trình vận chuyển đạn dược, vốn là một hoạt động đặc biệt nhạy cảm và quan trọng.
+\section{Mục tiêu của đề tài}
+Mục tiêu chính của đề tài là xây dựng một hệ thống IoT hỗ trợ giám sát và điều phối quá trình vận chuyển đạn dược theo thời gian thực, đảm bảo an toàn và nâng cao hiệu quả quản lý. Hệ thống được thiết kế để thu thập dữ liệu liên tục từ các cảm biến rung, cảm biến nhiệt độ và module GPS được gắn trên phương tiện vận chuyển. Những dữ liệu này sau đó được truyền về máy chủ trung tâm thông qua các giao thức mạng phù hợp, đảm bảo khả năng truyền tải ổn định trong nhiều điều kiện hoạt động khác nhau.
+
+Bên cạnh truyền dữ liệu, hệ thống còn hiển thị trực quan trạng thái vận chuyển qua ứng dụng theo thời gian thực, giúp đơn vị dễ dàng theo dõi hành trình. Hệ thống được tích hợp cơ chế tự động phát hiện và cảnh báo khi xuất hiện các tình huống bất thường như nhiệt độ vượt ngưỡng cho phép, rung lắc mạnh hoặc phương tiện lệch khỏi lộ trình định sẵn. Ngoài ra, chức năng điều phối và theo dõi hành trình trên bản đồ số cho phép đưa ra các quyết định kịp thời, từ đó nâng cao mức độ an toàn, đảm bảo tuân thủ các quy định kỹ thuật và tối ưu hóa hiệu quả vận hành trong toàn bộ quá trình vận chuyển.
+
+\section{Phạm vi của đề tài}
+Đề tài tập trung vào việc thiết kế và triển khai một mô hình hệ thống IoT phục vụ giám sát quá trình vận chuyển đạn dược trong phạm vi thử nghiệm. Hệ thống được xây dựng dựa trên các thành phần phần cứng bao gồm cảm biến đo độ rung, cảm biến nhiệt độ, module GPS và bộ truyền thông LoRa, nhằm thu thập và truyền tải các thông số quan trọng trong quá trình di chuyển. Bên cạnh đó, đề tài cũng bao gồm việc thiết kế kiến trúc kết nối và giao thức truyền dữ liệu giữa thiết bị IoT và máy chủ, đảm bảo dữ liệu được gửi về hệ thống trung tâm một cách ổn định và liên tục. Song song với phần cứng, nhóm thực hiện xây dựng backend, dashboard giám sát và giao diện người dùng để hiển thị dữ liệu theo thời gian thực, hỗ trợ công tác quản lý và theo dõi hành trình.
+
+Ngoài chức năng giám sát, hệ thống còn  trang bị cơ chế cảnh báo tự động và khả năng ghi lịch sử vận chuyển nhằm phân tích, đánh giá và xử lý sự cố khi cần thiết. Để kiểm chứng tính đúng đắn và độ tin cậy, toàn bộ hệ thống được mô phỏng và thử nghiệm trong môi trường giả lập, giúp đánh giá khả năng hoạt động ổn định của mô hình trước khi triển khai thực tế. Tuy nhiên, đề tài không mở rộng sang các nghiệp vụ chuyên sâu, không thử nghiệm trên phương tiện vận chuyển thật và không xử lý các tình huống tác chiến thực tế, nhằm đảm bảo phù hợp với phạm vi nghiên cứu và điều kiện triển khai của đồ án.
+\section{Cấu trúc của đề tài}
+Đề tài được tổ chức thành bảy chương theo trình tự logic giúp người đọc dễ dàng theo dõi quá trình nghiên cứu và triển khai hệ thống. Mỗi chương đảm nhận một vai trò riêng, từ việc giới thiệu bối cảnh cho đến trình bày lý thuyết nền tảng, phân tích yêu cầu, thiết kế, cài đặt, đánh giá và tổng kết. Cấu trúc này đảm bảo tính mạch lạc và phản ánh đầy đủ các bước thực hiện của đồ án.
+
+Chương 1 trình bày phần giới thiệu tổng quan, bao gồm bối cảnh hình thành đề tài, mục tiêu nghiên cứu, phạm vi thực hiện và bố cục của toàn bộ báo cáo.
+
+Chương 2 cung cấp cơ sở lý thuyết và các công nghệ liên quan, bao gồm khái niệm về IoT, các giao thức truyền thông cũng như các loại cảm biến và thiết bị được sử dụng trong hệ thống.
+
+Chương 3 tập trung phân tích yêu cầu hệ thống, mô tả các yêu cầu chức năng, yêu cầu phi chức năng, quy trình vận chuyển và những rủi ro cần được giám sát.
+
+Chương 4 mô tả thiết kế hệ thống IoT, bao gồm kiến trúc tổng thể, thiết kế phần cứng, mô hình truyền thông dữ liệu và các giao diện giám sát.
+
+Chương 5 trình bày quá trình cài đặt và triển khai hệ thống, từ cấu hình thiết bị, lập trình firmware cho đến xây dựng backend và ứng dụng giám sát.
+
+Chương 6 đưa ra các kết quả đạt được, kèm theo đánh giá thông qua mô phỏng và kiểm thử để xác định độ ổn định, độ chính xác và khả năng cảnh báo của hệ thống.
+
+Chương 7 tổng kết các nội dung chính của đề tài, đồng thời nêu ra những hạn chế còn tồn tại và đề xuất các hướng phát triển hệ thống trong tương lai.

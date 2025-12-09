@@ -1,0 +1,282 @@
+\section{Thành viên tham dự}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Student’s name} & \textbf{Student’s ID} \\ \hline
+Lâm Hoàng Tân           & 2213892                \\ \hline
+Trương Nguyễn Hoàng Anh & 2210147                \\ \hline
+Hoàng Sỹ Xuân Sơn       & 2212937                \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Nội dung công việc}
+\textbf{Mục tiêu chung:}
+\begin{itemize}
+    \item Xác định yêu cầu chức năng và phi chức năng của hệ thống giám sát, điều phối vận chuyển.
+    \item Nghiên cứu, lựa chọn thiết bị phần cứng phù hợp.
+    \item Mô hình hóa hoạt động và chức năng của hệ thống.
+\end{itemize}
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{7cm}|p{4cm}|p{3cm}|}
+\hline
+\textbf{Mô tả} & \textbf{Thành viên} & \textbf{Hạn nộp} \\ \hline
+Xác định yêu cầu chức năng và phi chức năng & Lâm Hoàng Tân & 19/09/2025 \\ \hline
+Mô hình hóa hệ thống & Trương Nguyễn Hoàng Anh & 19/09/2025 \\ \hline
+Nghiên cứu, lựa chọn thiết bị phần cứng phù hợp & Hoàng Sỹ Xuân Sơn & 19/09/2025 \\ \hline
+\end{tabular}
+\end{table}
+\section{Kết quả đạt được}
+\subsection{Yêu cầu dự án}
+
+\subsubsection{Yêu cầu chức năng}
+\begin{itemize}
+    \item \textbf{Hiển thị dữ liệu}
+    \begin{itemize}
+        \item Hiển thị các thông số, dữ liệu có liên quan, bao gồm độ rung, nhiệt độ, vị trí GPS và thời gian
+    \end{itemize}
+
+    \item \textbf{Quản lý hàng hoá}
+    \begin{itemize}
+        \item Quản lý thông tin chi tiết của hàng hoá
+        \item Gán mã định danh cho từng hàng hoá
+        \item Theo dõi tình trạng hàng hoá
+    \end{itemize}
+
+    \item \textbf{Theo dõi, điều phối lộ trình}
+    \begin{itemize}
+        \item Hiển thị vị trí hiện tại, lộ trình trên bản đồ
+        \item Cho phép cập nhật tuyến đường khi cần
+        \item Đề xuất lộ trình tối ưu dựa trên dữ liệu thu được
+    \end{itemize}
+
+    \item \textbf{Giám sát, cập nhật trạng thái vận chuyển}
+    \begin{itemize}
+        \item Cập nhật trạng thái vận chuyển của phương tiện
+        \item Theo dõi tiến độ vận chuyển
+        \item Lưu trữ lịch sử vận chuyển
+    \end{itemize}
+
+    \item \textbf{Gửi cảnh báo, thông báo qua phần mềm}
+    \begin{itemize}
+        \item Cảnh báo khi nhiệt độ hoặc độ rung vượt ngưỡng
+        \item Cảnh báo khi phương tiện đi lệch lộ trình
+        \item Gửi thông báo đến trung tâm điều hành và người có thẩm quyền qua ứng dụng/web
+    \end{itemize}
+
+    \item \textbf{Quản lý quyền truy cập}
+    \begin{itemize}
+        \item Xác thực người dùng trước khi truy cập hệ thống
+        \item Phân quyền: quản trị viên, điều phối viên, lái xe, kỹ thuật viên
+        \item Quản lý nhật ký đăng nhập và thao tác của từng người dùng
+    \end{itemize}
+
+    \item \textbf{Bảo mật dữ liệu}
+    \begin{itemize}
+        \item Mã hóa dữ liệu trong quá trình truyền và lưu trữ
+        \item Xác thực thiết bị trước khi gửi dữ liệu về hệ thống
+        \item Ngăn chặn truy cập trái phép vào dữ liệu nhạy cảm
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Yêu cầu phi chức năng}
+\begin{itemize}
+    \item \textbf{Hiệu suất (Performance)}
+    \begin{itemize}
+        \item Cập nhật dữ liệu lên giao diện người dùng trong dưới 5 giây/lần
+        \item Truyền dữ liệu trong khoảng 2-3 giây
+    \end{itemize}
+
+    \item \textbf{Tính sẵn sàng (Availability)}
+    \begin{itemize}
+        \item Hệ thống phải đảm bảo sẵn sàng hoạt động trên 90\% khi có kết nối mạng
+    \end{itemize}
+
+    \item \textbf{Khả năng mở rộng}
+    \begin{itemize}
+        \item Hỗ trợ cùng lúc nhiều thiết bị, tối thiểu 4 thiết bị
+        \item Có thể tích hợp thêm các cảm biến nếu cần thiết
+    \end{itemize}
+
+    \item \textbf{Tính dễ sử dụng}
+    \begin{itemize}
+        \item Giao diện trực quan, dễ nhìn, dễ thao tác
+        \item Người dùng mới có thể làm quen với hệ thống không quá 15 phút
+    \end{itemize}
+
+    \item \textbf{Tính tương thích}
+    \begin{itemize}
+        \item Phải tương thích với các thiết bị IoT phổ biến
+        \item Hỗ trợ trên nền tảng Android
+    \end{itemize}
+
+    \item \textbf{Khả năng bảo trì}
+    \begin{itemize}
+        \item Thiết kế theo hướng module hoá, để bảo trì/nâng cấp mà không làm ảnh hưởng đến toàn bộ hệ thống
+        \item Cung cấp đầy đủ tài liệu kỹ thuật, hướng dẫn sử dụng
+    \end{itemize}
+\end{itemize}
+
+
+
+\subsection{Các thiết bị trong hệ thống}
+\subsubsection{Mô hình hoạt động và quy trình của hệ thống}
+Hệ thống được thiết kế theo mô hình ba lớp chính: khối cảm biến, khối xử lý trung tâm, và khối quản lý tập trung.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/MoHinhHeThong.png}
+    \caption{Mô hình hoạt động của hệ thống}
+    \label{fig:placeholder}
+\end{figure}
+
+Khối cảm biến gắn trên phương tiện để thu thập dữ liệu cốt lõi như vị trí GPS, rung động và nhiệt độ, phản ánh trực tiếp tình trạng vận chuyển. Dữ liệu này được gửi đến khối xử lý trung tâm, nơi Raspberry Pi thực hiện tiền xử lý, mã hóa và truyền qua LoRa/LoRaWAN đến gateway. Đồng thời, một màn hình LCD được tích hợp để hiển thị trực tiếp thông số môi trường và trạng thái hệ thống, hỗ trợ theo dõi nhanh tại phương tiện.
+
+Tại lớp quản lý, dữ liệu được đưa lên nền tảng Cloud IoT để xử lý, lưu trữ và phân phối đến các dịch vụ liên quan. Đồng thời, Firebase được tích hợp nhằm hỗ trợ ứng dụng di động, cho phép đồng bộ dữ liệu theo thời gian thực, gửi cảnh báo tức thì và quản lý người dùng. Nhờ đó, người quản lý có thể giám sát trạng thái vận chuyển, nhận cảnh báo kịp thời và đưa ra quyết định chính xác.
+
+\subsubsection{Sơ đồ khối chức năng của hệ thống}
+\subsubsubsection{Sơ đồ khối của hệ thống}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\linewidth]{images/SoDoKhoi.png}
+    \caption{Sơ đồ khối của toàn bộ hệ thống}
+    \label{fig:placeholder}
+\end{figure}
+
+Sơ đồ khối chức năng của hệ thống được thể hiện trong Hình 2. Trung tâm của hệ thống là khối xử lý trung tâm, chịu trách nhiệm thu nhận dữ liệu từ các cảm biến rung, nhiệt độ và GPS, thực hiện tiền xử lý, mã hóa và quản lý luồng thông tin. Khối nguồn đảm bảo cung cấp điện áp ổn định cho toàn bộ hệ thống. Sau khi xử lý, dữ liệu được hiển thị cục bộ trên màn hình và đồng thời truyền qua LoRa/LoRaWAN đến Gateway trước khi chuyển tiếp lên Cloud/Server. Tại đây, dữ liệu được lưu trữ trong cơ sở dữ liệu, quản lý bởi MQTT Broker và tích hợp với khối bảo mật cùng ứng dụng di động để hỗ trợ giám sát, cảnh báo và ra quyết định từ xa.
+
+\subsubsubsection{Chức năng của từng khối}
+\begin{itemize}
+    \item \textbf{Khối nguồn:} Cung cấp điện áp ổn định (5V) cho toàn bộ hệ thống, đảm bảo các khối cảm biến, xử lý và truyền thông hoạt động liên tục, ổn định.
+    
+    \item \textbf{Khối cảm biến:} 
+    \begin{itemize}
+        \item \textit{Cảm biến rung:} sử dụng cảm biến rung phát hiện rung động bất thường trong quá trình vận chuyển.
+        \item \textit{Cảm biến nhiệt độ:} sử dụng cảm biến nhiệt độ và độ ẩm DHT20 để theo dõi liên tục điều kiện môi trường (nhiệt độ, độ ẩm) để đảm bảo đạn dược được bảo quản trong ngưỡng an toàn, tránh hiện tượng biến chất, ẩm mốc hoặc kích hoạt ngoài ý muốn.
+        \item \textit{Cảm biến GPS:} sử dụng Module GPS xác định vị trí địa lý chính xác của phương tiện chở đạn dược, phục vụ cho việc giám sát hành trình và phát hiện kịp thời khi có sai lệch lộ trình.
+    \end{itemize}
+    
+    \item \textbf{Khối xử lý trung tâm:} được xây dựng trên nền tảng Raspberry Pi 4 Model B, giữ vai trò bộ não của hệ thống. Thiết bị này thu thập dữ liệu từ các cảm biến, xử lý và so sánh với các ngưỡng an toàn đã thiết lập. Khi phát hiện bất thường có thể đe dọa an toàn vận chuyển đạn dược, Raspberry Pi sẽ ngay lập tức kích hoạt cảnh báo và đồng thời điều phối dữ liệu đến các khối hiển thị, truyền thông và lưu trữ. Với khả năng mở rộng, nó cũng có thể tích hợp các thuật toán phân tích để dự đoán nguy cơ và phát cảnh báo sớm, tăng cường độ tin cậy cho toàn hệ thống.
+    
+    \item \textbf{Khối hiển thị:} Sử dụng màn hình LCD để trực tiếp hiển thị các thông số môi trường (nhiệt độ, độ ẩm), trạng thái rung. 
+    
+    \item \textbf{Khối cảnh báo:} Khi phát hiện bất thường như rung động quá mức, nhiệt độ vượt ngưỡng an toàn hoặc sai lệch hành trình, hệ thống ngay lập tức phát tín hiệu cảnh báo. Cảnh báo được gửi đến ứng dụng di động của người quản lý dưới dạng thông báo tức thì (push notification).
+    
+    \item \textbf{Khối truyền dữ liệu (LoRa/LoRaWAN):} Đảm bảo truyền dữ liệu tầm xa với năng lượng thấp giữa phương tiện vận chuyển và Gateway. LoRaWAN phù hợp cho môi trường vận tải quân sự, nhờ khả năng truyền ổn định trong điều kiện địa hình phức tạp và độ tin cậy cao.
+    
+    \item \textbf{Gateway (LoRaWAN Gateway):} Là cầu nối trung gian giữa thiết bị IoT trên phương tiện và hệ thống Cloud/Server. Gateway tiếp nhận dữ liệu từ các node cảm biến, sau đó mã hóa và chuyển tiếp đến máy chủ thông qua giao thức bảo mật (MQTT). Đồng thời, Gateway có thể quản lý nhiều phương tiện vận chuyển trong cùng khu vực.
+    
+    \item \textbf{Cloud/Server (MQTT Broker + Database):} Máy chủ trung tâm có chức năng tiếp nhận, xử lý và lưu trữ dữ liệu. MQTT Broker điều phối việc gửi/nhận dữ liệu giữa nhiều thiết bị và ứng dụng, đảm bảo giám sát đồng bộ theo thời gian thực. Cơ sở dữ liệu trên nền tảng Cloud IoT lưu trữ dữ liệu lâu dài, hỗ trợ truy xuất lịch sử vận chuyển và có khả năng sao lưu (backup) nhằm tránh mất mát dữ liệu trong trường hợp sự cố đường truyền.
+
+    \item \textbf{Khối bảo mật:} Được tích hợp ở tất cả các tầng của hệ thống nhằm bảo vệ dữ liệu nhạy cảm liên quan đến vận chuyển đạn dược. Các cơ chế bảo mật mã hóa dữ liệu truyền đi, cùng kiểm soát quyền truy cập. Điều này đảm bảo hệ thống không bị xâm nhập trái phép hay rò rỉ thông tin nhạy cảm.
+    
+    \item \textbf{Ứng dụng di động (App Mobile):} Là giao diện dành cho cán bộ quản lý vận chuyển đạn dược. Ứng dụng cho phép giám sát trạng thái vận chuyển theo thời gian thực, nhận cảnh báo ngay khi có sự cố, đồng thời hiển thị bản đồ số để theo dõi trực quan lộ trình.
+\end{itemize}
+\subsubsection{Lựa chọn thiết bị}
+
+Dựa trên các yêu cầu chức năng và phi chức năng đã đề xuất, nhóm tiến hành lựa chọn thiết bị phần cứng phù hợp, 
+đặc tả chi tiết yêu cầu cho từng loại cảm biến và module tích hợp trong hệ thống. 
+Các yêu cầu được phân loại thành \textbf{yêu cầu chức năng (FR)} và \textbf{yêu cầu phi chức năng (NFR)}.
+
+\subsubsubsection*{Cảm biến nhiệt độ/độ ẩm (ví dụ DHT20)}
+\textbf{Yêu cầu chức năng (FR-T)}
+\begin{itemize}
+    \item Đo và gửi dữ liệu môi trường (nhiệt độ, độ ẩm) theo chu kỳ 60s, rút xuống 10–15s khi cảnh báo.
+    \item So sánh với ngưỡng an toàn; khi vượt ngưỡng sinh cảnh báo và gửi về hệ thống (LoRa/LoRaWAN $\rightarrow$ Gateway $\rightarrow$ MQTT $\rightarrow$ Cloud).
+    \item Hiển thị giá trị hiện thời trên LCD kèm trạng thái cảm biến.
+    \item Lưu đệm dữ liệu khi mất kết nối và đồng bộ lại khi có mạng.
+    \item Tự chẩn đoán lỗi phần cứng, gửi mã lỗi về trung tâm.
+\end{itemize}
+
+\textbf{Yêu cầu phi chức năng (NFR-T)}
+\begin{itemize}
+    \item Độ trễ truyền dữ liệu $\leq 3s$; UI cập nhật $<5s$.
+    \item Độ chính xác: $\pm0.5^{\circ}C$; $\pm2\%$RH .
+    \item Sẵn sàng $\geq 90\%$ khi có mạng.
+    \item Hỗ trợ $\geq 4$ node cảm biến song song, dễ mở rộng.
+    \item Dữ liệu được mã hóa end-to-end, xác thực thiết bị.
+    \item Tương thích giao thức MQTT và ứng dụng Android.
+    \item Cấu hình ngưỡng/chu kỳ đo OTA; có tài liệu bảo trì đầy đủ.
+\end{itemize}
+
+\subsubsubsection*{Cảm biến rung/va đập}
+\textbf{Yêu cầu chức năng (FR-V)}
+\begin{itemize}
+    \item Đo biên độ rung, tổng hợp theo chu kỳ 1–5s, kèm timestamp + GPS.
+    \item Phát hiện sự kiện bất thường (va chạm, rung quá mức), gửi cảnh báo tức thì.
+    \item Hiển thị trạng thái trên LCD, lưu lịch sử sự kiện lên Cloud.
+    \item Tích hợp với điều phối lộ trình: cảnh báo gắn vào đoạn đường cụ thể.
+\end{itemize}
+
+\textbf{Yêu cầu phi chức năng (NFR-V)}
+\begin{itemize}
+    \item Trễ sự kiện $\leq 3s$; UI nhận $<5s$.
+    \item Độ chính xác phát hiện $\geq 95\%$, báo giả $\leq 5\%$ .
+    \item Hỗ trợ tối thiểu 4 node đồng thời.
+    \item Dữ liệu mã hóa, xác thực thiết bị.
+    \item Cập nhật ngưỡng rung/firmware OTA, module hóa dễ thay thế.
+\end{itemize}
+
+\subsubsubsection*{Module GPS/GNSS}
+\textbf{Yêu cầu chức năng (FR-G)}
+\begin{itemize}
+    \item Cung cấp vị trí, tốc độ, hướng; cập nhật chu kỳ 1–5s .
+    \item Phát hiện lệch lộ trình, sinh cảnh báo.
+    \item Lưu trữ và đồng bộ lịch sử hành trình lên Cloud.
+    \item Gắn tọa độ GPS cho các sự kiện nhiệt độ/rung.
+\end{itemize}
+
+\textbf{Yêu cầu phi chức năng (NFR-G)}
+\begin{itemize}
+    \item Dữ liệu đến Cloud $\leq 3s$, bản đồ cập nhật $<5s$.
+    \item Sẵn sàng $\geq 90\%$; mất mạng phải lưu đệm và đồng bộ lại.
+    \item Hỗ trợ tối thiểu 4 phương tiện trên một Gateway.
+    \item Tương thích MQTT, Android; dữ liệu mã hóa và xác thực thiết bị.
+    \item Cho phép cấu hình tuyến/chu kỳ OTA, có tài liệu lắp đặt.
+\end{itemize}
+\textbf{Prototype lựa chọn thiết bị}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Thiết bị} & \textbf{Prototype} \\ \hline
+
+\textbf{Cảm biến nhiệt độ/độ ẩm} 
+& AHT20 / DHT20 board – đo nhiệt/ẩm, giao tiếp I²C, chu kỳ 10–60s. \\ \hline
+
+\textbf{Cảm biến rung/va đập} 
+& MPU-6050 (GY-521) hoặc ADXL345 – accelerometer/IMU giá rẻ, dễ tích hợp với Raspberry Pi/MCU. \\ \hline
+
+\textbf{GPS/GNSS} 
+& u-blox NEO-M8N – cập nhật 1–10 Hz, UART, độ chính xác cao; hoặc LGT-92 LoRaWAN GPS Tracker (tích hợp GPS + IMU + LoRaWAN). \\ \hline
+
+\textbf{Kết nối LoRa/LoRaWAN} 
+& Module SX127x, Wio-E5, HAT SX1262 cho Raspberry Pi (kiểm tra dải AS923 tại Việt Nam). \\ \hline
+
+\end{tabular}
+\caption{Prototype lựa chọn thiết bị cho hệ thống}
+\end{table}
+
+\section{Tổng kết}
+Trong tuần qua, nhóm đã đạt được những thành tựu sau
+\begin{itemize}
+\item Hoàn thiện bộ yêu cầu chức năng và phi chức năng cho hệ thống giám sát – điều phối vận chuyển.
+
+\item Thiết kế mô hình hoạt động tổng thể ba lớp (cảm biến – xử lý trung tâm – quản lý tập trung).
+
+\item Xây dựng sơ đồ khối chức năng, xác định rõ vai trò của từng khối: cảm biến, xử lý trung tâm, hiển thị, cảnh báo, truyền thông LoRa/LoRaWAN, gateway, cloud/server (MQTT + CSDL), bảo mật và ứng dụng di động.
+
+\item Xác định prototype thiết bị trọng yếu (DHT20/AHT20, MPU-6050/ADXL345, u-blox NEO-M8N/LGT-92, module LoRa phù hợp băng tần AS923).
+
+\end{itemize}
+Đánh giá sơ bộ cho thấy hệ thống có khả năng đáp ứng yêu cầu giám sát, truyền dữ liệu ổn định và hỗ trợ quản lý từ xa, tạo nền tảng cho các giai đoạn phát triển tiếp theo.
+\section{Kế hoạch tuần tới}
+Trong tuần tới, nhóm dự kiến thực hiện các công việc sau:
+\begin{itemize}
+    \item \textbf{Lên timeline giai đoạn 1:} Hoàn thiện kế hoạch chi tiết cho giai đoạn 1, xác định các mốc quan trọng và phân công công việc cho từng thành viên.
+    \item \textbf{Tìm hiểu cảm biến:} Nghiên cứu và lựa chọn các loại cảm biến phù hợp, đảm bảo đáp ứng các yêu cầu phi chức năng của hệ thống (độ chính xác, độ trễ, khả năng mở rộng).
+    \item \textbf{Khởi tạo dự án trên GitHub:} Tạo repository chính thức để quản lý mã nguồn, tài liệu và theo dõi tiến độ, đảm bảo tính minh bạch và khả năng cộng tác hiệu quả.
+\end{itemize}

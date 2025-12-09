@@ -1,0 +1,386 @@
+\section{Thành viên tham dự}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Student’s name} & \textbf{Student’s ID} \\ \hline
+Lâm Hoàng Tân           & 2213892                \\ \hline
+Trương Nguyễn Hoàng Anh & 2210147                \\ \hline
+Hoàng Sỹ Xuân Sơn       & 2212937                \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Nội dung công việc}
+Trong tuần này nhóm tập trung thực hiện các nhiệm vụ chính để hoàn thiện luồng dữ liệu end-to-end từ thiết bị đến Cloud. Cụ thể:
+
+\begin{itemize}
+    \item Hoàn thiện và kiểm thử firmware P2P trên 2 kit Ra-08H:
+    \begin{itemize}
+        \item Biên dịch, build và nạp firmware mẫu \texttt{pingpong.bin} để xác minh phần cứng và thông số RF cơ bản.
+        \item Phát triển bản firmware tùy chỉnh (\texttt{pingpong\_uart.bin}) hỗ trợ đọc JSON từ ESP32 qua UART, đóng gói payload và gửi qua LoRa P2P.
+    \end{itemize}
+    \item Thiết lập luồng Gateway P2P và tích hợp với Backend:
+    \begin{itemize}
+        \item Triển khai node RX (Ra-08H) để nhận gói LoRa, giải mã payload và xuất ra dạng JSON (kèm \texttt{rssi}/\texttt{snr}).
+        \item Thiết kế, triển khai script Python (\texttt{mqtt\_to\_firestore.py}) để nhận message từ Mosquitto, parse payload \texttt{"raw"} và ghi dữ liệu lên Firestore.
+    \end{itemize}
+    \item Thiết lập hạ tầng Backend tạm: Mosquitto (MQTT Broker) và Firestore:
+    \begin{itemize}
+        \item Mosquitto cấu hình cho phép kết nối LAN để node Gateway và script Python có thể publish/subscribe.
+        \item Firestore được cấu hình (project ở \texttt{asia-southeast1}) và schema 2 lớp (Latest State + History) được áp dụng.
+    \end{itemize}
+    \item Phát triển và kiểm thử ESP32 sender và MQTT forwarder:
+    \begin{itemize}
+        \item ESP32 tạo payload JSON và gửi qua UART tới Ra-08H TX (baud 115200, newline-terminated).
+        \item Node RX forward payload lên Mosquitto; Python Bridge xử lý và ghi lên Firestore.
+    \end{itemize}
+    \item Kiểm thử tích hợp (Hardware-in-the-Loop):
+    \begin{itemize}
+        \item Kiểm tra end-to-end: ESP32 $\rightarrow$ Ra-08H TX $\rightarrow$ LoRa P2P $\rightarrow$ Ra-08H RX $\rightarrow$ ESP32 (gateway) $\rightarrow$ MQTT Broker $\rightarrow$ Python Bridge $\rightarrow$ Firestore.
+        \item Ghi nhận logs, ảnh chụp màn hình serial, và xuất CSV sample cho phân tích sơ bộ RSSI/SNR và độ trễ.
+    \end{itemize}
+\end{itemize}
+
+\bigskip
+
+\noindent \textbf{Bảng tóm tắt công việc (trạng thái):}
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{7.2cm}|p{3.5cm}|p{3cm}|}
+\hline
+\textbf{Công việc} & \textbf{Thành viên phụ trách} & \textbf{Trạng thái} \\ \hline
+Build, debug firmware gốc pingpong và tạo binary & Hoàng Sỹ Xuân Sơn & Hoàn thành \\ \hline
+Phát triển firmware UART-to-LoRa (TX) và LoRa-to-UART (RX) & Hoàng Sỹ Xuân Sơn & Hoàn thành \\ \hline
+ESP32 sender (gửi JSON qua UART) & Hoàng Sỹ Xuân Sơn & Hoàn thành \\ \hline
+Thiết kế UI/UX cho app & Lâm Hoàng Tân & Hoàn thành \\ \hline
+Mosquitto Broker cấu hình LAN; Python Bridge xử lý payload và ghi Firestore & Trương Nguyễn Hoàng Anh & Hoàn thành \\ \hline
+Thiết kế schema Firestore (Latest State + History) & Trương Nguyễn Hoàng Anh & Hoàn thành \\ \hline
+Kiểm thử end-to-end, thu logs và lưu artifacts & Cả nhóm & Hoàn thành \\ \hline
+\end{tabular}
+\end{table}
+
+
+\section{Mục tiêu điều chỉnh}
+% \begin{itemize}
+%     \item Tập trung hiện thực hoàn chỉnh giao thức MQTT và Mobile App để đảm bảo luồng dữ liệu hoạt động thông suốt.
+%     \item Điều chỉnh kiến trúc truyền tải Giai đoạn 1 sang mô phỏng LoRa P2P để tối ưu chi phí và chủ động phần cứng cho prototype. Định hướng Giai đoạn 2 sẽ nâng cấp lên LoRaWAN tiêu chuẩn.
+%     \item Tạm hoãn việc triển khai và so sánh với CoAP để ưu tiên tính ổn định của hệ thống giám sát thời gian thực.
+% \end{itemize}
+
+\section{Kết quả hiện thực}
+
+\subsection{Thiết kế và Triển khai Cơ sở dữ liệu}
+Song song với việc phát triển firmware, hạ tầng backend trên cloud đã được thiết kế và triển khai để sẵn sàng tiếp nhận, lưu trữ và phân phối dữ liệu.
+
+\subsubsection{Nền tảng và Cấu hình Ban đầu}
+\begin{itemize}
+    \item \textbf{Nền tảng:} \textbf{Google Firebase Firestore} được chọn làm CSDL chính. Lý do: khả năng đồng bộ hóa thời gian thực (real-time listeners) tối ưu cho App Flutter, và kiến trúc NoSQL linh hoạt, dễ dàng mở rộng cho Giai đoạn 2.
+    \item \textbf{Cấu hình:} Project đã được khởi tạo tại location \texttt{asia-southeast1} (Singapore) để đảm bảo độ trễ thấp. Quy tắc bảo mật (Security Rules) tạm thời được đặt ở "Test Mode" để cho phép Script Python Bridge và App Flutter đọc/ghi dữ liệu trong quá trình phát triển.
+\end{itemize}
+
+\subsubsection{Thiết kế Cấu trúc Dữ liệu (Schema) 2 Lớp}
+Một cấu trúc dữ liệu 2 lớp (dual-layer schema) đã được thiết kế để tối ưu đồng thời hai mục tiêu: hiển thị real-time và lưu trữ lịch sử:
+
+\begin{itemize}
+    \item \textbf{Lớp 1: Trạng thái Mới nhất (Latest State Document)}
+    \begin{itemize}
+        \item \textbf{Đường dẫn:} \texttt{devices/\{device\_id\}}
+        \item \textbf{Mô tả:} Document này lưu trữ trạng thái cuối cùng nhận được từ thiết bị. Dữ liệu mới sẽ được ghi đè (\texttt{merge=True}).
+        \item \textbf{Mục đích:} Giúp App Flutter chỉ cần lắng nghe (listen) duy nhất 1 document/thiết bị để cập nhật Dashboard, tiết kiệm băng thông và tăng tốc độ phản hồi.
+    \end{itemize}
+    \item \textbf{Lớp 2: Lịch sử Dữ liệu (History Sub-collection)}
+    \begin{itemize}
+        \item \textbf{Đường dẫn:} \texttt{devices/\{device\_id\}/history/\{auto\_id\}}
+        \item \textbf{Mô tả:} Mỗi gói tin (payload) nhận được sẽ được ghi mới (\texttt{add}) vào một sub-collection \texttt{history} bên trong document của thiết bị đó.
+        \item \textbf{Mục đích:} Tạo ra một kho lưu trữ dữ liệu lịch sử đầy đủ (time-series data), phục vụ cho việc huấn luyện các mô hình ML và cho phép người dùng xem lại lịch sử vận chuyển ở Giai đoạn 2.
+    \end{itemize}
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/HistoryTrans.png}
+    \caption{Lưu trữ dữ liệu lịch sử}
+    \label{fig:placeholder}
+\end{figure}
+
+\subsection{Xây dựng Python Bridge và Kiểm thử Tích hợp Hệ thống}
+
+\subsubsection{Nâng cấp Python Bridge xử lý Payload Thực tế}
+Script \texttt{mqtt\_to\_firestore.py} (đã tối ưu từ tuần trước) được nâng cấp để thay thế hoàn toàn simulator và trở thành trái tim xử lý logic của backend:
+\begin{itemize}
+    \item \textbf{Xử lý Payload "raw":} Hàm \texttt{on\_message} được lập trình lại để "hiểu" đúng cấu trúc JSON lồng nhau do Kit 2 của Sơn gửi lên.
+    \begin{itemize}
+        \item Script tự động nhận diện payload wrapper \texttt{\{"raw": "...", "rssi": ...\}}.
+        \item Thực hiện parse JSON lần 2 trên chuỗi (string) bên trong trường \texttt{"raw"}.
+    \end{itemize}
+    \item \textbf{Làm giàu Dữ liệu (Data Enrichment):} Script tự động trích xuất các thông số tín hiệu của Gateway (như \texttt{rssi}, \texttt{snr} từ tầng JSON bên ngoài) và gộp chung vào payload đã xử lý. (Kết quả được thể hiện trong Hình \ref{fig:placeholder}, với các trường \texttt{gateway\_rssi} và \texttt{gateway\_snr}).
+    \item \textbf{Tối ưu Hiệu năng:} Vẫn giữ nguyên các cơ chế tối ưu:
+    \begin{itemize}
+        \item \textbf{Non-Blocking:} Sử dụng \texttt{queue.Queue} và \texttt{threading} để tách biệt luồng nhận MQTT (I/O nhanh) và luồng ghi Firestore (I/O chậm), đảm bảo không một tin nhắn nào từ phần cứng bị lỡ.
+        \item \textbf{Robustness:} Tích hợp cơ chế tự động kết nối lại (reconnect) khi mất kết nối MQTT và cơ chế thử lại (retry) khi ghi Firestore thất bại.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Kiểm thử Tích hợp Hệ thống (Hardware-in-the-Loop)}
+Sau khi Firmware P2P hoàn tất, nhóm đã tiến hành kiểm thử tích hợp toàn bộ luồng dữ liệu thật (end-to-end) thay thế cho simulator:
+\begin{enumerate}
+    \item \textbf{Node Gửi (ESP32 + Ra-08H TX):} Hoạt động, gửi payload JSON (qua UART).
+    \item \textbf{Gateway P2P (Ra-08H RX):} Hoạt động, nhận LoRa, đóng gói "raw" và publish lên MQTT Broker (qua WiFi).
+    \item \textbf{Mosquitto Broker:} Chạy ổn định (dưới dạng service), nhận tin nhắn từ Kit 2.
+    \item \textbf{Script Python Bridge:} Chạy script \texttt{mqtt\_to\_firestore.py}, lắng nghe Broker, xử lý thành công payload "raw" và ghi vào Firestore.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/FirebaseDB.png}
+    \caption{Kết quả tích hợp thành công: Dữ liệu từ LoRa được ghi lên Firestore}
+    \label{fig:placeholder}
+\end{figure}
+
+
+\subsection{Phát triển và nạp firmware P2P cho Ra-08H}
+\textbf{Môi trường và công cụ}\\
+\begin{itemize}
+    \item Môi trường build: Keil µVision (UV4) / dự án SDK ASR6601 được tạo bằng script KeilProjectGen.
+    \item Công cụ nạp / debug: TremoProg; giao tiếp serial dùng Ai-Thinker Serial Tool .
+    \item File đầu ra: \texttt{pingpong.bin} (phiên bản gốc) và bản sửa để hỗ trợ UART/JSON (phiên bản thử nghiệm \texttt{pingpong\_uart.bin}).
+\end{itemize}
+
+\subsection{Các bước build LoRa P2P}
+\begin{enumerate}
+  \item \textbf{Chuẩn bị source:} Lấy mã ví dụ pingpong từ repository SDK ASR6601 (thư mục \texttt{projects/ASR6601CB-EVAL/examples/lora/pingpong}).
+  \item \textbf>Tạo project Keil:} Chạy script KeilProjectGen (ví dụ \texttt{KeilProjectGen.exe ...}) để sinh file \texttt{project.uvprojx}.
+  \item \textbf{Build:} Mở Keil hoặc dùng CLI UV4 để build target (ví dụ: \texttt{UV4.exe -b project.uvprojx -t "pingpong"}). Kết quả tạo file binary: \texttt{pingpong.bin}.
+  \item \textbf{Flash:} Dùng \texttt{tremo\_loader.py} hoặc công cụ nạp của board để flash \texttt{pingpong.bin} lên Ra-08H.
+  \item \textbf{(Nếu chỉnh sửa) Rebuild:} Sau khi chỉnh code pingping.c về UART wrapper, buffer size,... build lại và nạp firmware sửa .
+  \item \textbf{Ghi chú:} trong môi trường của nhóm, đã thực hiện build cả bằng Keil và kiểm tra file bin đầu ra; đã lưu lại file bin và các log build để tái hiện.
+\end{enumerate}
+
+\subsection{Phát triển firmware P2P cho 2 node LoRa}
+\subsubsection{Node TX (UART $\rightarrow$ LoRa)}
+\paragraph{Mục tiêu}
+Nhận payload JSON từ ESP32 qua UART non-blocking, gói thành payload LoRa và gửi đi.
+
+\paragraph{Thay đổi chính}
+\begin{itemize}
+  \item Tăng \texttt{BUFFER\_SIZE} từ 5 lên 256 để chứa JSON payload.
+  \item Thêm khởi tạo UART (UART1) ở 115200 bps; đảm bảo iomux/clock cho UART đã enable (vào \texttt{board\_init} hoặc hàm init chuyên biệt).
+  \item Thực hiện đọc non-blocking: gom bytes đến khi gặp newline (\texttt{\textbackslash n}) hoặc đầy buffer, sau đó gọi \texttt{Radio.Send(Buffer, BufferSize)}.
+  \item Thêm debug prints: mỗi lần gửi in \texttt{TX <n> bytes: <payload>} lên debug UART.
+\end{itemize}
+
+\begin{lstlisting}[caption=UART wrapper]
+#define UART_INST  UART0
+#define UART_BAUD  115200
+
+static void uart_init_wrapper(uint32_t baud)
+{
+    uart_config_t cfg;
+    uart_config_init(&cfg);
+    cfg.baudrate     = baud;
+    cfg.data_width   = UART_DATA_WIDTH_8;
+    cfg.stop_bits    = UART_STOP_BITS_1;
+    cfg.parity       = UART_PARITY_NO;
+    cfg.flow_control = UART_FLOW_CONTROL_DISABLED;
+    cfg.mode         = UART_MODE_TXRX;
+    cfg.fifo_mode    = 1;
+    uart_init(UART_INST, &cfg);
+    uart_cmd(UART_INST, true);
+}
+
+static int uart_available_wrapper(void)
+{
+    return uart_get_flag_status(UART_INST, UART_FLAG_RX_FIFO_EMPTY) ? 0 : 1;
+}
+
+static int uart_readbyte_wrapper(void)
+{
+    if (!uart_available_wrapper()) return -1;
+    return (int)uart_receive_data(UART_INST);
+}
+
+static void uart_writebyte(uint8_t b)
+{
+    uart_send_data(UART_INST, b);
+}
+\end{lstlisting}
+
+\paragraph{Luồng xử lý chính (tóm tắt)}
+\begin{enumerate}
+  \item Trong vòng chính, ở trạng thái LOWPOWER: kiểm \texttt{uart\_available}; gom bytes đến khi gặp newline.
+  \item Khi có 1 dòng hoàn chỉnh: copy vào \texttt{Buffer}, đặt \texttt{BufferSize} đúng, gọi \texttt{Radio.Send(Buffer, BufferSize)}.
+  \item Sau OnTxDone chuyển về Rx để chờ reply (nếu cần).
+\end{enumerate}
+
+\subsubsection{Node RX (LoRa $\rightarrow$ UART \& PC)}
+\paragraph{Mục tiêu}
+Khai thác OnRxDone để in ra 1 dòng JSON có cả payload (escape), RSSI và SNR cho PC đọc/ghi log.
+
+\paragraph{Thay đổi chính}
+\begin{itemize}
+  \item Khi \texttt{OnRxDone(uint8\_t *payload, uint16\_t size, int16\_t rssi, int8\_t snr)} được gọi:
+  \begin{itemize}
+    \item Sao chép payload vào buffer an toàn, escape \texttt{"} và \texttt{\textbackslash} để tạo chuỗi JSON an toàn.
+    \item In ra 1 dòng JSON dạng: \texttt{\{"raw":"...","rssi":-82,"snr":9\}\textbackslash n}.
+  \end{itemize}
+  \item Thêm code escape để tránh hỏng format khi payload có dấu ngoặc kép hoặc byte không in được.
+\end{itemize}
+
+\begin{lstlisting}[caption=OnRxDone - in JSON kèm rssi/snr]
+void OnRxDone( uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr )
+{
+    Radio.Sleep();
+
+    /* safe copy */
+    uint16_t use_len = (size < BUFFER_SIZE-1) ? size : BUFFER_SIZE-1;
+    uint8_t local[BUFFER_SIZE];
+    memcpy(local, payload, use_len);
+    local[use_len] = 0;
+
+    /* escape payload to be JSON safe */
+    char esc[BUFFER_SIZE * 2];
+    escape_json(local, use_len, esc, sizeof(esc));
+
+    /* print one JSON line for PC logger to parse */
+    printf("{\"raw\":\"%s\",\"rssi\":%d,\"snr\":%d}\r\n", esc, rssi, snr);
+
+    /* store for compatibility */
+    BufferSize = use_len;
+    memcpy(Buffer, local, use_len);
+    RssiValue = rssi;
+    SnrValue = snr;
+    State = RX;
+}
+\end{lstlisting}
+
+\subsection{Cấu hình phần cứng}
+\begin{itemize}
+  \item \textbf>Mapping chân cơ bản:}
+    \begin{itemize}
+      \item ESP32 TX1 (GPIO26) $\rightarrow$ Ra-08H RX (UART RX trên module).
+      \item ESP32 RX1 (GPIO25) $\leftarrow$ Ra-08H TX (để gửi payload lên MQTT).
+      \item GND chung giữa ESP32 và cả hai Ra-08H (bắt buộc).
+    \end{itemize}
+  \item \textbf{Anten:} Gắn anten SMA cho cả hai module trước khi phát để tránh tổn hại PA.
+  \item \textbf{Khoảng cách test:} bắt đầu thử trong phạm vi 0.5--2 m để chắc radio hoạt động trước khi thử xa hơn.
+\end{itemize}
+
+\subsection{Hiện thực (kết quả thực nghiệm và log)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{images/week/week9/lora.png}
+    \caption{Kết quả truyền dữ liệu bằng Lora}
+    \label{UI5}
+\end{figure}
+Mô tả: Trong hình trên là kết của truyền dữ liệu của node Lora TX (bên trái) lấy dữ liệu UART từ ESP32 sang Node Lora RX (bên phải) và gửi dữ liệu lên 1 mạch ESP32 khác để gửi lên MQTT. Khoảng cách của 2 Lora là 1-2m.
+\subsubsection{Kết quả nghiệm thu}
+\begin{itemize}
+  \item \textbf{Hoàn thành luồng dữ liệu E2E (đã nghiệm thu):} \\
+  Đã hoàn thiện và nghiệm thu thành công chuỗi truyền dữ liệu:
+\[
+\text{ESP32 (JSON)} \rightarrow \text{Ra-08H TX (UART in, LoRa out)}
+\]
+\[
+\rightarrow \text{Ra-08H RX (LoRa in, UART out)}
+ \rightarrow \text{ESP32(JSON)} \rightarrow \text{MQTT Broker (Mosquitto)}
+\]
+  \begin{itemize}
+    \item Node TX nhận JSON từ ESP32 gửi qua UART và phát qua LoRa P2P.
+    \item Node RX nhận gói LoRa, giải mã payload, in/log dưới dạng JSON và
+    ESP32 nhận nhận qua UART và publish payload đó lên MQTT Broker (qua Wi-Fi).
+    \item Xác thực trên MQTT Broker: topic nhận dữ liệu đúng định dạng và nội dung (ví dụ \texttt{ammo\_transport/Ra-08H-Node1/telemetry}) — broker nhận message đều đặn khi TX gửi.
+  \end{itemize}
+
+  \item \textbf{Payload / topic (mẫu nghiệm thu):}
+\begin{lstlisting}[language=json,caption={Mẫu payload đã forward lên MQTT}]
+Topic: ammo_transport/Ra-08H-Node1/telemetry
+Payload:
+{
+  "device_id": "Ra-08H-Node1",
+  "timestamp": 1715200000,
+  "temp": 31.9,
+  "battery": 4.00,
+  "gps": {"lat":10.8776,"lng":106.8062},
+  "rssi_lora": -73
+}
+\end{lstlisting}
+ \item \textbf{Giới hạn nghiệm thu hiện tại:}
+  \begin{itemize}
+    \item Đã nghiệm thu thành công chức năng truyền dữ liệu và forward lên MQTT trong môi trường thử nghiệm (khoảng cách ngắn, trong nhà, anten gắn sẵn).
+    \item Chưa kiểm tra bài bản về khoảng cách truyền (range test) ở khoảng cách lớn / ngoài trời / qua nhiều chướng ngại vật — đây là bước cần thực hiện tiếp để đánh giá khả năng vận hành thực tế.
+  \end{itemize}
+
+  \item \textbf{Đề xuất bước tiếp theo (sau nghiệm thu):}
+  \begin{itemize}
+    \item Thực hiện test phạm vi (range test) theo kịch bản: tăng dần khoảng cách (100 m → 500 m → 1 km tùy điều kiện) và thu packet-loss / RSSI / SNR / latency.
+    \item Nếu cần hoạt động xa hơn, tối ưu anten, tăng TX power (trong giới hạn pháp lý), hoặc cân nhắc chuyển sang LoRaWAN/gateway đa kênh ở giai đoạn tiếp theo.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Thiết kế giao diện người dùng}
+Hình \ref{UI1} mô tả các giao diện liên quan đến chức năng đăng nhập và đăng ký. Người dùng có thể tạo tài khoản mới hoặc đăng nhập vào hệ thống để bắt đầu sử dụng các tính năng giám sát vận chuyển đạn dược.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{images/week/week9/065_UI_1.jpg}
+    \caption{Các giao diện liên quan đến phần đăng nhập, đăng ký}
+    \label{UI1}
+\end{figure}
+
+Tiếp theo, Hình \ref{UI2} thể hiện giao diện trang Home, nơi tổng hợp các thông tin quan trọng ở dạng tóm tắt. Trang này đóng vai trò trung tâm điều hướng, cung cấp các mục chính như tổng quan, lịch trình vận chuyển và cảnh báo trong ngày.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{images/week/week9/065_UI_2.jpg}
+    \caption{Các giao diện liên quan đến trang \textbf{Home}}
+    \label{UI2}
+\end{figure}
+
+Hình \ref{UI3} minh hoạ giao diện trang Maps, cho phép theo dõi vị trí các phương tiện vận chuyển đạn dược theo thời gian thực. Bản đồ tích hợp các điểm đánh dấu thể hiện trạng thái, tuyến đường di chuyển, và các cảnh báo. Người dùng có thể tương tác trực tiếp với bản đồ để xem thêm thông tin chi tiết về từng phương tiện hoặc tuyến vận chuyển.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/week/week9/065_UI_3.jpg}
+    \caption{Các giao diện liên quan đến trang \textbf{Maps}}
+    \label{UI3}
+\end{figure}
+
+Trong Hình \ref{UI4}, giao diện Dashboard được thể hiện, cung cấp các biểu đồ thống kê và thông số quan trọng, hoặc các thông tin phân tích theo thời gian. Mục tiêu của dashboard là hỗ trợ người vận hành đưa ra quyết định nhanh chóng dựa trên dữ liệu trực quan.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\linewidth]{images/week/week9/065_UI_4.jpg}
+    \caption{Các giao diện liên quan đến trang \textbf{Dashboard}}
+    \label{UI4}
+\end{figure}
+
+Cuối cùng, Hình \ref{UI5} mô tả trang Profile, nơi người dùng có thể xem và chỉnh sửa thông tin cá nhân, thay đổi cài đặt tài khoản, hoặc đăng xuất khỏi hệ thống. Giao diện được thiết kế đơn giản, tập trung vào sự rõ ràng và dễ thao tác.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{images/week/week9/065_UI_5.jpg}
+    \caption{Các giao diện liên quan đến trang \textbf{Profile}}
+    \label{UI5}
+\end{figure}
+
+
+\section{Tổng kết tuần}
+\subsection*{Đánh giá chung}
+Tuần này nhóm hoàn thành mấu chốt chức năng của prototype: chuyển từ mô phỏng sang dữ liệu thực (ESP32 \& Ra-08H) và tích hợp trọn vẹn lên backend (Mosquitto + Firestore). Các thành phần chính đã hoạt động ổn định tại phạm vi thử nghiệm trong nhà (khoảng cách ngắn), cho phép tiếp tục vào bước đo đạc phạm vi và tối ưu về nguồn/anten.
+
+\subsection*{Kết quả đạt được}
+\begin{itemize}
+    \item Hoàn thành firmware P2P cho node TX và RX; node TX có thể đọc JSON từ ESP32 và phát payload qua LoRa; node RX giải mã payload và forward lên MQTT.
+    \item Python Bridge (\texttt{mqtt\_to\_firestore.py}) được nâng cấp để parse trường \texttt{"raw"} (JSON lồng) và làm giàu dữ liệu với \texttt{rssi}/\texttt{snr} trước khi ghi Firestore.
+    \item CSDL Firestore được triển khai với schema 2 lớp (Latest State + History) và đã nhận dữ liệu thực tế; Mobile App có thể đọc trạng thái mới nhất realtime.
+    \item Thu thập logs mẫu (serial screenshots, CSV) phục vụ cho phân tích sơ bộ RSSI/SNR và latency.
+    \item Đã hoàn thiện thiết kế UX/UI cho giao diện đăng nhập, home, bản đồ, dashboard và profile cho Mobile App.
+\end{itemize}
+
+\subsection*{Vấn đề tồn đọng}
+\begin{itemize}
+    \item Range test (độ phủ, packet-loss ở khoảng cách lớn / môi trường ngoài trời) chưa được thực hiện — cần kịch bản đo đạc và địa điểm thử nghiệm.
+    \item Kiểm tra ổn định nguồn khi Ra-08H TX cấp từ ESP32 3.3V: đã phát hiện khả năng sụt áp ở mức phát cao, cần đánh giá tiếp và chuẩn hoá nguồn cho triển khai thực tế.
+\end{itemize}
+\section{Kế hoạch tuần tới}
+
+\subsection*{Mục tiêu}
+\begin{itemize}
+    \item Kiểm tra khoảng cách truyền dữ liệu (range test) giữa 2 kit LoRa ở các khoảng cách khác nhau (100m, 500m, 1km) để đo độ phủ và độ tin cậy.
+    \item Tiến hành hoàn thiện các tính năng của giao diện người dùng trong App, đặc biệt là thêm các biểu đồ phân tích dữ liệu và tích hợp dữ liệu lịch sử.
+    \item Rà soát, refactor và tối ưu hiệu năng code cho các chức năng đã có.
+\end{itemize}

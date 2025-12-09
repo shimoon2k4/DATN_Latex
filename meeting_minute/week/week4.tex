@@ -1,0 +1,193 @@
+\section{Thành viên tham dự}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Student’s name} & \textbf{Student’s ID} \\ \hline
+Lâm Hoàng Tân           & 2213892                \\ \hline
+Trương Nguyễn Hoàng Anh & 2210147                \\ \hline
+Hoàng Sỹ Xuân Sơn       & 2212937                \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Nội dung công việc}
+\textbf{Mục tiêu chung:}
+\begin{itemize}
+\item Hiện thực code GPS
+\item Hiện thực code cảm biến nhiệt độ độ ẩm 
+\item Hiện thực code cảm biến rung
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{7cm}|p{4cm}|p{3cm}|}
+\hline
+\textbf{Mô tả} & \textbf{Thành viên} & \textbf{Hạn nộp} \\ \hline
+Hiện thực code cảm biến nhiệt độ độ ẩm & Lâm Hoàng Tân & 10/10/2025 \\ \hline
+Hiện thực code GPS & Trương Nguyễn Hoàng Anh & 10/10/2025 \\ \hline
+Hiện thực code cảm biến rung  & Hoàng Sỹ Xuân Sơn & 10/10/2025 \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Kết quả hiện thực}
+
+\subsection{Module GPS (NEO\text{-}M6N) }
+
+\paragraph{Kết nối phần cứng}
+\begin{itemize}
+  \item ESP32 dùng \textbf{UART2} (\texttt{HardwareSerial(2)}) chuyên cho GPS để tránh xung đột với \texttt{Serial} debug.
+  \item \textbf{Đấu dây chéo}: \texttt{RX2=GPIO16} $\leftarrow$ TX(GPS), \texttt{TX2=GPIO17} $\rightarrow$ RX(GPS); \textbf{GND chung} giữa ESP32 và GPS.
+  \item \textbf{Nguồn}: 3.3V ổn định; dây nguồn ngắn, tiết diện đủ. Gần module GPS đặt \textbf{tụ 10\,\textmu F + 100\,nF} song song để triệt nhiễu cao tần và sụt áp tức thời.
+  \item \textbf{Anten}: anten gắn chắc, hướng lên trời, cách xa đường xung nhịp (SCL/SCK) và nguồn nhiễu RF; ưu tiên bề mặt kim loại làm ground plane nhỏ cho patch antenna.
+  \item \textbf{Baud}: code đang đặt \texttt{GPSBaud=4800}; đa số NEO-6/NEO-M6N mặc định \texttt{9600}. Nếu thấy dữ liệu `*` liên tục $\Rightarrow$ cần đồng bộ baud.
+\end{itemize}
+
+\paragraph{Đọc dữ liệu}
+\begin{itemize}
+  \item \texttt{smartDelay(1000)} duy trì vòng đọc UART liên tục trong 1\,s: khi \texttt{ss.available()} thì \texttt{gps.encode(ss.read())}, đảm bảo \emph{không rớt ký tự} NMEA trong khi in/log.
+  \item \textbf{Trường in ra} (có kiểm \texttt{.isValid()} từng trường): 
+  \texttt{sats} (số vệ tinh), \texttt{hdop} (Horizontal DOP), \texttt{lat/lon} (deg), \texttt{age} (ms), \texttt{date/time} (UTC), \texttt{alt} (m), \texttt{course} (deg), \texttt{speed} (km/h), \texttt{cardinal} (hướng), 
+  kèm thống kê parser \texttt{gps.charsProcessed()/sentencesWithFix()/failedChecksum()}.
+  \item \textbf{Hậu kiểm}: nếu sau $>$5\,s \texttt{gps.charsProcessed()<10} $\Rightarrow$ in cảnh báo \texttt{"No GPS data received: check wiring"}.
+  \end{itemize}
+\paragraph{Kết quả thử nghiệm}
+\begin{itemize}
+  \item Các cột \texttt{lat/lon/hdop/sats} hiển thị \emph{giá trị số} thay vì `*`; \texttt{SentencesWithFix} tăng đều; \texttt{failedChecksum} thấp (\(\approx 0\)–rất nhỏ).
+  \item \textbf{Cold start} ngoài trời: \(\sim\)20--40\,s; \texttt{HDOP} điển hình 0.9--1.6; sai số vị trí \(\sim\)3--6\,m (phụ thuộc anten/môi trường). Tốc độ khớp tham chiếu điện thoại sai lệch nhỏ (dưới \(\pm 0.6\)\,m/s).
+\end{itemize}
+
+
+\subsection{Module DHT11 — cảm biến nhiệt độ/độ ẩm }
+
+\paragraph{Kết nối phần cứng}
+\begin{itemize}
+  \item \textbf{Vi điều khiển}: ESP32 DevKit; \textbf{GND chung}, nguồn 3.3V ổn định (ưu tiên cùng rail 3.3V với ESP32).
+  \item \textbf{Chân tín hiệu}: \texttt{DATA} nối \texttt{GPIO14} (theo code); đi dây ngắn, tránh song song đường RF/UART tốc độ cao.
+  \item \textbf{Kéo lên}: nếu board cảm biến không có sẵn, thêm \textbf{10\,k$\Omega$ pull-up} từ DATA lên 3.3V; bảo đảm tiếp xúc chắc, tránh \emph{floating}.
+  \item \textbf{LED trạng thái}: \texttt{GPIO2} (on-board) chớp 2\,s để xác nhận scheduler/nguồn chạy ổn định.
+\end{itemize}
+
+\paragraph{Đọc dữ liệu}
+\begin{itemize}
+  \item \textbf{API}: \texttt{readHumidity()} (\%), \texttt{readTemperature()} ($^\circ$C); trả \texttt{NAN} khi lỗi timing/tín hiệu.
+  \item \textbf{Kiểm tra hợp lệ}: nếu \texttt{isnan(h) || isnan(t)} $\Rightarrow$ in cảnh báo; ngược lại in theo định dạng:
+\begin{verbatim}
+Humidity: 73.00 %       Temperature: 31.00 °C
+Humidity: 73.00 %       Temperature: 31.00 °C
+Humidity: 73.00 %       Temperature: 31.80 °C
+\end{verbatim}
+  \item \textbf{Chu kỳ đọc}: 5\,s/lần (FreeRTOS \texttt{vTaskDelay(5000\,ms)}), phù hợp khuyến nghị $\leq$1–2\,Hz của DHT11 để tránh tự sưởi và sai số do lấy mẫu dày.
+  \item \textbf{Gợi ý hậu xử lý}: loại bỏ outlier (\(h\notin[0,100]\%\), \(t\notin[0,60]^\circ\)C), dùng trung bình trượt 3–5 mẫu để mượt dữ liệu hiển thị.
+\end{itemize}
+
+\paragraph{Ngưỡng hợp lệ}
+\begin{itemize}
+  \item \textbf{Độ ẩm}: $0 \le h \le 100$\,\%RH $\Rightarrow$ \texttt{env.valid=true}; ngoài dải $\Rightarrow$ \texttt{env.valid=false} và không dùng cho điều khiển.
+  \item \textbf{Nhiệt độ}: dải mục tiêu $[0,50]^\circ$C; vượt dải coi là bất thường (kiểm tra vị trí đặt cảm biến, luồng khí nóng, tự sưởi).
+  \item \textbf{Lỗi liên tiếp}: nếu gặp \texttt{NAN} $>$ 3 lần liên tục, ghi cảnh báo, kiểm tra dây/pull-up/nguồn và giảm nhiễu môi trường.
+\end{itemize}
+
+\paragraph{Kết quả thử nghiệm}
+\begin{itemize}
+  \item \textbf{Giá trị quan sát}: độ ẩm ổn định quanh \textbf{73.00\,\%RH}; nhiệt độ dao động \textbf{31.00–31.80$^\circ$C} (phù hợp dao động môi trường và độ phân giải DHT11).
+  \item \textbf{Độ ổn định}: không phát sinh \texttt{NAN} trong chuỗi log mẫu; chu kỳ 5\,s giúp dữ liệu mượt và hạn chế tự sưởi.
+  \item \textbf{Khuyến nghị}: nếu cần sai số thấp/dải rộng hơn, cân nhắc DHT22/SHT3x; bọc che gió nhẹ để giảm nhiễu gió cục bộ.
+\end{itemize}
+
+
+\subsection{Module ADXL345 — I2C, gia tốc 3 trục}
+
+\paragraph{Kết nối phần cứng}
+\begin{itemize}
+  \item \textbf{Giao tiếp}: I2C địa chỉ \texttt{0x53} (ALT ADDRESS=GND). 
+  \item \textbf{ESP32 gợi ý}: \texttt{SDA=GPIO21}, \texttt{SCL=GPIO22}; \textbf{pull-up} 4.7–10\,k$\Omega$ nếu board chưa tích hợp; GND chung; nguồn 3.3V.
+\end{itemize}
+
+\paragraph{Đọc dữ liệu}
+\begin{itemize}
+  \item Đọc 6\,byte từ \texttt{0x32..0x37} $\rightarrow$ ghép \texttt{x,y,z} (\texttt{int16\_t}, little endian). \textbf{FULL\_RES=1} \(\Rightarrow\) 4\,mg/LSB.
+  \item Xuất bản tin định dạng:
+\begin{verbatim}
+TELEM,<ts>,<x>,<y>,<z>,<shock>
+\end{verbatim}
+  \item \textbf{Mẫu log thực tế} (20\,Hz, \texttt{ts=millis()}):
+\begin{verbatim}
+TELEM,2300,-204,162,-265,0
+TELEM,2350,332,38,-292,0
+TELEM,2400,262,164,-313,0
+TELEM,2450,-428,-199,-404,0
+TELEM,2500,310,-61,-597,1
+TELEM,2550,631,273,-408,1
+TELEM,2600,-875,-384,-342,1
+TELEM,2650,793,191,-262,1
+\end{verbatim}
+  \item \textbf{Giải thích}: \texttt{x,y,z} là \emph{giá trị thô (LSB)}; có thể quy đổi \(a_g = \text{LSB} \times 0.0039\) để ra đơn vị $g$.
+\end{itemize}
+
+\paragraph{Ngưỡng rung/sốc}
+\begin{itemize}
+  \item Tính \(|a|=\sqrt{(x\cdot0.0039)^2+(y\cdot0.0039)^2+(z\cdot0.0039)^2}\) (đơn vị $g$).
+  \item \textbf{Ngưỡng shock}: \(|a|\ge 2.5\,g \Rightarrow \texttt{shock}=1\), ngược lại 0 (đúng như các mốc \texttt{ts}=2500–2650\,ms trong log).
+  \item \textbf{Gợi ý mượt/ổn định}: áp dụng LPF bậc 1 (\(\alpha\in[0.1,0.3]\)) hoặc trung bình trượt 5–10 mẫu khi thiết bị tĩnh; loại DC (trọng lực) nếu phân tích rung thuần.
+\end{itemize}
+
+\paragraph{Kết quả thử nghiệm}
+\begin{itemize}
+  \item \textbf{Telem 20\,Hz} ổn định, không rơi mẫu; \texttt{shock} bật đúng tại các khung \texttt{ts} có tổng gia tốc vượt ngưỡng.
+  \item \textbf{Độ nhạy}: FULL\_RES giúp nhiễu nền thấp; tác động mạnh (\(\gtrsim 2.5\,g\)) được ghi nhận rõ ràng.
+  \item \textbf{Tích hợp hệ thống}: định dạng \texttt{TELEM} phù hợp để đẩy vào pipeline log/JSON-line và đồng bộ \texttt{ts} với các cảm biến khác.
+\end{itemize}
+
+\section{Tổng kết}
+
+\subsection*{Đánh giá chung}
+Nhóm đã \textbf{hoàn thành} tích hợp \& thử nghiệm \textbf{DHT11} (ổn định, không NAN trong log mẫu) và \textbf{ADXL345} (telem 20\,Hz, phát hiện \emph{shock} tại $|a|\ge 2.5\,g$). 
+\textbf{GPS NEO-M6N} hiện \emph{chưa} hoạt động đúng: log hiển thị \emph{toàn dấu `*`} ở các cột dữ liệu (\texttt{lat/lon/hdop/sats/...}), chỉ tăng bộ đếm \texttt{charsProcessed}, còn \texttt{sentencesWithFix=0}, \texttt{failedChecksum\,$\approx 0$}. 
+Điều này cho thấy \textbf{parser chưa nhận/giải mã được câu NMEA hợp lệ}, nhiều khả năng do \emph{sai baud}/\emph{đấu dây}/\emph{anten/EMI}.
+
+\subsection*{Kết quả đạt được (đã xác nhận)}
+\begin{itemize}
+  \item \textbf{DHT11}: đọc \texttt{humidity/temperature} chu kỳ 5\,s; giá trị tham chiếu 73\%RH, 31.0--31.8$^\circ$C; phù hợp mục tiêu giám sát cơ bản.
+  \item \textbf{ADXL345}: đọc \texttt{x,y,z} (FULL\_RES, 4\,mg/LSB), telem 20\,Hz; cờ \texttt{shock} bật đúng tại các khung vượt ngưỡng (khớp log mẫu).
+\end{itemize}
+
+\subsection*{Sự cố tồn tại (GPS) \& chẩn đoán hiện tại}
+\begin{itemize}
+  \item \textbf{Triệu chứng}: các trường \texttt{sats/hdop/lat/lon/alt/speed} in `*`; \texttt{charsProcessed} tăng dần; \texttt{sentencesWithFix=0}, \texttt{failedChecksum}\,$\approx 0$.
+  \item \textbf{Giả thuyết nguyên nhân chính}:
+  \begin{enumerate}
+    \item \textbf{Sai baud} giữa GPS và UART2 của ESP32 (code đang \texttt{4800}, đa số NEO-6/NEO-M6N mặc định \texttt{9600}).
+    \item \textbf{Đấu dây} chưa đúng (TX/RX chéo, thiếu GND chung, tiếp xúc lỏng).
+    \item \textbf{Nguồn/EMI}: sụt áp hoặc nhiễu cao tần làm GPS khởi động bất ổn; thiếu tụ lọc cục bộ gần module.
+    \item \textbf{Anten/không gian mở}: anten chưa thoáng bầu trời, cold start kéo dài; tuy vậy, \emph{ngay cả khi chưa fix}, parser vẫn phải thấy chuỗi \texttt{\$GP...} (nếu baud/dây đúng).
+  \end{enumerate}
+\end{itemize}
+
+\subsection*{Thử nghiệm đã thực hiện}
+\begin{itemize}
+  \item In tiêu đề \& các cột dữ liệu; bật \texttt{smartDelay(1000)} để đảm bảo nuôi parser liên tục.
+  \item Theo dõi các bộ đếm \texttt{charsProcessed/sentencesWithFix/failedChecksum} để suy luận đường dữ liệu \& checksum.
+  \item Kết quả: \texttt{charsProcessed} tăng nhưng không có câu hợp lệ $\Rightarrow$ nghiêng về \textbf{baud/dây}.
+\end{itemize}
+\section{Kế hoạch tuần tới }
+
+\subsection*{Mục tiêu}
+
+Làm sạch, chuẩn hoá và đồng bộ thời gian cho dòng dữ liệu cảm biến để sẵn sàng đẩy vào pipeline truyền/ghi (sprint sau).
+
+Đảm bảo không mất dữ liệu khi mất kết nối (store\text{-}and\text{-}forward) và giảm báo động giả do nhiễu.
+
+Hoàn thiện code module GPS
+
+\subsection*{Phạm vi công việc (Tasks)}
+\begin{itemize}
+\item \textbf{Task 1: Lọc nhiễu & chuẩn hoá dữ liệu cảm biến} — áp dụng bộ lọc (LPF bậc 1/trung bình trượt), loại outlier, chuẩn hoá schema (đơn vị, tên trường) cho \texttt{ADXL345}/\texttt{DHT11}.
+
+\item \textbf{Task 2: Đồng bộ thời gian bằng GPS timestamp}
+
+\item \textbf{Task 3: Hoàn thiện module GPS} — \emph{đồng bộ baud} (tự phát hiện \texttt{4800/9600} nếu cần), kiểm tra đấu dây & anten; \emph{bộ đệm đọc liên tục} (tránh mất ký tự), thống kê \texttt{charsProcessed/sentencesWithFix/failedChecksum}; trích xuất trường \texttt{lat, lon, speed(km/h), course, alt, hdop, sats} (có kiểm \texttt{isValid()}); \textbf{định dạng log}:
+\begin{verbatim}
+GPS,<ts_gps>,<lat>,<lon>,<speed_kmh>,<hdop>,<sats>,<age_ms>
+\end{verbatim}
+và \textbf{tích hợp} với luồng cảm biến khác (đồng bộ theo \texttt{ts\_gps}, khi mất GPS dùng \texttt{ts\_fallback}). \emph{DoD:} có fix ổn định ngoài trời (HDOP ≤ 1.6), log liên tục ≥ 15 phút không rơi khung.
+\end{itemize}

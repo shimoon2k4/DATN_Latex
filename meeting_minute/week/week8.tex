@@ -1,0 +1,159 @@
+\section{Thành viên tham dự}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Student’s name} & \textbf{Student’s ID} \\ \hline
+Lâm Hoàng Tân           & 2213892                \\ \hline
+Trương Nguyễn Hoàng Anh & 2210147                \\ \hline
+Hoàng Sỹ Xuân Sơn       & 2212937                \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Nội dung công việc} 
+\textbf{Mục tiêu chung:}
+\begin{itemize}
+    \item Hoàn thiện hạ tầng phần mềm (MQTT Broker) để sẵn sàng tiếp nhận dữ liệu.
+    \item Mô phỏng và triển khai kiến trúc truyền tải LoRa P2P (Node-Gateway) thay cho LoRaWWAN ở Giai đoạn 1.
+    \item Kiểm thử luồng dữ liệu end-to-end (từ Simulator đến App) và phân tích độ trễ sơ bộ.
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{7cm}|p{4cm}|p{3cm}|}
+\hline
+\textbf{Mô tả} & \textbf{Thành viên} & \textbf{Hạn nộp} \\ 
+\hline
+Cài đặt, cấu hình Mosquitto Broker, xử lý các vấn đề về kết nối (localhost, firewall), xây dựng Client nhận dữ liệu (Subscriber) là Mobile App Flutter để hiển thị thông số
+& Trương Nguyễn Hoàng Anh
+& 01/11/2025 \\ 
+\hline
+Nghiên cứu SDK (ASR6601) và lập trình firmware P2P cho 2 kit Ra-08H
+& Hoàng Sỹ Xuân Sơn
+& 01/11/2025 \\ 
+\hline
+Nghiên cứu, so sánh lý thuyết giữa MQTT và CoAP, thiết kế và định nghĩa cấu trúc JSON Payload
+& Lâm Hoàng Tân 
+& 01/11/2025 \\ 
+\hline
+\end{tabular}
+\end{table}
+
+\section{Mục tiêu điều chỉnh}
+\begin{itemize}
+    \item Tập trung hiện thực hoàn chỉnh giao thức MQTT và Mobile App để đảm bảo luồng dữ liệu hoạt động thông suốt.
+    \item Điều chỉnh kiến trúc truyền tải Giai đoạn 1 sang mô phỏng LoRa P2P để tối ưu chi phí và chủ động phần cứng cho prototype. Định hướng Giai đoạn 2 sẽ nâng cấp lên LoRaWAN tiêu chuẩn.
+    \item Tạm hoãn việc triển khai và so sánh với CoAP để ưu tiên tính ổn định của hệ thống giám sát thời gian thực.
+\end{itemize}
+
+\section{Kết quả hiện thực}
+
+\subsection{Cài đặt và cấu hình môi trường Backend (MQTT Broker)}
+\subsubsection{Yêu cầu phần cứng/ phần mềm}
+\begin{itemize}
+    \item Hệ điều hành: Windows (môi trường development).
+    \item Phần mềm: Mosquitto MQTT Broker.
+    \item Công cụ kiểm thử: MQTT Explorer, mosquitto\_pub/sub.
+\end{itemize}
+
+\subsubsection{Cấu hình Mosquitto Broker}
+Đã cài đặt và cấu hình lại Mosquitto Broker để cho phép kết nối từ các thiết bị trong mạng LAN (thay vì chỉ localhost mặc định).
+
+\begin{lstlisting}[caption=File cấu hình mosquitto.conf đã điều chỉnh]
+# Lang nghe tren moi dia chi IP (0.0.0.0)
+listener 1883 0.0.0.0
+allow_anonymous true
+# Persistence (tuy chon)
+persistence true
+persistence_location /var/lib/mosquitto/
+log_dest file /var/log/mosquitto/mosquitto.log
+\end{lstlisting}
+
+\subsection{Mô hình triển khai Giai đoạn 1 (Prototype P2P)}
+\subsubsection{Lựa chọn giải pháp truyền tải tạm thời}
+Để tối ưu chi phí và đẩy nhanh tiến độ xây dựng prototype trong Giai đoạn 1, nhóm tạm thời sử dụng mô hình LoRa P2P (Peer-to-Peer) thay vì triển khai hạ tầng LoRaWAN đầy đủ. Mô hình LoRaWAN tiêu chuẩn sẽ được đầu tư và triển khai trong Giai đoạn 2 để đáp ứng yêu cầu mở rộng.
+
+Mô hình P2P hiện tại sử dụng 2 kit SoC Ra-08H:
+\begin{itemize}
+  \item \textbf{Node gửi (Kit 1):} Đọc cảm biến và gửi gói tin LoRa P2P trực tiếp (không qua quy trình Join mạng phức tạp).
+  \item \textbf{P2P Gateway (Kit 2):} Đóng vai trò là một Gateway đơn kênh, nhận gói tin LoRa và dùng Wi-Fi tích hợp để đẩy thẳng lên MQTT Broker.
+\end{itemize}
+
+\subsubsection{Giả lập P2P Gateway (Simulator)}
+Trong thời gian chờ hoàn thiện firmware đặc thù cho phần cứng P2P, nhóm đã xây dựng script Python để mô phỏng hoạt động của "P2P Gateway" (Kit 2), đảm bảo việc phát triển Mobile App không bị gián đoạn.
+
+\begin{itemize}
+    \item \textbf{Topic structure:} \texttt{ammo\_transport/<device\_id>/telemetry}
+    \item \textbf{Payload mẫu (Mô phỏng P2P):} (Sử dụng cấu trúc JSON phẳng, đơn giản hóa cho giai đoạn prototype)
+\begin{lstlisting}[language=json, caption=Mẫu JSON payload P2P đang được mô phỏng]
+{
+  "device_id": "Ra-08H-Node1",
+  "timestamp": 1715000000,
+  "temp": 34.5,
+  "battery": 4.0,
+  "gps": {
+    "lat": 10.7768,
+    "lng": 106.7012
+  },
+  "rssi_lora": -73 
+}
+\end{lstlisting}
+\end{itemize}
+
+\subsection{Hiện thực Mobile App (Subscriber) với Flutter}
+\subsubsection{Cấu trúc và Chức năng}
+Ứng dụng đã hoàn thiện chức năng kết nối MQTT, tự động subscribe và hiển thị dữ liệu thời gian thực lên Dashboard.
+\begin{itemize}
+    \item \texttt{MqttService}: Quản lý kết nối nền.
+    \item \texttt{TransportData}: Model đã được cập nhật để parse đúng cấu trúc JSON P2P mới.
+\end{itemize}
+
+\subsubsection{Triển khai MqttService (Trích đoạn)}
+\begin{lstlisting}[language=Java, caption=Hàm connect và subscribe trong Flutter]
+Future<void> connect() async {
+  // ... (cau hinh client) ...
+  if (client.connectionStatus!.state == MqttConnectionState.connected) {
+    print('MQTT Connected');
+    // Subscribe topic wildcard de nghe tat ca thiet bi
+    client.subscribe('ammo_transport/+/telemetry', MqttQos.atMostOnce);
+    
+    client.updates!.listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
+      final MqttPublishMessage recMess = c![0].payload as MqttPublishMessage;
+      final pt = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+      onDataReceived(pt); // Callback cap nhat UI
+    });
+  }
+}
+\end{lstlisting}
+
+\subsection{Các vấn đề gặp phải và giải pháp}
+\begin{itemize}
+    \item \textbf{Vấn đề:} Mosquitto trên Windows mặc định chặn kết nối từ bên ngoài (chỉ cho phép localhost).
+    \item \textbf{Giải pháp:} Đã cấu hình lại \texttt{listener 0.0.0.0} và mở port 1883 trên Windows Firewall.
+\end{itemize}
+
+\section{Tổng kết tuần}
+\subsection*{Đánh giá chung}
+Nhóm đã hoàn thành mục tiêu điều chỉnh là thiết lập thành công luồng dữ liệu cơ bản từ thiết bị lên Mobile App thông qua MQTT Broker. Việc tạm hoãn CoAP giúp tập trung nguồn lực để hoàn thiện sớm prototype Giai đoạn 1.
+
+\subsection*{Kết quả đạt được}
+\begin{itemize}
+    \item \textbf{Backend:} Mosquitto Broker hoạt động ổn định.
+    \item \textbf{IoT Device:} Đã gửi được dữ liệu JSON giả lập lên đúng topic.
+    \item \textbf{Mobile App:} Đã tích hợp thư viện \texttt{mqtt\_client}, kết nối thành công và hiển thị được dữ liệu thời gian thực lên UI cơ bản.
+\end{itemize}
+
+\subsection*{Vấn đề tồn đọng}
+\begin{itemize}
+    \item \textbf{Vấn đề phần cứng:} Firmware cho 2 kit Ra-08H (chế độ P2P) đang trong quá trình hoàn thiện do độ phức tạp của SDK đặc thù (ASR6601).
+\end{itemize}  
+
+\section{Kế hoạch tuần tới}
+
+\subsection*{Mục tiêu}
+\begin{itemize}
+    \item Task 1: Thiết kế CSDL
+    \item Task 2: Kiểm thử tích hợp hệ thống
+    \item Task 3: Hoàn thiện Mobile App
+    \item Task 4: Hoàn tất firmware cho Node gửi và P2P Gateway, tích hợp phần cứng thật vào hệ thống, thay thế cho simulator.
+\end{itemize}

@@ -1,0 +1,75 @@
+\chapter{Phân tích yêu cầu hệ thống}
+\section{Yêu cầu chức năng}
+\subsection{Người dùng}
+\begin{itemize}
+    \item Có thể theo dõi các thông số quan trọng của quá trình vận chuyển theo thời gian thực trên ứng dụng và web, bao gồm độ rung, nhiệt độ, vị trí GPS và thời gian cập nhật.
+    \item Có thể xem vị trí hiện tại và toàn bộ lộ trình của phương tiện trên bản đồ, đồng thời cập nhật tuyến đường khi cần thiết.
+    \item Có thể nhận cảnh báo ngay lập tức qua ứng dụng hoặc web khi hệ thống phát hiện nhiệt độ hoặc độ rung vượt ngưỡng cho phép hoặc khi phương tiện đi lệch lộ trình.
+    \item Có thể giám sát trạng thái vận chuyển và tiến độ của chuyến hàng.
+    \item Có thể xem và truy xuất lịch sử của các thông số vận chuyển và các sự kiện cảnh báo đã xảy ra.
+    \item Có thể quản lý quyền truy cập và phân quyền cho các vai trò khác nhau như quản trị viên, điều phối viên, lái xe và kỹ thuật viên.
+    \item Quản trị viên có thể xem nhật ký đăng nhập và thao tác của tất cả người dùng trong hệ thống.
+\end{itemize}
+
+\subsection{Hệ thống}
+\begin{itemize}
+    \item Phải liên tục thu thập và xử lý dữ liệu từ các cảm biến độ rung, nhiệt độ và thiết bị GPS.
+    \item Phải đồng bộ hóa các dữ liệu này lên hệ thống trung tâm và hiển thị theo thời gian thực trên giao diện người dùng.
+    \item Phải phân tích dữ liệu để đề xuất lộ trình tối ưu dựa trên các thông số đã thu được.
+    \item Phải tự động xác định và kích hoạt cảnh báo khi các thông số vượt ngưỡng hoặc khi vị trí phương tiện đi chệch khỏi lộ trình đã định.
+    \item Phải gửi thông báo cảnh báo đến trung tâm điều hành và người có thẩm quyền qua ứng dụng hoặc web.
+    \item Phải lưu trữ và quản lý toàn bộ lịch sử vận chuyển và dữ liệu liên quan một cách an toàn.
+    \item Phải thực hiện xác thực người dùng trước khi cấp quyền truy cập hệ thống.
+    \item Phải thực hiện xác thực thiết bị trước khi chấp nhận dữ liệu gửi về.
+    \item Phải mã hóa dữ liệu trong quá trình truyền tải và khi lưu trữ để đảm bảo bảo mật dữ liệu.
+\end{itemize}
+\section{Yêu cầu phi chức năng}
+\subsection{Hiệu năng}
+\begin{itemize}
+    \item Hệ thống phải đảm bảo truyền dữ liệu từ thiết bị đến máy chủ trong khoảng 2-3 giây.
+    \item Dữ liệu mới phải được cập nhật lên giao diện người dùng trong vòng dưới 5 giây kể từ khi dữ liệu được gửi về.
+\end{itemize}
+
+\subsection{Tính sẵn sàng}
+\begin{itemize}
+    \item Hệ thống phải đảm bảo sẵn sàng hoạt động trên 90\% khi có kết nối mạng ổn định.
+    \item Dữ liệu phải được thu thập và lưu trữ liên tục khi hệ thống hoạt động.
+\end{itemize}
+
+\subsection{Khả năng mở rộng}
+\begin{itemize}
+    \item Hệ thống phải hỗ trợ cùng lúc nhiều thiết bị, với mức tối thiểu là 4 thiết bị đang hoạt động đồng thời.
+    \item Thiết kế hệ thống phải cho phép tích hợp thêm các loại cảm biến mới khác nếu có nhu cầu giám sát mở rộng.
+\end{itemize}
+
+\subsection{Tính dễ sử dụng}
+\begin{itemize}
+    \item Giao diện người dùng phải trực quan, dễ nhìn và dễ thao tác.
+    \item Người dùng mới có thể làm quen với các chức năng chính của hệ thống trong không quá 15 phút.
+\end{itemize}
+
+\subsection{Tính tương thích}
+\begin{itemize}
+    \item Hệ thống phải tương thích với các thiết bị IoT phổ biến trên thị trường.
+    \item Ứng dụng di động phải hỗ trợ tốt trên nền tảng Android.
+\end{itemize}
+
+\subsection{Khả năng bảo trì}
+\begin{itemize}
+    \item Hệ thống phải được thiết kế theo hướng module hóa để cho phép bảo trì hoặc nâng cấp từng phần mà không làm ảnh hưởng đến toàn bộ hoạt động.
+    \item Phải cung cấp đầy đủ tài liệu kỹ thuật và hướng dẫn sử dụng.
+\end{itemize}
+\section{Quy trình vận chuyển đạn dược}
+
+\section{Các rủi ro cần giám sát}
+
+\section{Use-case diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/chapter_3/usecase.png}
+    \caption{Usecase diagram}
+    \label{fig:placeholder}
+\end{figure}
+\textbf{Đặc tả diagram}
+
+\section{Activity diagram}

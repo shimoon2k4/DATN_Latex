@@ -1,0 +1,156 @@
+\section{Thành viên tham dự}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Student’s name} & \textbf{Student’s ID} \\ \hline
+Lâm Hoàng Tân           & 2213892                \\ \hline
+Trương Nguyễn Hoàng Anh & 2210147                \\ \hline
+Hoàng Sỹ Xuân Sơn       & 2212937                \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Nội dung công việc}
+\textbf{Mục tiêu chung:}
+\begin{itemize}
+\item Thiết kế chiến lược tạo mẫu và thử nghiệm
+\item Mô phỏng luồng dữ liệu
+\item Thiết kế activity diagram và sequence diagram cho pipeline dữ liệu
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{7cm}|p{4cm}|p{3cm}|}
+\hline
+\textbf{Mô tả} & \textbf{Thành viên} & \textbf{Hạn nộp} \\ \hline
+Thiết kế chiến lược tạo mẫu và thử nghiệm & Lâm Hoàng Tân & 26/09/2025 \\ \hline
+Mô phỏng luồng dữ liệu & Trương Nguyễn Hoàng Anh & 26/09/2025 \\ \hline
+Tạo Scrum cho giai đoạn 1  & Hoàng Sỹ Xuân Sơn & 26/09/2025 \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Kết quả đạt được}
+\subsection{Prototyping and testing strategy}
+
+\subsubsection*{Mục tiêu \& nguyên tắc}
+\begin{itemize}
+  \item Giảm rủi ro theo từng bước nhỏ (build--measure--learn), ưu tiên kiểm chứng sớm GPS, nhiệt độ, rung, truyền dữ liệu MQTT/CoAP và hiển thị dashboard.
+  \item Dữ liệu kiểm thử lặp lại được, đo được (định nghĩa KPI, phương pháp đo, mẫu log chuẩn hoá).
+  \item An toàn trước hết: dùng tải giả/mô phỏng, \textbf{không sử dụng đạn thật}. Tự động hoá thu thập log \& báo cáo.
+\end{itemize}
+
+\subsubsection*{Kế hoạch thực hiện theo 2 giai đoạn}
+
+\paragraph*{GIAI ĐOẠN 1 (ĐA KTMT) --- Prototype tối thiểu}
+\textbf{Mục tiêu:} 
+\begin{itemize}
+  \item Xây dựng prototype thiết bị IoT cơ bản (GPS + cảm biến nhiệt độ, rung).
+  \item Gửi dữ liệu về server qua giao thức IoT (MQTT/CoAP).
+  \item Giao diện hiển thị vị trí và trạng thái vận chuyển trên dashboard.
+\end{itemize}
+
+\textbf{Phạm vi kiểm thử chính:}
+\begin{itemize}
+  \item \emph{Thiết bị/firmware:} đọc cảm biến 1--2\,Hz, chu kỳ gửi 5--30\,s; xử lý mất sóng bằng store\mbox{-}and\mbox{-}forward \& retry.
+  \item \emph{Truyền thông:} E2E path \textit{Device} $\to$ \textit{Broker} $\to$ \textit{DB} $\to$ \textit{Dashboard}; đo độ trễ và tỉ lệ gói hợp lệ trong 30 phút.
+  \item \emph{Dashboard:} hiển thị marker vị trí, bảng trạng thái (nhiệt, rung), cảnh báo ngưỡng cơ bản.
+\end{itemize}
+
+\textbf{KPI mục tiêu (GĐ1):}
+\begin{itemize}
+  \item Tỷ lệ gói hợp lệ (PSR) $\ge 98\%$ (4G); packet loss $< 2\%$.
+  \item Độ trễ end--to--end $p95 \le 30$\,s (4G).
+  \item GPS: CEP50 $\le 8$\,m (ngoài trời thoáng); độ đầy đủ lịch sử $\ge 99\%$ điểm thời gian.
+\end{itemize}
+
+\textbf{Bàn giao (deliverables) GĐ1:}
+\begin{itemize}
+  \item 1--2 node prototype, cấu hình broker/DB, định dạng topic/payload tối thiểu.
+  \item Ảnh/chụp màn hình dashboard, log mẫu (CSV/JSONL), video demo ngắn.
+\end{itemize}
+
+\paragraph*{GIAI ĐOẠN 2 (ĐALV) --- Hoàn thiện \& đánh giá}
+\textbf{Mục tiêu:}
+\begin{itemize}
+  \item Hoàn thiện hệ thống IoT: mở rộng cảm biến (tuỳ chọn), \textbf{bảo mật dữ liệu} (TLS/mTLS), \textbf{tối ưu đường truyền}.
+  \item Phát triển nền tảng quản lý điều phối (dashboard + bản đồ + cảnh báo + lịch sử).
+  \item Tích hợp \textbf{thuật toán tối ưu lộ trình} và \textbf{báo cáo dữ liệu lịch sử}.
+  \item \textbf{Đánh giá hệ thống} qua mô phỏng thực tế hoặc thử nghiệm nhỏ (pilot).
+\end{itemize}
+
+\textbf{Phạm vi kiểm thử chính:}
+\begin{itemize}
+  \item \emph{Bảo mật:} xác thực thiết bị (mTLS), mã hoá kênh (TLS), chống MITM/replay ở lab; RBAC \& audit cho dashboard.
+  \item \emph{Tối ưu truyền:} nén/batch, điều chỉnh chu kỳ gửi theo trạng thái mạng; so sánh 4G/LoRa (nếu áp dụng).
+  \item \emph{Điều phối:} chạy thuật toán VRP/VRPTW trên bộ ca mô phỏng; kiểm tra tuân thủ geofence \& cửa sổ thời gian.
+  \item \emph{Lịch sử \& báo cáo:} truy vấn lại hành trình, xuất báo cáo (CSV/PDF), độ tin cậy dữ liệu theo thời gian.
+\end{itemize}
+
+\textbf{KPI mục tiêu (GĐ2):}
+\begin{itemize}
+  \item PSR $\ge 99\%$ (4G); độ trễ end--to--end $p95 \le 10$\,s (4G) / $\le 60$\,s (LoRa, nếu dùng).
+  \item Cảnh báo hiển thị $\le 5$\,s (4G); tỷ lệ báo giả $\le 5\%$.
+  \item Điều phối: giảm $\ge 10$--$20\%$ quãng đường/thời gian so baseline; $0$ vi phạm geofence.
+  \item Uptime thiết bị $\ge 120$\,h/chu kỳ sạc; dữ liệu lịch sử đầy đủ $\ge 99\%$.
+\end{itemize}
+
+\textbf{Bàn giao (deliverables) GĐ2:}
+\begin{itemize}
+  \item Dashboard điều phối (bản đồ + cảnh báo + lịch sử), tài liệu bảo mật (TLS/mTLS).
+  \item Mô-đun tối ưu lộ trình + kết quả so sánh baseline; báo cáo đánh giá (pilot/mô phỏng) kèm KPI.
+\end{itemize}
+
+\subsection{Mô phỏng luồng dữ liệu }
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/DFD.png}
+    \caption{Mô phỏng luồng dữ liệu tổng quan của hệ thống}
+    \label{fig:placeholder}
+\end{figure}
+
+Trong hệ thống được đề xuất, dữ liệu từ các cảm biến khác nhau được thu thập, xử lý và truyền về trung tâm để phục vụ giám sát và cảnh báo. Sơ đồ luồng dữ liệu ở Hình~\ref{fig:placeholder} mô tả chi tiết quá trình này:
+
+\begin{itemize}
+    \item \textbf{Lớp cảm biến}: Bao gồm GPS (cảm biến vị trí), cảm biến nhiệt độ và cảm biến rung/lắc. Các cảm biến này tạo ra dữ liệu thô liên quan đến trạng thái hoạt động và môi trường xung quanh thiết bị.
+    
+    \item \textbf{MCU/Board}: Đóng vai trò trung tâm xử lý cục bộ. MCU nhận dữ liệu thô từ cảm biến, tiến hành xử lý sơ bộ (lọc nhiễu, định dạng lại dữ liệu) và chuẩn bị cho quá trình truyền.
+    
+    \item \textbf{Module truyền thông (LoRa / 4G / 5G)}: Là cầu nối để gửi dữ liệu đã xử lý từ MCU đến hệ thống backend. LoRa được ưu tiên do chi phí thấp và tiết kiệm năng lượng, trong khi 4G/5G có thể được sử dụng như giải pháp bổ sung nhằm đảm bảo dữ liệu luôn đến được server trong điều kiện mạng phức tạp.
+    
+    \item \textbf{Máy chủ trung tâm (Central Server)}: Tiếp nhận và lưu trữ dữ liệu từ các thiết bị đầu cuối, đồng thời thực hiện các phân tích cần thiết (như thống kê, phát hiện bất thường).
+    
+    \item \textbf{Hệ thống Dashboard / Bản đồ + Cảnh báo}: Là giao diện trực quan để người vận hành theo dõi vị trí, nhiệt độ, tình trạng rung/lắc theo thời gian thực. Hệ thống cũng có khả năng phát cảnh báo khi phát hiện các điều kiện bất thường.
+    
+    \item \textbf{Người quản lý (Operator / Manager)}: Là tác nhân cuối cùng trong chuỗi luồng dữ liệu. Người quản lý có thể truy cập dashboard, giám sát tình trạng thiết bị và nhận thông báo/cảnh báo để kịp thời đưa ra quyết định.
+\end{itemize}
+
+Nhờ mô phỏng luồng dữ liệu như trên, có thể thấy toàn bộ hành trình của dữ liệu từ lúc được thu thập ở lớp cảm biến, qua xử lý cục bộ, truyền tải, phân tích, đến hiển thị cho người vận hành được đảm bảo tính nhất quán, liên tục và hiệu quả. Điều này là cơ sở quan trọng cho việc triển khai thực tế hệ thống IoT trong đề tài.
+
+\subsection{Scrum Giai đoạn 1}
+Link \href{https://docs.google.com/spreadsheets/d/1e4jft_93W_9vEpqOCunSGOkECcjQFuD1FFCQJ_wwuTY/edit?usp=sharing}{drive} sau là kế hoạch Scrum cho đề tài IoT giám sát & điều phối vận chuyển đạn dược của nhóm. Nó chia việc theo các sprint, mỗi sprint có danh sách task, người phụ trách, thời hạn, trạng thái và \% hoàn thành, kèm trang tổng quan lịch trình để theo dõi tiến độ nhanh. Tóm lại, đây là bảng kế hoạch Scrum giúp bám việc và kiểm soát rủi ro cho toàn dự án.Nội dung Mỗi Sprint là như sau:
+\begin{enumerate}
+  \item \textbf{Sprint 1 -- Phân tích \& Thiết kế:} Chốt yêu cầu, đánh giá ràng buộc an toàn; đề xuất kiến trúc IoT (thiết bị--gateway--cloud), chọn giao thức (ví dụ: MQTT/HTTP) và thiết kế dữ liệu.
+  \item \textbf{Sprint 2 -- Cảm biến \& Truyền dữ liệu:} Tích hợp cảm biến, đóng gói/chuẩn hoá dữ liệu; truyền về server qua MQTT; bổ sung cơ chế xác thực cơ bản và logging.
+  \item \textbf{Sprint 3 -- Backend \& Dashboard:} Xây dựng API nhận dữ liệu, lưu trữ (có thể time-series); thiết lập rule cảnh báo; phát triển dashboard theo dõi trạng thái/lộ trình.
+  \item \textbf{Sprint 4 -- Tích hợp \& Kiểm thử:} Kết nối end-to-end; kiểm thử chức năng, tải và độ tin cậy; hardening bảo mật; nghiệm thu và tài liệu hoá vận hành.
+\end{enumerate}
+
+\section{Tổng kết}
+Trong tuần qua, nhóm đã đạt được những kết quả chính sau:
+\begin{itemize}
+    \item Hoàn thiện \textbf{chiến lược tạo mẫu và thử nghiệm} theo 2 giai đoạn (GĐ1/GĐ2), xác định KPI cốt lõi (PSR, độ trễ end--to--end, độ chính xác GPS) và nguyên tắc an toàn (\textit{dùng tải giả, không sử dụng đạn thật}, chuẩn hoá log).
+    \item Xây dựng \textbf{mô phỏng luồng dữ liệu/DFD} cho pipeline \emph{Device $\rightarrow$ Broker $\rightarrow$ Database $\rightarrow$ Dashboard}, làm rõ điểm đo kiểm, cảnh báo và truy vết.
+    \item Thiết lập \textbf{kế hoạch Scrum} (giai đoạn 1--4) cùng phân rã task, phân công trách nhiệm, mốc hạn (26/09/2025) và trang tổng quan theo dõi tiến độ.
+    \item Cụ thể hoá \textbf{mục tiêu chung} (chiến lược tạo mẫu, mô phỏng luồng dữ liệu, thiết kế activity/sequence diagram) thành hạng mục công việc cho từng thành viên.
+\end{itemize}
+
+\noindent\textbf{Đánh giá chung:} Tiến độ bám sát kế hoạch; các rủi ro chính (chất lượng kết nối, lựa chọn cảm biến) đã có phương án giảm thiểu (\emph{store-and-forward}, retry, logging). Nền tảng kỹ thuật và quản trị đã sẵn sàng cho các bước tiếp theo (hoàn thiện activity/sequence diagram, khởi tạo repository) như nêu ở mục \emph{Kế hoạch tuần tới}.
+
+\section{Kế hoạch tuần tới}
+Trong tuần tới, nhóm dự kiến thực hiện các công việc sau:
+\begin{itemize}
+    \item \textbf{Hoàn thiện các diagram còn lại} Hoàn thiện activity diagram và sequence diagram cho hệ thống
+    \item \textbf{Thiết kế interface:} Thiết kế sơ đồ mạch kết nối phần cứng.
+    \item \textbf{Khởi tạo dự án trên GitHub:} Tạo repository chính thức để quản lý mã nguồn, tài liệu và theo dõi tiến độ, đảm bảo tính minh bạch và khả năng cộng tác hiệu quả.
+\end{itemize}

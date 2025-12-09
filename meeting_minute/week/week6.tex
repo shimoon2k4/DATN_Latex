@@ -1,0 +1,204 @@
+\section{Thành viên tham dự}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Student’s name} & \textbf{Student’s ID} \\ \hline
+Lâm Hoàng Tân           & 2213892                \\ \hline
+Trương Nguyễn Hoàng Anh & 2210147                \\ \hline
+Hoàng Sỹ Xuân Sơn       & 2212937                \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Nội dung công việc} 
+\textbf{Mục tiêu chung:} 
+\begin{itemize} 
+\item Khắc phục sự cố module GPS. 
+\item Đề xuất và hiện thực giải pháp lưu dữ liệu tạm thời trên bộ nhớ cục bộ.
+\item Đồng bộ hóa thời gian các gói tin cảm biến dựa trên timestamp từ GPS. 
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{7cm}|p{4cm}|p{3cm}|}
+\hline
+\textbf{Mô tả} & \textbf{Thành viên} & \textbf{Hạn nộp} \\ 
+\hline
+Hoàn thiện module GPS, tập trung vào khắc phục lỗi sai baud và kiểm tra phần cứng 
+& Trương Nguyễn Hoàng Anh
+& 24/10/2025 \\ 
+\hline
+Đề xuất và hiện thực giải pháp lưu dữ liệu tạm thời trên bộ nhớ cục bộ. 
+& Hoàng Sỹ Xuân Sơn
+& 24/10/2025 \\ 
+\hline
+Tích hợp GPS timestamp để đồng bộ thời gian cho toàn hệ thống 
+& Lâm Hoàng Tân 
+& 24/10/2025 \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+\section{Kết quả hiện thực}
+\subsection{Hoàn thiện Module GPS}
+Trong quá trình phát triển, nhóm gặp phải một số sự cố với module GPS Neo-6M, chủ yếu là do vấn đề về dây dẫn kết nối và mã nguồn.
+
+\textbf{1. Vấn đề dây dẫn:}  
+Khi đầu tiên kết nối module GPS với ESP32, nhóm gặp sự cố không nhận được tín hiệu từ GPS. Sau khi kiểm tra, chúng tôi phát hiện ra rằng một trong những nguyên nhân là dây dẫn không tiếp xúc tốt, gây ra mất tín hiệu giữa module GPS và ESP32. Việc kết nối lại và chắc chắn rằng các dây nối chắc chắn vào các chân RX, TX đã giúp khắc phục được vấn đề này.
+
+\textbf{2. Vấn đề với mã nguồn:}  
+Sau khi kiểm tra kết nối dây dẫn và khắc phục vấn đề về phần cứng, nhóm nhận thấy rằng cấu hình baud rate của module GPS chưa đúng với mặc định của module. Mặc dù đã cấu hình đúng baud rate trong mã nguồn, nhưng module vẫn không xuất tín hiệu GPS. Sau khi thử nghiệm và điều chỉnh baud rate phù hợp với thông số của module Neo-6M (9600 bps), dữ liệu GPS bắt đầu được nhận và hiển thị chính xác.
+
+\textbf{Cải tiến mã nguồn:}  
+Mã nguồn đã được cải tiến để xử lý tín hiệu GPS đúng cách. Dưới đây là mã nguồn đã được chỉnh sửa, bao gồm các kiểm tra và xử lý tín hiệu từ module GPS:
+
+\begin{verbatim}
+void GPSNeo6M::read() {
+  while (_serial.available() > 0) {
+    _gps.encode(_serial.read());
+  }
+}
+\end{verbatim}
+
+Trong đó, hàm `read()` được sử dụng để đọc tín hiệu GPS và mã hóa chúng vào đối tượng `GPS` của thư viện `GPS.h`. Sau đó, các thông số như vĩ độ, kinh độ, và số vệ tinh sẽ được in ra nếu có tín hiệu GPS.
+
+\begin{verbatim}
+void GPSNeo6M::printLocation() {
+  if (_gps.location.isUpdated()) {
+    Serial.print("Latitude : ");
+    Serial.println(_gps.location.lat(), 6);
+    
+    Serial.print("Longitude: ");  
+    Serial.println(_gps.location.lng(), 6);
+    
+    Serial.print("Satellites: "); 
+    Serial.println(_gps.satellites.value());
+    
+    printTimestamp();
+    Serial.println("-----------------------");
+  }
+}
+\end{verbatim}
+
+\textbf{Kết quả đạt được:}  
+Sau khi giải quyết vấn đề với dây dẫn và chỉnh sửa mã nguồn, module GPS đã hoạt động ổn định và cung cấp dữ liệu GPS chính xác, sẵn sàng cho việc đồng bộ hóa thời gian trong hệ thống.
+
+\subsection{Lưu trữ dữ liệu tạm thời trên bộ nhớ cục bộ}
+
+Với ESP32 NodeMCU, ta có thể lưu trữ dữ liệu từ các cảm biến vào bộ nhớ cục bộ hoặc thẻ nhớ ngoài (SD card). Tuy nhiên, ESP32 không có bộ nhớ lưu trữ lớn như các thiết bị máy tính hoặc server, vì vậy ta thường phải sử dụng các giải pháp như thẻ SD hoặc bộ nhớ flash tích hợp.
+
+\subsubsection{Lưu trữ dữ liệu tạm thời trên bộ nhớ flash (Internal Flash Memory)}
+
+ESP32 được tích hợp sẵn bộ nhớ flash (thường khoảng 4MB), có thể sử dụng để lưu trữ dữ liệu tạm thời hoặc file cấu hình hệ thống. Dữ liệu được lưu trữ trực tiếp trong vi điều khiển nên không cần thêm phần cứng bên ngoài, rất tiện lợi cho các ứng dụng nhỏ hoặc thử nghiệm.
+
+\textbf{Cách thực hiện:} Sử dụng SPIFFS (SPI Flash File System) để lưu trữ dữ liệu vào bộ nhớ flash. Mỗi file có thể chứa dữ liệu cảm biến, thông tin log hoặc bản ghi tạm trước khi được gửi lên server.   
+
+\textbf{Ưu điểm:}
+\begin{itemize}
+    \item Dễ dàng triển khai và sử dụng.
+    \item Phù hợp với những ứng dụng cần lưu trữ tạm thời.
+    \item Đọc/ghi dễ dàng và nhanh chóng.
+\end{itemize}
+
+\textbf{Nhược điẻm:}
+\begin{itemize}
+    \item Dung lượng bộ nhớ có hạn.
+    \item Không thích hợp cho việc lưu trữ dữ liệu lớn liên tục.
+    \item Cần quản lý bộ nhớ cẩn thận để tránh hao mòn flash.
+\end{itemize}
+
+\subsubsection{Lưu trữ dữ liệu vào thẻ SD (SD Card)}
+
+Đối với các ứng dụng cần lưu trữ lượng lớn dữ liệu cảm biến (ví dụ như theo dõi rung, nhiệt độ, GPS liên tục), việc sử dụng thẻ SD là giải pháp tối ưu hơn. Thẻ SD có thể lưu trữ hàng triệu bản ghi, phù hợp với hệ thống cần chạy trong thời gian dài hoặc vùng có kết nối không ổn định.
+
+\textbf{Cách thực hiện:} Sử dụng thẻ SD kết nối với ESP32 qua giao diện SPI. Thư viện \texttt{SD.h} cho phép dễ dàng đọc/ghi dữ liệu dưới dạng file văn bản (.txt, .csv), giúp việc trích xuất và phân tích dữ liệu sau này đơn giản hơn.
+
+\textbf{Ưu điểm:}
+\begin{itemize}
+    \item Thẻ SD có dung lượng lưu trữ lớn (từ 4GB đến 64GB hoặc hơn).
+    \item Lý tưởng cho việc lưu trữ dữ liệu dài hạn.
+\end{itemize}
+
+\textbf{Nhược điẻm:}
+\begin{itemize}
+    \item Cần phải sử dụng module SD card và cổng kết nối thêm.
+    \item Tốc độ đọc/ghi phụ thuộc vào loại thẻ SD và tốc độ bus.
+    \item Dễ bị lỗi file system nếu mất điện trong quá trình ghi.
+\end{itemize}
+
+\subsubsection{Lưu trữ dữ liệu trên EEPROM}
+
+Trong trường hợp chỉ cần lưu một lượng nhỏ dữ liệu (như ID thiết bị, ngưỡng cảnh báo nhiệt độ, hoặc thông tin cấu hình mạng), ta có thể sử dụng bộ nhớ EEPROM của ESP32. Đây là vùng nhớ không mất dữ liệu khi mất nguồn, phù hợp cho các thông tin cần lưu giữ qua các lần khởi động.
+
+\textbf{Cách thực hiện:} Sử dụng \texttt{EEPROM.h} để lưu trữ dữ liệu vào bộ nhớ EEPROM của ESP32. Lưu ý rằng bộ nhớ EEPROM thực tế được mô phỏng trên flash nên cần giới hạn số lần ghi để tránh hư hại bộ nhớ.
+
+
+\textbf{Ưu điểm:}
+\begin{itemize}
+    \item Thích hợp cho lưu trữ dữ liệu cấu hình hoặc dữ liệu nhỏ.
+    \item Dễ dàng truy xuất.
+\end{itemize}
+
+\textbf{Nhược điẻm:}
+\begin{itemize}
+    \item Dung lượng nhỏ (512KB) và hạn chế ghi nhiều lần (khoảng 100.000 chu kỳ ghi).
+\end{itemize}
+
+\subsection{Chọn giải pháp và hiện thực}
+
+Sau khi phân tích các phương án lưu trữ cục bộ gồm SPIFFS, EEPROM và thẻ SD, nhóm quyết định lựa chọn giải pháp sử dụng \textbf{thẻ SD Card} để lưu trữ dữ liệu cảm biến. 
+
+\textbf{Lý do lựa chọn:}  
+Các phương án SPIFFS và EEPROM có dung lượng rất hạn chế (chỉ từ vài trăm KB đến vài MB) và số chu kỳ ghi/xoá thấp, không phù hợp cho ứng dụng ghi dữ liệu cảm biến liên tục theo thời gian thực (GPS, nhiệt độ, rung/lắc). Ngoài ra, EEPROM chỉ thích hợp lưu cấu hình hoặc các giá trị nhỏ. Trong khi đó, thẻ SD có dung lượng lớn (từ 4GB đến 64GB), tốc độ đọc/ghi cao, độ ổn định tốt và có thể tháo rời để trích xuất dữ liệu dễ dàng bằng máy tính. Do đó, đây là lựa chọn phù hợp nhất để đảm bảo tính liên tục, an toàn và tiện lợi trong quá trình giám sát vận chuyển đạn dược, đặc biệt trong môi trường mạng không ổn định.
+
+\textbf{Cách hiện thực:}  
+Nhóm sử dụng module SD Card kết nối với ESP32 qua giao diện SPI (các chân SCK = 18, MISO = 19, MOSI = 23, CS = tuỳ chọn). Trong chương trình, việc giao tiếp và ghi dữ liệu được thực hiện thông qua thư viện \texttt{SD.h} và \texttt{FS.h}. Toàn bộ chức năng lưu trữ được đóng gói trong file \texttt{local\_memory.cpp} với các hàm chính:
+\begin{itemize}
+    \item \texttt{sd\_init(csPin)}: Khởi tạo giao tiếp SPI, kiểm tra loại thẻ, dung lượng và tạo file log mới với định dạng \texttt{/data\_0001.csv}, \texttt{/data\_0002.csv}, … Mỗi file mới đều được ghi tiêu đề (header) \texttt{ts\_ms, lat, lng, sats, temperature, humidity, ax, ay, az}.
+    \item \texttt{sd\_append\_csv(...)}: Ghi một dòng dữ liệu cảm biến vào file CSV đang mở, bao gồm thời gian (timestamp), toạ độ GPS, số vệ tinh, nhiệt độ, độ ẩm và giá trị gia tốc ba trục. Sau mỗi 25 dòng (theo hằng \texttt{SYNC\_EVERY}), hệ thống tự động gọi \texttt{flush()} để đảm bảo dữ liệu được ghi thực vào thẻ SD, tránh mất mát khi mất nguồn đột ngột.
+    \item \texttt{sd\_append\_line(filename, data)}: Hỗ trợ ghi nhanh dữ liệu text hoặc log tùy ý vào file chỉ định.
+    \item \texttt{sd\_flush()}: Ghi toàn bộ dữ liệu còn tồn đọng trong buffer ra thẻ SD, thường được gọi trước khi hệ thống vào chế độ deep sleep hoặc reset.
+\end{itemize}
+
+\textbf{Cơ chế hoạt động:}  
+Khi khởi động, hệ thống sẽ tự động tạo file dữ liệu mới và bắt đầu ghi các bản ghi cảm biến theo thời gian thực. Dữ liệu được định dạng dạng \texttt{.csv} để dễ dàng phân tích và trực quan hóa trên máy tính sau này. Chu kỳ ghi và tần suất đồng bộ được tối ưu nhằm cân bằng giữa độ an toàn dữ liệu và tuổi thọ thẻ SD. Ngoài ra, nhóm cũng cài đặt cơ chế thử nhiều tần số SPI (10 MHz và 4 MHz) để đảm bảo khả năng tương thích với các module SD khác nhau.
+
+\textbf{Ưu điểm thực tế:}  
+Giải pháp này giúp hệ thống hoạt động ổn định trong điều kiện mạng không liên tục — dữ liệu sẽ được lưu tạm trên thẻ SD và tự động đồng bộ lên máy chủ khi kết nối phục hồi (cơ chế \textit{store-and-forward}). Đồng thời, việc lưu dữ liệu dạng CSV cho phép nhóm dễ dàng kiểm tra, phân tích và đánh giá hiệu năng hệ thống bằng công cụ như Excel hoặc Python mà không cần xử lý phức tạp.
+
+Nhờ thiết kế này, hệ thống đảm bảo lưu trữ dữ liệu cảm biến một cách tin cậy, liên tục và an toàn, đáp ứng đúng yêu cầu kỹ thuật của đề tài giám sát vận chuyển đạn dược.
+
+\section{Tổng kết}
+
+\subsection*{Đánh giá chung}  
+Tuần này, nhóm đã khắc phục được sự cố không nhận tín hiệu từ module GPS Neo-6M nhờ kiểm tra kỹ lưỡng dây dẫn và cấu hình lại mã nguồn. Module GPS đã hoạt động ổn định và cung cấp dữ liệu về vị trí, số vệ tinh và thời gian một cách chính xác. Đồng thời, giải pháp lưu trữ dữ liệu cảm biến trên thẻ SD đã được triển khai thành công, đảm bảo tính liên tục trong việc lưu trữ và trích xuất dữ liệu.
+
+\subsection*{Kết quả đạt được (đã xác nhận)}  
+\begin{itemize} 
+\item \textbf{GPS:} Sau khi điều chỉnh lại dây dẫn và cấu hình baud rate chính xác, module GPS Neo-6M đã có thể thu thập và xuất tín hiệu GPS, hiển thị các thông số như vĩ độ, kinh độ và số vệ tinh.
+\item \textbf{Lưu trữ dữ liệu:} Dữ liệu cảm biến đã được lưu trữ thành công trên thẻ SD, giúp hệ thống duy trì khả năng lưu trữ liên tục và dễ dàng truy xuất.
+\item \textbf{Đồng bộ hóa thời gian:} Dữ liệu GPS đã cung cấp thông tin thời gian chính xác, giúp đồng bộ hóa thời gian cho các cảm biến khác trong hệ thống.
+\end{itemize}
+
+\subsection*{Vấn đề tồn đọng}  
+\begin{itemize}
+    \item \textbf{Module GPS:} Mặc dù sự cố về dây dẫn và baud rate đã được khắc phục, vẫn cần kiểm tra thêm trong các môi trường khác để đảm bảo tính ổn định của module GPS trong các điều kiện khác nhau.
+    \item \textbf{Tích hợp dữ liệu:} Cần hoàn thiện cơ chế tích hợp và đồng bộ hóa các dữ liệu cảm biến (GPS, ADXL345, DHT11) vào một hệ thống chung để dễ dàng xử lý và phân tích.
+    \item \textbf{Quản lý bộ nhớ trên thẻ SD:} Cần cải thiện cơ chế quản lý thẻ SD để tránh mất mát dữ liệu khi hệ thống mất điện đột ngột.
+\end{itemize}
+\section{Kế hoạch tuần tới}
+
+\subsection*{Mục tiêu}
+Sau khi hoàn thiện module GPS và cơ chế lưu trữ dữ liệu trên thẻ SD, nhóm sẽ chuyển sang giai đoạn thử nghiệm truyền dữ liệu qua mạng LoRa. Mục tiêu chính trong tuần tới là thiết lập và đánh giá hiệu năng truyền dữ liệu giữa thiết bị IoT và gateway thông qua module LoRa, nhằm chuẩn bị cho việc tích hợp hệ thống truyền nhận hoàn chỉnh trong các sprint tiếp theo.
+
+\begin{itemize}
+    \item \textbf{Task 1: Cấu hình module LoRa}  
+    Tiến hành thiết lập thông số truyền cho module LoRa (tần số hoạt động, công suất phát, tốc độ baud và địa chỉ thiết bị). Kiểm tra khả năng kết nối giữa thiết bị và gateway, đảm bảo tín hiệu ổn định ở khoảng cách thử nghiệm 100–200 mét.
+
+    \item \textbf{Task 2: Gửi dữ liệu từ thiết bị đến gateway}  
+    Xây dựng và kiểm thử chương trình gửi dữ liệu cảm biến (GPS, nhiệt độ, rung/lắc) từ thiết bị IoT đến gateway thông qua giao thức LoRa. Đảm bảo dữ liệu được truyền đúng định dạng và có thể hiển thị hoặc ghi nhận tại gateway.
+
+    \item \textbf{Task 3: Ghi nhận và phân tích độ trễ truyền}  
+    Tiến hành đo đạc thời gian trễ giữa thời điểm thiết bị gửi dữ liệu và thời điểm gateway nhận được. Ghi lại kết quả để đánh giá độ ổn định và tốc độ truyền của mạng LoRa trong điều kiện thực tế, làm cơ sở tối ưu hóa cho giai đoạn tích hợp sau này.
+\end{itemize}

@@ -1,0 +1,208 @@
+\section{Thành viên tham dự}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Student’s name} & \textbf{Student’s ID} \\ \hline
+Lâm Hoàng Tân           & 2213892                \\ \hline
+Trương Nguyễn Hoàng Anh & 2210147                \\ \hline
+Hoàng Sỹ Xuân Sơn       & 2212937                \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Nội dung công việc} 
+\textbf{Mục tiêu chung:} 
+\begin{itemize} 
+\item Cấu hình module LoRa 
+\item Gửi dữ liệu từ thiết bị đến gateway
+\item Ghi nhận và phân tích độ trễ truyền. 
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{7cm}|p{4cm}|p{3cm}|}
+\hline
+\textbf{Mô tả} & \textbf{Thành viên} & \textbf{Hạn nộp} \\ 
+\hline
+Đề xuất và lựa chọn module Lora
+& Trương Nguyễn Hoàng Anh
+& 01/11/2025 \\ 
+\hline
+Cấu hình Module Lora
+& Hoàng Sỹ Xuân Sơn
+& 01/11/2025 \\ 
+\hline
+Viết code gửi/nhận dữ liệu trên module Lora
+& Lâm Hoàng Tân 
+& 01/11/2025 \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+\section{Kết quả hiện thực}
+
+\subsection*{Lựa chọn module LoRa}
+
+\subsubsection*{Yêu cầu kỹ thuật}
+\begin{itemize}
+  \item Hỗ trợ LoRaWAN (OTAA, Class~A) để kết nối TTN/gateway chuẩn.
+  \item Băng tần phù hợp tại VN/địa bàn thử nghiệm: \textbf{AS923} .
+  \item Công suất phát đủ cho thử nghiệm ngoài trời (\,$\geq$\,+14\,dBm, ưu tiên +20\,$\sim$\,22\,dBm).
+  \item Giao tiếp UART đơn giản, có firmware \textit{AT Command} để tích hợp nhanh với ESP32.
+  \item Nguồn 3.3\,V (hoặc devkit có sẵn ổn áp, USB--UART) và tài liệu công khai.
+\end{itemize}
+
+\subsubsection*{Các phương án cân nhắc}
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{3.6cm}|p{3cm}|p{3.2cm}|p{5cm}|}
+\hline
+\textbf{Phương án} & \textbf{Chuẩn} & \textbf{Tích hợp} & \textbf{Ưu / Nhược} \\
+\hline
+\textbf{Ai-Thinker RA-08H (ASR6601) DevKit} &
+LoRaWAN (AT FW) &
+UART (AT), USB--UART sẵn &
+\textbf{Ưu}: Có AT command, Join OTAA nhanh; công suất cao (+22\,dBm); devkit cắm là chạy. \newline
+\textbf{Nhược}: Lệnh AT phụ thuộc phiên bản FW, cần đọc đúng tài liệu. \\
+\hline
+Module SX1276/78 (LoRa P2P) &
+LoRa (không LoRaWAN) &
+SPI (RadioLib) &
+\textbf{Ưu}: Chủ động PHY, payload tự do. \newline
+\textbf{Nhược}: Không có LoRaWAN; phải tự làm lớp mạng/gateway; không phù hợp mục tiêu TTN. \\
+\hline
+Board ESP32-LoRa (Heltec/TTGO) &
+LoRa (có thể chạy LoRaWAN bằng lib) &
+SPI + lib &
+\textbf{Ưu}: All-in-one (màn hình, anten). \newline
+\textbf{Nhược}: Khác layout/hệ dây hiện có; lib/region cần cấu hình kỹ; không có AT sẵn. \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection*{Quyết định lựa chọn}
+Nhóm lựa chọn \textbf{RA-08H (ASR6601) DevKit của Ai-Thinker} vì:
+\begin{itemize}
+  \item Hỗ trợ \textbf{LoRaWAN qua AT command} $\Rightarrow$ rút ngắn thời gian tích hợp, phù hợp sprint hiện tại.
+  \item \textbf{Devkit} có sẵn USB--UART/CH340, mạch ổn áp và đầu nối, dễ cấp nguồn và debug.
+  \item Công suất phát \textbf{lên đến +22\,dBm}, phù hợp thử nghiệm tầm xa.
+  \item Tài liệu AT công khai; cộng đồng sử dụng rộng, dễ tra cứu.
+\end{itemize}
+
+\subsubsection*{Cấu hình băng tần/region}
+\begin{itemize}
+  \item Region sử dụng: \textbf{AS923}.
+  \item Tham số Join: \texttt{DevEUI}, \texttt{JoinEUI(AppEUI)}, \texttt{AppKey} do TTN cấp/Generate.
+  \item Lưu ý duty-cycle và giới hạn công suất theo quy định region.
+\end{itemize}
+
+\subsubsection*{Kết nối phần cứng (ESP32 \textrightarrow{} RA-08H)}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{ESP32} & \textbf{RA-08H DevKit} & \textbf{Ghi chú} \\
+\hline
+TX (GPIO\,26) & RX & UART1 cho LoRa (ví dụ RX=25, TX=26) \\
+\hline
+RX (GPIO\,25) & TX & Baud mặc định 9600/115200 (theo FW) \\
+\hline
+3V3/5V & VCC & Theo header board; dùng nguồn ổn định \\
+\hline
+GND & GND & Bắt buộc chung mass \\
+\hline
+-- & ANT & Gắn anten đúng băng tần \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection*{Rủi ro \& giảm thiểu}
+\begin{itemize}
+  \item \textbf{Sai region/bandmask} $\Rightarrow$ Join thất bại: đối chiếu Frequency Plan của TTN trước khi nạp.
+  \item \textbf{Sai baud/đảo TX/RX} $\Rightarrow$ không nhận AT: kiểm tra cáp, baud, đảo chân.
+  \item \textbf{Nguồn/anten} chưa chuẩn $\Rightarrow$ RSSI/SNR kém: dùng nguồn ổn, anten đúng loại/băng tần.
+\end{itemize}
+\subsubsection*{1) Hạ tầng đã thiết lập}
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{5.5cm}|p{3.2cm}|p{6.3cm}|}
+\hline
+\textbf{Hạng mục} & \textbf{Trạng thái} & \textbf{Ghi chú} \\ \hline
+Module LoRa & Hoàn tất & RA-08H (ASR6601) -- devkit AI-Thinker \\ \hline
+Băng tần/Region & Hoàn tất & \texttt{AS923} (hoặc \texttt{EU868}/\texttt{US915} tùy gateway); anten gắn chuẩn \\ \hline
+UART ESP32--LoRa & Hoàn tất & UART1 \texttt{RX=25, TX=26}, baud \texttt{9600} \\ \hline
+TTN Application \& Device & Hoàn tất & Application ID: \texttt{centrix-ammo-iot-au1}; DevEUI/JoinEUI/AppKey đã nhập \\ \hline
+Join OTAA & Chưa hoàn tất & Thiết bị \textbf{JOINED/ACCEPTED} trên TTN Console \\ \hline
+Gửi uplink định kỳ & Chưa hoàn tất & Chu kỳ mặc định \texttt{60 s}, payload gọn 12--14 bytes \\ \hline
+Nhận downlink đổi chu kỳ & Chưa hoàn tất & FPort=1, 2 byte (big-endian) $\rightarrow$ cập nhật chu kỳ gửi \\ \hline
+\end{tabular}
+\end{table}
+
+\subsubsection*{2) Cấu hình/AT lệnh chính}
+\noindent Cấu hình theo firmware AT của RA-08H (ví dụ):
+\begin{verbatim}
+AT                          // Kỳ vọng: OK
+AT+CDEVEUI=70B3D57ED0073C3E
+AT+CAPPEUI=0000000000000000
+AT+CAPPKEY=773056A87688229CD19DD25F9D09722F
+AT+CCLASS=0                 // Class A
+AT+CFREQBANDMASK= AS923     // Theo region của gateway 
+AT+CJOIN=1,0,8,8            // Join OTAA, chờ ACCEPTED
+// Gửi dữ liệu (tùy firmware, ví dụ):
+AT+MSGHEX=<payload_hex>
+-- hoặc --
+AT+DTRX=1,2,3,1 <payload>
+\end{verbatim}
+
+\subsubsection*{3) Định dạng payload (đã áp dụng)}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|l|}
+\hline
+\textbf{Trường} & \textbf{Byte} & \textbf{Mã hoá} \\ \hline
+\texttt{ts01s}  & 2  & \texttt{(millis/100) mod 65536} (uint16) \\ \hline
+\texttt{lat\_e6} & 4 & \texttt{lat * 1e6} (int32) \\ \hline
+\texttt{lon\_e6} & 4 & \texttt{lon * 1e6} (int32) \\ \hline
+\texttt{temp\_c2} & 2 & \texttt{°C * 100} (int16) \\ \hline
+\texttt{hum\_c2} (tuỳ chọn) & 2 & \texttt{\%RH * 100} (uint16) \\ \hline
+\end{tabular}
+\end{table}
+\noindent Tổng cộng: 12 bytes (không có \texttt{hum\_c2}) hoặc 14 bytes (có \texttt{hum\_c2}).
+
+\subsubsection*{5) Vấn đề \& cách khắc phục trong tuần}
+\begin{itemize}
+  \item Sai lệch region/frequency plan $\rightarrow$ hiệu chỉnh về \texttt{AS923}/\texttt{EU868} theo gateway.
+  \item Baud UART chưa khớp (9600/115200) $\rightarrow$ đồng nhất \texttt{9600 8N1} cho RA-08H.
+  \item Chưa nhận downlink ngay $\rightarrow$ nhớ Class A: downlink đến \textbf{sau} uplink gần nhất.
+\end{itemize}
+
+\section{Tổng kết}
+
+\subsection*{Đánh giá chung}  
+Tuần này, nhóm đã tiến hành cấu hình bước đầu cho module LoRa. Tuy nhiên, việc gửi nhận dữ liệu qua module này vẫn chưa thành công và sẽ là mục tiêu cần hoàn thiện trong tuần tiếp theo
+
+\subsection*{Kết quả đạt được }  
+\begin{itemize} 
+\item \textbf{Tích hợp LoRaWAN:} Lựa chọn và kết nối thành công module \textbf{RA-08H} với ESP32 qua UART (AT command).
+\item \textbf{Kết nối TTN:} Thiết bị đã \textbf{JOIN OTAA thành công} với Application trên The Things Network (Region AS923).
+
+\end{itemize}
+\subsection*{Vấn đề tồn đọng}  
+\begin{itemize}
+    \item \textbf{Gửi/Nhận dữ liệu LoRa:} Hiện tại nhóm chưa thể gửi và nhận dữ liệu từ 
+\end{itemize}
+\section{Kế hoạch tuần tới}
+
+\subsection*{Mục tiêu}
+Tiến hành kết nối module Lora với gateway và tiến hành nhận và gửi dữ liệu bước đầu\\
+Thực hiện code truyền dữ liệu thông qua MQTT và CoApp, so sánh hiệu năng. 
+\begin{itemize}
+    \item \textbf{Task 1: Cài đặt và cấu hình môi trường Backend}  
+
+    \item \textbf{Task 2: Hiện thực Client gửi dữ liệu (MQTT \& CoAP)}  
+
+    \item \textbf{Task 3: Đo đạc, so sánh hiệu năng và tổng kết} 
+
+    \item \textbf{Task 4: Hoàn thiện gửi/nhận dữ liệu thông qua module Lora}
+\end{itemize}

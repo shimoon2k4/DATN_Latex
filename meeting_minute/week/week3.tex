@@ -1,0 +1,274 @@
+\section{Thành viên tham dự}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Student’s name} & \textbf{Student’s ID} \\ \hline
+Lâm Hoàng Tân           & 2213892                \\ \hline
+Trương Nguyễn Hoàng Anh & 2210147                \\ \hline
+Hoàng Sỹ Xuân Sơn       & 2212937                \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Nội dung công việc}
+\textbf{Mục tiêu chung:}
+\begin{itemize}
+\item Thiết kế hardware interface
+\item Khởi tạo dự án trên Github.
+\item Thiết kế activity diagram và sequence diagram cho pipeline dữ liệu
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{7cm}|p{4cm}|p{3cm}|}
+\hline
+\textbf{Mô tả} & \textbf{Thành viên} & \textbf{Hạn nộp} \\ \hline
+Thiết kế Interface, activity diagram & Lâm Hoàng Tân & 26/09/2025 \\ \hline
+Khởi tạo dự án trên Github & Trương Nguyễn Hoàng Anh & 26/09/2025 \\ \hline
+Thiết kế sequence diagram  & Hoàng Sỹ Xuân Sơn & 26/09/2025 \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Kết quả đạt được}
+\subsection{Hardware interface}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{images/week/week_3/hardware-interface.png}
+    \caption{Hardware interface}
+    \label{fig:placeholder}
+\end{figure}
+
+%----------------------------------------------------%
+
+\subsection{Activity diagram}
+
+\subsubsection{Điều phối lộ trình}
+Sơ đồ hoạt động này minh hoạ các khối chức năng của hệ thống, bao gồm ba phần: \textbf{Người dùng (Điều phối viên)}, \textbf{Hệ thống điều phối}, và \textbf{Thiết bị/Phương tiện}.
+
+\textbf{Người dùng}
+\begin{itemize}
+  \item Khởi tạo yêu cầu điều phối và nhập ràng buộc: điểm nhận/giao, cửa sổ thời gian, năng lực phương tiện, vùng cấm (geofence), yêu cầu an toàn.
+  \item Duyệt phương án hệ thống đề xuất (KPI/ETA hiển thị trên bản đồ) và phê duyệt (Approve) hoặc quay lại chỉnh ràng buộc nếu chưa phù hợp.
+\end{itemize}
+
+\textbf{Hệ thống điều phối}
+\begin{itemize}
+  \item Kiểm tra hợp lệ dữ liệu đầu vào (đủ trường, không trùng, đúng geofence \& time window).
+  \item Xây dựng đồ thị lộ trình và chạy thuật toán tối ưu (VRP/TSP mở rộng) để tạo kế hoạch lộ trình kèm KPI/ETA.
+  \item Đóng gói payload (các chặng, toạ độ, ETA, geofence, tham số cảnh báo) và phát hành qua broker.
+  \item Theo dõi ACK từ thiết bị; nếu không nhận ACK thì xếp hàng/Retry theo backoff cho lần gửi tiếp theo.
+\end{itemize}
+
+\textbf{Thiết bị/Phương tiện}
+\begin{itemize}
+  \item Nhận lộ trình, gửi ACK xác nhận và bắt đầu hành trình theo kế hoạch đã phát hành.
+\end{itemize}
+
+\textbf{Kết quả:} Kế hoạch lộ trình được tối ưu, phê duyệt và phát hành xuống thiết bị; trạng thái phát hành được theo dõi qua ACK/Retry để đảm bảo thực thi.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/week/week_3/activity_điều phối.png}
+  \caption{Activity diagram: Điều phối lộ trình}
+  \label{fig:act-dieu-phoi}
+\end{figure}
+
+% -------------------------------------------------------------
+
+\subsubsection{Quản lý hàng hoá}
+Sơ đồ hoạt động này minh hoạ vòng đời bản ghi hàng hoá/đơn vận chuyển: đăng ký, cập nhật, bàn giao và theo dõi trạng thái. Quá trình gồm Người dùng (Kho/Điều phối), Hệ thống quản lý và Điểm giao nhận/Thiết bị quét.
+
+\textbf{Người dùng}
+\begin{itemize}
+  \item \textbf{Đăng ký (Add):} nhập thông tin lô/đơn (loại, khối lượng, bao gói, đơn vị nhận, ưu tiên).
+  \item \textbf{Cập nhật (Update):} quét/nhập \texttt{ID} để chỉnh thuộc tính.
+  \item \textbf{Tra cứu \& đổi trạng thái (Track):} theo tiến trình \texttt{READY} $\rightarrow$ \texttt{LOADED} $\rightarrow$ \texttt{IN\_TRANSIT} $\rightarrow$ \texttt{DELIVERED/RETURNED}.
+  \item Tại các điểm Load/Unload/Deliver: quét ID để ghi nhận bàn giao.
+\end{itemize}
+
+\textbf{Hệ thống quản lý}
+\begin{itemize}
+  \item Xác thực dữ liệu khi tạo mới; nếu trùng ID trả lỗi và yêu cầu nhập lại; nếu hợp lệ thì cấp/ghi ID (QR/RFID) và lưu CSDL.
+  \item Với Update/Track: kiểm tra tồn tại; nếu có, cho phép chỉnh sửa/đổi trạng thái và ghi audit log.
+  \item Với sự kiện bàn giao: đối chiếu đơn--phương tiện, ghi sự kiện (thời gian, vị trí, người phụ trách) và đồng bộ trạng thái lên dashboard/app.
+\end{itemize}
+
+\textbf{Điểm giao nhận/Thiết bị quét}
+\begin{itemize}
+  \item Quét \& gửi đối soát (OK/Rejected). Trường hợp không khớp, hệ thống từ chối và yêu cầu kiểm tra lại trước khi cập nhật.
+\end{itemize}
+
+\textbf{Kết quả:} Hàng hoá được đăng ký -- truy vết -- bàn giao đúng quy trình; audit log đầy đủ; trạng thái đồng bộ giữa kho, phương tiện và dashboard.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/week/week_3/activity_quản lý.png}
+  \caption{Activity diagram: Quản lý hàng hoá}
+  \label{fig:act-hang-hoa}
+\end{figure}
+
+% -------------------------------------------------------------
+
+\subsubsection{Giám sát \& cập nhật trạng thái vận chuyển }
+Sơ đồ hoạt động này minh hoạ pipeline thu thập -- xác thực -- lưu trữ telemetry (GPS, tốc độ, nhiệt, rung), phát hiện bất thường và cập nhật trạng thái chuyến. Quá trình gồm \textbf{Thiết bị}, \textbf{Hệ thống giám sát} và \textbf{Người dùng (Giám sát viên/Điều phối)}.
+
+\textbf{Thiết bị}
+\begin{itemize}
+  \item Định kỳ gửi gói dữ liệu. Nếu Online gửi trực tiếp; nếu Offline thì đệm cục bộ và gửi lại khi có kết nối.
+\end{itemize}
+
+\textbf{Hệ thống giám sát}
+\begin{itemize}
+  \item Nhận gói tin và xác thực (verify): định danh, bảo mật/chữ ký, cấu trúc dữ liệu.
+  \item Nếu không đạt, ghi lỗi và không cập nhật; nếu đạt, lưu dữ liệu và cập nhật trạng thái chuyến (\texttt{IN\_TRANSIT}/\texttt{DELAYED}/\texttt{ALERT}/\texttt{ARRIVED}/\texttt{DELIVERED}).
+  \item Đánh giá luật bất thường: vượt ngưỡng an toàn (nhiệt/rung), lệch lộ trình (geofence), dừng bất thường/over-speed. Khi phát hiện ALERT, tạo cảnh báo, có thể mở sự cố và đề xuất hành động; nếu đến đích, xác nhận bàn giao và đóng chuyến.
+\end{itemize}
+
+\textbf{Người dùng}
+\begin{itemize}
+  \item Nhận thông báo, xử lý cảnh báo (ack/assign/resolve), và khi cần có thể bổ sung ghi chú để hoàn tất hồ sơ sự cố.
+\end{itemize}
+
+\textbf{Kết quả:} Trạng thái vận chuyển được cập nhật liên tục; bất thường được phát hiện sớm \& cảnh báo; dữ liệu được xác thực -- lưu trữ an toàn và liên thông với điều phối để tái tối ưu khi cần.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/week/week_3/activity_giám sát.png}
+  \caption{Activity diagram: Giám sát \& cập nhật trạng thái vận chuyển}
+  \label{fig:act-giam-sat}
+\end{figure}
+
+% -------------------------------------------------------------
+\subsection{Sequence diagram}
+
+Phần này trình bày ba sơ đồ trình tự tương ứng ba khối chức năng cốt lõi của hệ thống: \textbf{Điều phối lộ trình}, \textbf{Quản lý hàng hoá}, và \textbf{Giám sát \& cập nhật trạng thái vận chuyển}. Mỗi sơ đồ bám sát tương tác theo thời gian giữa \emph{Dashboard} (giao diện), \emph{Hệ thống} (xử lý nghiệp vụ) và \emph{Thiết bị} (thiết bị/ứng dụng hiện trường).
+
+\subsubsection{Điều phối lộ trình }
+\textbf{Bối cảnh.} Dashboard gửi \emph{yêu cầu điều phối} (đơn, ràng buộc, \emph{time windows}, vùng cấm). Hệ thống kiểm tra hợp lệ, nạp dữ liệu đội xe/kho/đơn, tính ma trận chi phí/độ trễ, và giải bài toán VRP/VRPTW để tạo \emph{route plan} kèm KPI; kết quả được trả về Dashboard để xem trước.
+
+\textbf{Nhánh xử lý.} (i) \emph{Phê duyệt}: Hệ thống \emph{publish} kế hoạch, đẩy lộ trình (stop list, ETA) xuống Thiết bị và thiết lập \emph{geofence}/điểm kiểm soát. (ii) \emph{Chỉnh sửa}: Dashboard cập nhật ràng buộc, Hệ thống \emph{re-run} tối ưu và trả kế hoạch mới kèm so sánh KPI.
+
+\textbf{Trong vận hành.} Luồng song song: (a) Thiết bị phát \emph{telemetry} định kỳ để Hệ thống ghi lịch sử và cập nhật tiến độ/ETA thời gian thực lên Dashboard; (b) Hệ thống phát hiện tắc đường/lệch tuyến, gợi ý \emph{re-route} và phản ánh ảnh hưởng KPI.
+
+\textbf{Chức năng chính:}
+\begin{itemize}
+  \item Lập kế hoạch lộ trình tối ưu từ ràng buộc đầu vào và dữ liệu hiện thời.
+  \item Quy trình \emph{phê duyệt/chỉnh sửa} có so sánh KPI trước khi phát hành.
+  \item Giám sát \emph{real-time}, phát hiện sự cố và \emph{re-route} an toàn.
+\end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/week/week_3/sequence_điều phối lộ trình.png}
+  \caption{Sequence diagram: Điều phối lộ trình}
+  \label{fig:sd-dieu-phoi}
+\end{figure}
+
+\subsubsection{Quản lý hàng hoá}
+\textbf{Bối cảnh.} Dashboard tạo lô/kiện (metadata về items, trọng lượng, điều kiện bảo quản). Hệ thống sinh mã lô/kiện + QR/Tag, lưu ràng buộc (nhiệt độ, rung) và trả về để in/đính; tiếp đó, Dashboard gán lô/kiện vào phương tiện/thiết bị, Hệ thống cập nhật ánh xạ shipment $\leftrightarrow$ vehicle $\leftrightarrow$ device.
+
+\textbf{Sự kiện thiết bị \& đối soát.} Thiết bị gửi sự kiện niêm phong/tamper; Hệ thống ghi trạng thái niêm phong và cập nhật Dashboard. Khi kiểm đếm, Dashboard gửi danh sách QR scan để Hệ thống đối soát sổ cái và trả báo cáo chênh lệch (missing/extra) hoặc đánh dấu \emph{sẵn sàng xuất kho} nếu khớp.
+
+\textbf{Trong vận chuyển.} Vòng lặp giám sát điều kiện bảo quản: Thiết bị gửi \emph{temp/rung/pin}, Hệ thống đánh giá ngưỡng/luật; nếu vi phạm thì cảnh báo lô/kiện và phát lệnh xử lý, nếu bình thường thì cập nhật trạng thái ổn định trên Dashboard.
+
+\textbf{Chức năng chính:}
+\begin{itemize}
+  \item Quản trị vòng đời lô/kiện: định danh (QR/Tag), gán phương tiện/thiết bị, niêm phong.
+  \item Đối soát tồn/kiện theo QR, phát hiện thiếu/thừa minh bạch.
+  \item Giám sát điều kiện bảo quản và cảnh báo sớm trong hành trình.
+\end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/week/week_3/sequence_quản lý hàng hóa.png}
+  \caption{Sequence diagram: Quản lý hàng hoá}
+  \label{fig:sd-hang-hoa}
+\end{figure}
+
+\subsubsection{Giám sát \& cập nhật trạng thái vận chuyển }
+\textbf{Bối cảnh.} Theo chu kỳ 5--15s, Thiết bị gửi \emph{telemetry} \{GPS, tốc độ, nhiệt, rung, pin, tín hiệu\}. Hệ thống \emph{upsert} dữ liệu thời gian, đánh giá luật (geofence, lệch tuyến, ngưỡng nhiệt, mất tín hiệu).
+
+\textbf{Nhánh xử lý.} (i) \emph{Có vi phạm}: sinh card cảnh báo (kèm vị trí hiện thời) lên Dashboard và gửi lệnh xử lý (safe stop/kiểm tra/re-route) cho Thiết bị. (ii) \emph{Không vi phạm}: cập nhật tiến độ \& ETA thời gian thực.
+
+\textbf{Mất kết nối \& checkpoint.} Khi quá thời gian im lặng, hệ thống đánh dấu \emph{offline} và thông báo vị trí cuối cùng để điều phối xác minh; đồng thời hỗ trợ luồng checkpoint/timeline khi Thiết bị gửi các mốc \emph{rời kho/đến điểm giao/hoàn tất}.
+
+\textbf{Chức năng chính:}
+\begin{itemize}
+  \item Giám sát \emph{real-time} trạng thái chuyến và ETA.
+  \item Cảnh báo sớm bất thường và điều phối hành động khắc phục.
+  \item Duy trì \emph{timeline} theo mốc để truy vết tiến trình giao vận.
+\end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/week/week_3/sequence_giám sát.png}
+  \caption{Sequence diagram: Giám sát \& cập nhật trạng thái vận chuyển}
+  \label{fig:sd-giam-sat}
+\end{figure}
+
+%----------------------------------------------------%
+
+\subsection{Cấu trúc dự án} 
+Implementation view mô tả cách tổ chức mã nguồn, cách các thành phần phần mềm được cấu trúc để hỗ trợ quá trình phát triển dự án.
+
+Dựa trên mục tiêu và phạm vi đề tài, nhóm chia hệ thống thành hai phần chính: \textbf{Backend (BE)} tập trung vào phần cứng và truyền thông IoT, và \textbf{Frontend (FE)} tập trung vào giám sát, điều phối và hiển thị dữ liệu. Cấu trúc dự kiến của repository được mô tả như sau:
+
+\subsubsection*{Backend (BE)}
+Phần Backend chịu trách nhiệm xử lý dữ liệu từ cảm biến, truyền dữ liệu đến hệ thống trung tâm và đảm bảo tính an toàn trong môi trường triển khai thực tế.
+
+\begin{itemize}
+    \item \textbf{src/}: Chứa mã nguồn chính cho vi điều khiển ESP32.
+    \begin{itemize}
+        \item \texttt{main.c}: Vòng lặp chính.
+        \item \texttt{sensors.c/.h}: Thu thập dữ liệu từ GPS, cảm biến nhiệt độ, rung/lắc.
+        \item \texttt{comm\_mqtt.c/.h}, \texttt{comm\_coap.c/.h}: Truyền dữ liệu bằng giao thức IoT (MQTT, CoAP).
+        \item \texttt{lora\_driver.c/.h}: Giao tiếp LoRa.
+        \item \texttt{security.c/.h}: Thực hiện mã hoá, xác thực thiết bị.
+        \item \texttt{utils.c/.h}: Các hàm tiện ích chung.
+    \end{itemize}
+    \item \textbf{tests/}: Các kịch bản kiểm thử (cảm biến, truyền thông, bảo mật).
+    \item \textbf{docs/}: Tài liệu phần cứng (sơ đồ mạch, kiến trúc BE, hướng dẫn triển khai).
+\end{itemize}
+
+\subsubsection*{Frontend (FE)}
+Phần Frontend được phát triển bằng Flutter (Dart), cung cấp giao diện trực quan cho việc giám sát trạng thái vận chuyển, hiển thị bản đồ và cảnh báo trên thiết bị di động hoặc web.
+
+\begin{itemize}
+    \item \textbf{lib/}: Thư mục chính chứa mã nguồn Flutter.
+    \begin{itemize}
+        \item \texttt{main.dart}: Điểm khởi động ứng dụng.
+        \item \texttt{screens/}: Các màn hình chính (Dashboard, MapScreen, AlertScreen, HistoryScreen).
+        \item \texttt{widgets/}: Các thành phần giao diện tái sử dụng.
+        \item \texttt{services/}: Kết nối API, xử lý dữ liệu từ Backend.
+        \item \texttt{models/}: Định nghĩa dữ liệu (Sensor, Alert, History).
+        \item \texttt{utils/}: Các tiện ích, cấu hình chung.
+    \end{itemize}
+    \item \textbf{assets/}: Chứa hình ảnh, biểu tượng, file cấu hình.
+    \item \textbf{docs/}: Tài liệu thiết kế giao diện, kiến trúc FE, hướng dẫn sử dụng.
+\end{itemize}
+
+\section{Tổng kết}
+Trong tuần qua, nhóm đã đạt được những kết quả chính sau:
+
+\begin{itemize}
+\item Xây dựng hardware interface và xác định sơ đồ kết nối giữa các khối phần cứng chính (ESP32, cảm biến, module LoRa, nguồn).
+\item Thiết kế Activity diagram cho ba quy trình cốt lõi: điều phối lộ trình, quản lý hàng hoá, và giám sát vận chuyển.
+\item Hoàn thiện Sequence diagram để mô tả chi tiết luồng tương tác giữa Dashboard, Hệ thống và Thiết bị, phản ánh chính xác pipeline dữ liệu.
+\item Đề xuất cấu trúc dự án (Backend/Frontend) để chuẩn bị cho giai đoạn hiện thực hoá, giúp đảm bảo khả năng mở rộng và dễ bảo trì.
+\item Phân công công việc rõ ràng cho từng thành viên và khởi tạo repository GitHub để quản lý mã nguồn.
+\end{itemize}
+
+\noindent\textbf{Đánh giá chung:} Nhóm đã phối hợp hiệu quả và hoàn thành đúng tiến độ các công việc được phân công. Các sơ đồ đã phản ánh rõ ràng luồng dữ liệu và tương tác trong hệ thống, giúp định hình kiến trúc tổng thể. Tuy vẫn còn một số chi tiết cần tinh chỉnh thêm, nhưng kết quả hiện tại đã đảm bảo được tính khả thi và là nền tảng vững chắc cho các bước phát triển, kiểm thử và triển khai trong giai đoạn tiếp theo.
+
+\section{Kế hoạch tuần tới}
+
+\subsection*{Mục tiêu}
+Hoàn thiện 3 module đọc cảm biến trên ESP32 (GPS, DHT11, ADXL345), chuẩn hoá schema dữ liệu và ghi log ổn định để phục vụ các Epic xử lý \& truyền dữ liệu kế tiếp, đồng thời tổng hợp tài liệu kỹ thuật cho hệ thống.
+
+\subsection*{Phạm vi công việc (Tasks)}
+\begin{itemize}
+  \item \textbf{Task 1: Code đọc dữ liệu GPS} (NEO\text{-}M6N) — UART init, parse NMEA (GGA/RMC), lấy \texttt{lat, lon, speed}, đồng bộ timestamp.
+  \item \textbf{Task 2: Code đọc nhiệt độ/độ ẩm từ DHT11} — I\textsuperscript{2}C init, đọc \texttt{temp, hum}, kiểm tra CRC, retry/backoff khi lỗi.
+  \item \textbf{Task 3: Code đọc rung từ ADXL345} — I\textsuperscript{2}C init, đọc \texttt{ax, ay, az}, scale về \textit{g}, áp dụng lọc nhiễu (LPF bậc 1/trung bình trượt).
+  \item \textbf{Task 4: Tổng hợp tài liệu kỹ thuật} - Tổng hợp lại những yêu cầu của hệ thống để thuận tiện kiểm tra.
+\end{itemize}

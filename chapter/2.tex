@@ -1,0 +1,220 @@
+\chapter{Cơ sở lý thuyết và các công nghệ liên quan}
+Chương này trình bày cơ sở lý thuyết và các công nghệ liên quan phục vụ việc xây dựng hệ thống IoT. Nội dung bao gồm tổng quan về IoT, các giao thức truyền thông phổ biến, các loại cảm biến và phần cứng sử dụng, cùng với các kỹ thuật bảo mật cần thiết trong quá trình truyền tải và xử lý dữ liệu.
+\section{Tổng quan về Internet of Things}
+Internet of Things (IoT) là thuật ngữ dùng để chỉ các đối tượng có thể được nhận biết cũng như sự tồn tại của chúng trong một kiến trúc mang tính kết nối. Đây là một viễn cảnh trong đó mọi vật, mọi con vật hoặc con người được cung cấp các định danh và khả năng tự động truyền tải dữ liệu qua một mạng lưới mà không cần sự tương tác giữa con người với con người hoặc con người với máy tính. IoT tiến hoá từ sự hội tụ của các công nghệ không dây, hệ thống vi cơ điện tử và Internet. 
+
+"Thing" trong Internet of Things, có thể là một trang trại động vật với bộ tiếp sóng chip sinh học, một chiếc xe ô tô tích hợp các cảm biến để cảnh báo lái xe khi lốp quá non, hoặc bất kỳ đồ vật nào do tự nhiên sinh ra hoặc do con người sản xuất ra mà có thể được gán với một địa chỉ IP và được cung cấp khả năng truyền tải dữ liệu qua mạng lưới.
+
+\section{Các giao thức truyền thông trong IoT}
+\subsection{LoRa}
+\subsubsection{Giới thiệu}
+LoRa, viết tắt của Long Range Radio, là một loại công nghệ hỗ trợ truyền dữ liệu trong những khoảng cách lên đến hàng chục km mà không cần thêm bất kỳ các mạch khuếch đại công suất nào. LoRa giúp việc truyền và nhận dữ liệu trở nên đơn giản hơn, tiết kiệm năng lượng tiêu thụ hiệu quả.
+
+Một mạng LoRa có thể cung cấp vùng phủ sóng tương tự như của một mạng di động. Trong một số trường hợp, các antenna Lora có thể kết hợp với antenna di động khi các tần số là gần nhau, do đó giúp tiết kiệm đáng kể chi phí. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\linewidth]{images/chapter_2/LoRa.png}
+    \caption{Minh hoạ về công nghệ LoRa}
+    \label{fig:placeholder}
+\end{figure}
+
+\subsubsection{Nguyên lý hoạt động}
+Nền tảng phát triển công nghệ LoRa dựa trên kỹ thuật điều chế Chirp Spread Spectrum. Khi các dữ liệu được tạo xung với tần số cao để tạo ra những tín hiệu có dải tần cao hơn. Các tín hiệu này sẽ được mã hóa theo các chuỗi chirp signal (tín hiệu hình sin thay đổi theo thời gian) trước khi được gửi đi từ antenna. Có hai loại chirp signal, bao gồm tần số up-chirp theo thời gian và tần số của down-chirp giảm dần theo thời gian.
+
+Nguyên tắc hoạt động này hỗ trợ thiết bị giảm độ phức tạp và tăng độ chính xác cần thiết cho mạch nhận để có thể giải mã và điều chỉnh lại dữ liệu. LoRa không yêu cầu nhiều công suất phát mà vẫn có thể truyền đi xa, vì tín hiệu LoRa có thể nhận được ở khoảng cách xa ngay cả khi cường độ tín hiệu thấp hơn nhiễu xung quanh.
+
+Băng tần hoạt động của LoRa nằm trong khoảng từ 430MHz đến 915MHz, áp dụng cho các khu vực khác nhau trên thế giới. Tín hiệu chirp sẽ cho phép các tín hiệu LoRa hoạt động trong cùng một khu vực mà không gây nhiễu lẫn nhau, cho phép nhiều thiết bị trao đổi dữ liệu trên nhiều kênh đồng thời.
+
+\subsubsection{Đặc điểm nổi bật}
+Là một công nghệ hiện đại được sử dụng phổ biến hiện nay, LoRa có khả năng truyền dữ liệu ở khoảng cách cực xa và có thể đạt khoảng cách truyền hơn 15km trong môi trường mở hoặc rộng hơn nữa. Nó còn có thể chạy với mức tiêu thụ điện năng thấp, điều này có thể kéo dài tuổi thọ pin và giảm chi phí sử dụng khi không cần thay quá nhiều lần.
+
+Với kỹ thuật truyền của công nghệ LoRa, tốc độ truyền tuy thấp nhưng vẫn cung cấp đủ băng thông cho một số ứng dụng IoT nhất định, chẳng hạn như định vị, theo dõi tài nguyên và gửi thông tin trạng thái. Công nghệ này có khả năng chống nhiễu tốt và khả năng tự động tìm kiếm kênh truyền tốt nhất, giúp đảm bảo tính toàn vẹn của dữ liệu truyền đi.
+
+\subsubsection{Ưu điểm và nhược điểm}
+Nổi bật nhất, LoRa có mức tiêu thụ điện năng thấp, đây là ưu điểm lớn nhất của công nghệ LoRa. Bởi mức tiêu thụ điện năng của công nghệ này thấp. Tương ứng, tuổi thọ của ắc quy có thể lên đến 10 năm, hỗ trợ các nhà máy, doanh nghiệp giảm chi phí thay thế ắc quy.
+
+LoRa còn có thể hỗ trợ máy tính truyền dữ liệu vài km mà không cần bộ khuếch đại công suất. Do Lora sử dụng ít nhiễu điện từ hơn nên tín hiệu có thể duy trì khoảng cách xa hoặc khả năng làm việc mạnh mẽ ngay cả trong môi trường đô thị với những ngôi nhà dày đặc. 
+
+LoRa là một giao thức mạng mở, có khả năng cung cấp các kết nối nút cuối được tiêu chuẩn hóa giữa những máy tính và thiết bị IoT. Điều này cho phép mỗi nhà máy nhanh chóng triển khai các ứng dụng IoT ở mọi nơi. 
+
+Công nghệ còn sở hữu mã hóa AES128, cho phép xác thực lẫn nhau, đảm bảo tính toàn vẹn và tăng tính bảo mật.
+
+Tuy LoRa là một công nghệ được ưa chuộng sử dụng nhưng nó không phải một công nghệ có tính hoàn hảo về mọi mặt. Công nghệ này không phù hợp với những công việc cần tải dữ liệu lớn, đây cũng là nhược điểm lớn nhất đối với công nghệ LoRa. Do các sóng truyền ở tần số này làm chậm tốc độ truyền và tải trọng của công nghệ bị giới hạn ở 100 byte. Do đó, độ trễ của công nghệ LoRa sẽ cao hơn các phương pháp khác.
+
+Khi sử dụng công nghệ LoRa, người dùng sẽ gặp khó khăn trong việc lắp đặt các gateway trong khu vực nội thành cũng là một trở ngại cho việc phổ cập công nghệ LoRa tại các khu vực đông dân cư.
+
+LoRa có khả năng truyền dữ liệu hạn chế và không phù hợp với các ứng dụng yêu cầu truyền dữ liệu lớn. Ngoài ra, để có thể triển khai một hệ thống LoRa hoàn chỉnh, cần có nhiều cổng và thiết bị kết nối, điều này làm tăng chi phí triển khai.
+
+\subsection{4G/5G}
+\subsubsection{Giới thiệu}
+
+\subsubsection{Nguyên lý hoạt động}
+
+\subsubsection{Đặc điểm nổi bật}
+
+\subsubsection{Ưu điểm và nhược điểm}
+
+\subsection{MQTT}
+\subsubsection{Giới thiệu}
+
+\subsubsection{Nguyên lý hoạt động}
+
+\subsubsection{Đặc điểm nổi bật}
+
+\subsubsection{Ưu điểm và nhược điểm}
+
+\subsection{So sánh và lựa chọn giao thức}
+\section{Các loại cảm biến, thiết bị sử dụng}
+\subsection{ESP32 NodeMCU-32S CH340 Ai-Thinker}
+ESP32 NodeMCU-32S CH340 Ai-Thinker được phát triển trên nền Vi điều khiển trung tâm là ESP32 SoC với công nghệ Wifi, BLE và kiến trúc ARM mới nhất hiện nay, kit có thiết kế phần cứng, firmware và cách sử dụng tương tự Kit NodeMCU ESP8266, với ưu điểm là cách sử dụng dễ dàng, ra chân đầy đủ, tích hợp mạch nạp và giao tiếp UART CH340, thích hợp với các nghiên cứu, ứng dụng về Wifi, BLE, IoT và điều khiển, thu thập dữ liệu qua mạng.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{8cm}|}
+\rowcolor{gray!15}
+\hline
+\textbf{Thông số} & \textbf{Giá trị} \\
+\hline
+SPI Flash & 32 Mbits \\
+\hline
+Dải tần số & 2400 - 2483.5 MHz \\
+\hline
+Bluetooth & BLE 4.2 BR/EDR \\
+\hline
+WiFi & 802.11 \\
+\hline
+Giao diện hỗ trợ & UART/SPI/SDIO/I2C/PWM/I2S/IR/\newline ADC/DAC \\
+\hline
+Nguồn sử dụng & 5VDC qua cổng Micro USB \\
+\hline
+Mạch nạp & Tích hợp CH340 UART \\
+\hline
+Số chân & 38 chân cắm 2.54mm, ra đầy đủ chân ESP32 \\
+\hline
+Tích hợp & LED trạng thái, nút nhấn IO0 (BOOT), nút ENABLE \\
+\hline
+Kích thước & 25.4 x 48.3 mm \\
+\hline
+\end{tabular}
+\caption{Thông số kỹ thuật của ESP32 NodeMCU-32S CH340 Ai-Thinker}
+\label{tab:esp32_specs}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\linewidth]{images/chapter_2/ESP32.png}
+    \caption{ESP32 NodeMCU-32S CH340 Ai-Thinker}
+    \label{fig:placeholder}
+\end{figure}
+
+\subsection{Cảm biến nhiệt độ, độ ẩm DHT11}
+DHT11 là cảm biến nhiệt độ, độ ẩm rất thông dụng hiện nay vì chi phí rẻ và rất dễ lấy dữ liệu thông qua giao tiếp 1-wire (giao tiếp digital 1-wire truyền dữ liệu duy nhất). Cảm biến được tích hợp bộ tiền xử lý tín hiệu giúp dữ liệu nhận về được chính xác mà không cần phải qua bất kỳ tính toán nào.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{6cm}|p{4cm}|}
+\rowcolor{gray!15}
+\hline
+\textbf{Thông số} & \textbf{Giá trị} \\
+\hline
+Điện áp hoạt động & 3-5V\\
+\hline
+Phạm vi đo độ ẩm & 20 - 90\% RH\\
+\hline 
+Phạm vi đo nhiệt độ & $0$ - $50^\circ$C\\
+\hline
+Độ chính xác độ ẩm & $\pm 5\%$ RH \\
+\hline
+Độ chính xác nhiệt độ & $\pm 2^\circ$C \\
+\hline
+Tần số lấy mẫu tối đa & 1 Hz\\  
+\hline
+Khoảng cách truyền tối đa & 20m\\
+\hline
+\end{tabular}
+\caption{Thông số kỹ thuật của cảm biến nhiệt độ, độ ẩm DHT11}
+\label{tab:placeholder}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\linewidth]{images/chapter_2/DHT11.jpg}
+    \caption{Cảm biến nhiệt độ, độ ẩm DHT11}
+    \label{fig:placeholder}
+\end{figure}
+\subsection{Cảm biến gia tốc 3 trục ADXL345}
+Cảm biến gia tốc 3 trục ADXL345 được dùng để đo gia tốc hoặc độ rung theo ba trục trong hệ tọa độ Descartes. Thiết bị hỗ trợ giao tiếp I2C, dễ tích hợp và có nhiều thư viện mẫu đi kèm. Nhờ độ nhạy cao và kích thước nhỏ gọn, ADXL345 phù hợp với các ứng dụng di động. Cảm biến có thể đo được cả gia tốc tĩnh (dùng để xác định độ nghiêng dựa trên trọng lực) lẫn gia tốc động (phát hiện chuyển động, va đập hoặc rung động).
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{6cm}|}
+\rowcolor{gray!15}
+\hline
+\textbf{Thông số} & \textbf{Giá trị} \\
+\hline
+Điện áp hoạt động & 3--5VDC \\
+\hline
+Điện áp giao tiếp & 3.3V \\
+\hline
+Dòng điện tiêu thụ & 30$\mu$A \\
+\hline
+Nhiệt độ hoạt động & $-40^oC$ - $85^oC$\\
+\hline
+Chuẩn giao tiếp & I2C, SPI \\
+\hline
+Dải đo gia tốc& $\pm2g$, $\pm4g$, $\pm8g$, $\pm16g$ \\
+\hline
+\end{tabular}
+\caption{Thông số kỹ thuật của cảm biến gia tốc 3 trục ADXL345}
+\label{tab:placeholder}
+\end{table}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\linewidth]{images/chapter_2/ADXL345.jpg}
+    \caption{Cảm biến gia tốc 3 trục ADXL345}
+    \label{fig:placeholder}
+\end{figure}
+
+\subsection{Module GPS NEO-6MV2}
+Module GPS NEO-6MV2 là một module GPS hoàn chỉnh dựa trên GPS Ublox NEO 6M. Thiết bị này sử dụng công nghệ mới nhất của Ublox để cung cấp thông tin định vị tốt nhất có thể và bao gồm một ăng-ten GPS chủ động tích hợp lớn hơn với chân cắm UART TTL.
+
+Module GPS Ublox có đầu ra TTL nối tiếp, đồng thời có đèn LED hiển thị trạng thái để dễ dàng quan sát trong quá trình sử dụng.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4.5cm}|p{3cm}|}
+\rowcolor{gray!15}
+\hline
+\textbf{Thông số} & \textbf{Giá trị} \\
+\hline
+Điện áp hoạt động & 3--5VDC \\
+\hline
+Điện áp giao tiếp & 3.3V \\
+\hline
+Kích thước antenna & 12 $\times$ 12mm \\
+\hline
+Kích thước module & 23 $\times$ 30mm \\
+\hline
+Chuẩn giao tiếp & UART TTL \\ 
+\hline
+Baud rate mặc định & 9600\\
+\hline
+\end{tabular}
+\caption{Thông số kỹ thuật của module GPS NEO-6MV2}
+\label{tab:placeholder}
+\end{table}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\linewidth]{images/chapter_2/GPS.jpg}
+    \caption{Module GPS NEO-6MV2}
+    \label{fig:placeholder}
+\end{figure}
+
+\subsection{Module truyền thông LoRa}
+
+\section{Các kỹ thuật bảo mật trong IoT}

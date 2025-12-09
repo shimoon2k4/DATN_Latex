@@ -1,0 +1,193 @@
+\section{Thành viên tham dự}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Student’s name} & \textbf{Student’s ID} \\ \hline
+Lâm Hoàng Tân           & 2213892                \\ \hline
+Trương Nguyễn Hoàng Anh & 2210147                \\ \hline
+Hoàng Sỹ Xuân Sơn       & 2212937                \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Nội dung công việc} 
+\textbf{Mục tiêu chung:} 
+\begin{itemize} 
+\item Khắc phục sự cố module GPS. 
+\item Áp dụng bộ lọc cơ bản để làm mượt dữ liệu từ cảm biến. 
+\item Đồng bộ hóa thời gian các gói tin cảm biến dựa trên timestamp từ GPS. 
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{7cm}|p{4cm}|p{3cm}|}
+\hline
+\textbf{Mô tả} & \textbf{Thành viên} & \textbf{Hạn nộp} \\ 
+\hline
+Hoàn thiện module GPS, tập trung vào khắc phục lỗi sai baud và kiểm tra phần cứng 
+& Trương Nguyễn Hoàng Anh, Hoàng Sỹ Xuân Sơn
+& 17/10/2025 \\ 
+\hline
+Lọc nhiễu và chuẩn hoá dữ liệu cảm biến ADXL345 và DHT11 
+& Hoàng Sỹ Xuân Sơn
+& 17/10/2025 \\ 
+\hline
+Tích hợp GPS timestamp để đồng bộ thời gian cho toàn hệ thống 
+& Lâm Hoàng Tân 
+& 17/10/2025 \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+\section{Kết quả hiện thực}
+\subsection{Ngưỡng hoạt động cho phép}
+Để hộp đạn được bảo quản an toàn, dưới đây là các thông số mà nhóm tiến hành cài đặt, nếu các giá trị tương ứng vượt quá ngưỡng này, hệ thống sẽ tiến hành cảnh báo.
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{STT} & \textbf{Thông số} & \textbf{Ngưỡng cho phép} \\
+    \hline
+    1 & Nhiệt độ & 30$^o$C\\
+    \hline
+    2 & Độ ẩm & 55\%\\
+    \hline
+    3 & Độ rung & 1,75-2g\\
+    \hline
+\end{tabular}
+\end{center}
+
+\subsection{Khắc phục và hoàn thiện Module GPS (NEO-6M)}
+
+\subsubsection{Tình trạng sự cố}
+Module GPS (NEO-6M) có thể được khởi tạo kết nối thông qua cổng UART (kết nối thành công), 
+tuy nhiên, không nhận được bất kỳ dữ liệu NMEA hợp lệ nào được gửi về vi điều khiển. 
+Serial Monitor không in ra tín hiệu hoặc chỉ hiển thị các ký tự không thể giải mã.
+
+\subsubsection{Chẩn đoán và các hành động đã thực hiện}
+
+\begin{itemize}
+    \item \textbf{Giả thuyết ban đầu:} 
+    Nguyên nhân chính được cho là do sai tốc độ baud. 
+    Module NEO-6M hoạt động mặc định ở \texttt{9600 baud}, 
+    trong khi code ban đầu có thể đã cấu hình sai.
+
+    \item \textbf{Hành động khắc phục đã thử:}
+    \begin{enumerate}
+        \item Cập nhật cấu hình UART2 trong code về đúng tốc độ baud mặc định của module:
+        \begin{verbatim}
+        Serial2.begin(9600, SERIAL_8N1, 16, 17);
+        \end{verbatim}
+    \item Kiểm tra kỹ lại toàn bộ kết nối vật lý: đảm bảo dây \texttt{TX/RX} được đấu chéo chính xác, kết nối \texttt{GND} chung vững chắc và nguồn 3.3V ổn định.
+    \end{enumerate}
+
+    \item \textbf{Kết quả:} 
+    Mặc dù đã đồng bộ baud và xác nhận kết nối phần cứng, 
+    module GPS vẫn không xuất ra dữ liệu. 
+    Thư viện \texttt{TinyGPSPlus} không nhận được ký tự nào để xử lý.
+
+    \item \textbf{Kết luận:} 
+    Sự cố module GPS chưa được khắc phục. 
+    Nguyên nhân cốt lõi có thể phức tạp hơn là sai tốc độ baud, 
+    có thể liên quan đến vấn đề nguồn, nhiễu tín hiệu, lỗi anten hoặc lỗi phần cứng của chính module.
+\end{itemize}
+
+\subsection{Lọc nhiễu và chuẩn hoá dữ liệu}
+
+\subsubsection{ADXL345 (Gia tốc kế)}
+\begin{itemize}
+    \item \textbf{Phương pháp}: 
+    Áp dụng bộ lọc \textbf{Trung bình trượt (Moving Average)} với cửa sổ 5 mẫu cho các giá trị thô \texttt{x, y, z}.
+
+    \item \textbf{Mục đích}: 
+    Loại bỏ các nhiễu gai (spike) tần số cao, giúp giá trị gia tốc nền khi thiết bị đứng yên ổn định hơn, 
+    từ đó giảm thiểu báo động \texttt{shock} giả.
+
+    \item \textbf{Kết quả}: 
+    Dữ liệu gia tốc trở nên “mượt” hơn, ngưỡng phát hiện shock hoạt động chính xác hơn khi có va đập thực sự, 
+    không bị kích hoạt bởi rung động nhỏ.
+\end{itemize}
+
+\subsubsection{DHT11 (Nhiệt độ/Độ ẩm)}
+\begin{itemize}
+    \item \textbf{Phương pháp}: 
+    Dữ liệu từ DHT11 vốn có tần số thấp và ít nhiễu, 
+    do đó nhóm tập trung vào \textbf{loại bỏ giá trị ngoại lai (outlier removal)}.
+
+    \item \textbf{Logic}: 
+    Một giá trị mới sẽ bị loại bỏ nếu chênh lệch với giá trị hợp lệ gần nhất quá một ngưỡng 
+    (ví dụ: $\Delta T > 10^{\circ}C$ hoặc $\Delta H > 20\%RH$ trong 5 giây).
+
+    \item \textbf{Kết quả}: 
+    Tăng cường độ tin cậy của dữ liệu, phòng trường hợp cảm biến đọc lỗi đột ngột 
+    do tiếp xúc hoặc nhiễu điện.
+\end{itemize}
+
+\subsection{Thiết kế cơ chế đồng bộ thời gian hệ thống}
+
+\begin{itemize}
+    \item Cơ chế này đã được thiết kế nhưng chưa thể triển khai 
+    do module GPS chưa hoạt động.
+
+    \item Cơ chế hoạt động dự kiến:
+    \begin{enumerate}
+        \item Khi hệ thống khởi động, vi điều khiển sử dụng hàm \texttt{millis()} 
+        làm timestamp tạm thời để đánh dấu thời gian.
+
+        \item Ngay khi module GPS trả về thời gian UTC hợp lệ, 
+        hệ thống sẽ ghi lại \textit{timestamp GPS} và 
+        \textit{thời điểm \texttt{millis()}} tương ứng.
+
+        \item Kể từ đó, timestamp cho mọi gói tin sẽ được tính theo công thức:
+        \[
+            ts_{\text{event}} = ts_{\text{gps\_base}} 
+            + \frac{(millis_{\text{current}} - millis_{\text{gps\_base}})}{1000}
+        \]
+    \end{enumerate}
+\end{itemize}
+
+\section{Tổng kết}
+
+\subsection*{Đánh giá chung} Tuần này, nhóm đã hoàn thành tốt mục tiêu lọc nhiễu cho cảm biến ADXL345 và DHT11. Tuy nhiên, sự cố lớn nhất là module GPS không hoạt động vẫn chưa được giải quyết.
+
+\subsection*{Kết quả đạt được (đã xác nhận)} 
+\begin{itemize} 
+\item \textbf{ADXL345/DHT11}: Dữ liệu được làm mượt và tăng độ tin cậy thông qua các bộ lọc phần mềm.
+\item \textbf{GPS}: Đã tiến hành chẩn đoán, xác nhận kết nối vật lý và cấu hình baud nhưng chưa thành công. Sự cố vẫn còn tồn đọng. 
+\end{itemize}
+
+\subsection*{Vấn đề tồn đọng}
+\begin{itemize}
+    \item \textbf{Module GPS không xuất dữ liệu (Ưu tiên cao nhất):} 
+    Mặc dù đã thử các bước khắc phục cơ bản, 
+    module vẫn không gửi về dữ liệu NMEA. 
+    Đây là vấn đề cần tập trung toàn bộ nguồn lực để giải quyết.
+
+    \item \textbf{Tích hợp luồng dữ liệu:} 
+    Cần xây dựng một cơ chế (ví dụ: \texttt{FreeRTOS Queue}) 
+    để hợp nhất tất cả dữ liệu vào một luồng xử lý duy nhất 
+    một cách an toàn và hiệu quả.
+
+    \item \textbf{Cấu trúc dữ liệu:} 
+    Cần định nghĩa một cấu trúc dữ liệu chung 
+    (ví dụ: định dạng \texttt{JSON}) 
+    để đóng gói dữ liệu từ tất cả các cảm biến, 
+    giúp việc truyền nhận và xử lý thống nhất hơn.
+\end{itemize}
+
+
+
+\section{Kế hoạch tuần tới }
+
+\subsection*{Mục tiêu}
+Giải quyết dứt điểm sự cố module GPS không hoạt động. Đây là nhiệm vụ quan trọng nhất, quyết định tiến độ của toàn bộ dự án.
+
+Làm sạch, chuẩn hoá và đồng bộ thời gian cho dòng dữ liệu cảm biến để sẵn sàng đẩy vào pipeline truyền/ghi (sprint sau).
+
+Đảm bảo không mất dữ liệu khi mất kết nối (store\text{-}and\text{-}forward) và giảm báo động giả do nhiễu.
+
+
+
+
+
