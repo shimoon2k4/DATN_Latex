@@ -1,15 +1,16 @@
+\babel@toc {vietnamese}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Minh hoạ về công nghệ LoRa}}{6}{figure.caption.5}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces ESP32 NodeMCU-32S CH340 Ai-Thinker}}{9}{figure.caption.7}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Cảm biến nhiệt độ, độ ẩm DHT11}}{10}{figure.caption.9}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Cảm biến gia tốc 3 trục ADXL345}}{11}{figure.caption.11}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Module GPS NEO-6MV2}}{12}{figure.caption.13}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces ESP32 NodeMCU-32S CH340 Ai-Thinker}}{13}{figure.caption.8}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Cảm biến nhiệt độ, độ ẩm DHT11}}{14}{figure.caption.10}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Cảm biến gia tốc 3 trục ADXL345}}{15}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Module GPS NEO-6MV2}}{16}{figure.caption.14}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Usecase diagram}}{16}{figure.caption.14}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Activity diagram: Điều phối lộ trình}}{18}{figure.caption.15}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Activity diagram: Quản lý hàng hoá}}{20}{figure.caption.16}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Activity diagram: Giám sát \& cập nhật trạng thái vận chuyển}}{22}{figure.caption.17}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Usecase diagram}}{20}{figure.caption.15}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Activity diagram: Điều phối lộ trình}}{22}{figure.caption.16}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Activity diagram: Quản lý hàng hoá}}{24}{figure.caption.17}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Activity diagram: Giám sát \& cập nhật trạng thái vận chuyển}}{26}{figure.caption.18}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

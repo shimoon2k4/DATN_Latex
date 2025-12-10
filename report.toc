@@ -1,3 +1,4 @@
+\babel@toc {vietnamese}{}\relax 
 \contentsline {chapter}{Danh s\'ach h\`inh v\~e}{viii}{figure.caption.1}%
 \contentsline {chapter}{Danh s\'ach b\h {a}ng}{x}{figure.caption.1}%
 \contentsline {chapter}{Lời cam kết}{xiii}{chapter*.2}%
@@ -20,64 +21,65 @@
 \contentsline {subsubsection}{\numberline {2.2.2.1}Giới thiệu}{8}{subsubsection.2.2.2.1}%
 \contentsline {subsubsection}{\numberline {2.2.2.2}Nguyên lý hoạt động}{8}{subsubsection.2.2.2.2}%
 \contentsline {subsubsection}{\numberline {2.2.2.3}Đặc điểm nổi bật}{8}{subsubsection.2.2.2.3}%
-\contentsline {subsubsection}{\numberline {2.2.2.4}Ưu điểm và nhược điểm}{8}{subsubsection.2.2.2.4}%
-\contentsline {subsection}{\numberline {2.2.3}MQTT}{8}{subsection.2.2.3}%
-\contentsline {subsubsection}{\numberline {2.2.3.1}Giới thiệu}{8}{subsubsection.2.2.3.1}%
-\contentsline {subsubsection}{\numberline {2.2.3.2}Nguyên lý hoạt động}{8}{subsubsection.2.2.3.2}%
-\contentsline {subsubsection}{\numberline {2.2.3.3}Đặc điểm nổi bật}{8}{subsubsection.2.2.3.3}%
-\contentsline {subsubsection}{\numberline {2.2.3.4}Ưu điểm và nhược điểm}{8}{subsubsection.2.2.3.4}%
-\contentsline {subsection}{\numberline {2.2.4}So sánh và lựa chọn giao thức}{8}{subsection.2.2.4}%
-\contentsline {section}{\numberline {2.3}Các loại cảm biến, thiết bị sử dụng}{8}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}ESP32 NodeMCU-32S CH340 Ai-Thinker}{8}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Cảm biến nhiệt độ, độ ẩm DHT11}{9}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Cảm biến gia tốc 3 trục ADXL345}{10}{subsection.2.3.3}%
-\contentsline {subsection}{\numberline {2.3.4}Module GPS NEO-6MV2}{11}{subsection.2.3.4}%
-\contentsline {subsection}{\numberline {2.3.5}Module truyền thông LoRa}{12}{subsection.2.3.5}%
-\contentsline {section}{\numberline {2.4}Các kỹ thuật bảo mật trong IoT}{12}{section.2.4}%
-\contentsline {chapter}{\numberline {3}Phân tích yêu cầu hệ thống}{13}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Yêu cầu chức năng}{13}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Người dùng}{13}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Hệ thống}{14}{subsection.3.1.2}%
-\contentsline {section}{\numberline {3.2}Yêu cầu phi chức năng}{14}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Hiệu năng}{14}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Tính sẵn sàng}{14}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Khả năng mở rộng}{15}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}Tính dễ sử dụng}{15}{subsection.3.2.4}%
-\contentsline {subsection}{\numberline {3.2.5}Tính tương thích}{15}{subsection.3.2.5}%
-\contentsline {subsection}{\numberline {3.2.6}Khả năng bảo trì}{15}{subsection.3.2.6}%
-\contentsline {section}{\numberline {3.3}Quy trình vận chuyển đạn dược}{16}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Các rủi ro cần giám sát}{16}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Use-case diagram}{16}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Activity diagram}{16}{section.3.6}%
-\contentsline {subsection}{\numberline {3.6.1}Điều phối lộ trình}{16}{subsection.3.6.1}%
-\contentsline {subsection}{\numberline {3.6.2}Quản lý hàng hoá}{18}{subsection.3.6.2}%
-\contentsline {subsection}{\numberline {3.6.3}Giám sát \& cập nhật trạng thái vận chuyển }{20}{subsection.3.6.3}%
-\contentsline {chapter}{\numberline {4}Thiết kế hệ thống}{23}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Sơ đồ kiến trúc tổng thể}{23}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Sơ đồ kết nối phần cứng}{23}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Thiết kế truyền thông dữ liệu}{23}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Thiết kế ứng dụng giám sát}{23}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Thiết kế giao diện quản lý}{23}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Thiết kế cơ chế bảo mật}{23}{section.4.6}%
-\contentsline {chapter}{\numberline {5}Cài đặt và triển khai hệ thống}{25}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Cài đặt môi trường phát triển}{26}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Cài đặt firmware}{26}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Cài đặt backend}{26}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Cài đặt ứng dụng}{26}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Kết nối thiết bị}{26}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Triển khai hệ thống}{26}{section.5.6}%
-\contentsline {chapter}{\numberline {6}Kết quả và đánh giá}{27}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Mô phỏng vận chuyển}{28}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Độ ổn định truyền dữ liệu}{28}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Độ chính xác GPS}{28}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Độ chính xác của cảm biến}{28}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Độ trễ truyền thông}{28}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Khả năng cảnh báo}{28}{section.6.6}%
-\contentsline {section}{\numberline {6.7}So sánh và đánh giá}{28}{section.6.7}%
-\contentsline {chapter}{\numberline {7}Kết luận và hướng phát triển}{29}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Đánh giá chung}{29}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Hạn chế}{29}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Hướng phát triển}{29}{section.7.3}%
-\contentsline {chapter}{Phụ lục A}{31}{appendix*.18}%
-\contentsline {chapter}{Tài liệu tham khảo}{32}{appendix*.18}%
-\contentsline {chapter}{Danh mục thuật ngữ}{35}{appendix*.20}%
+\contentsline {subsubsection}{\numberline {2.2.2.4}Ưu điểm và nhược điểm}{9}{subsubsection.2.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.3}MQTT}{9}{subsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.3.1}Giới thiệu}{9}{subsubsection.2.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.2.3.2}Nguyên lý hoạt động}{9}{subsubsection.2.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.2.3.3}Đặc điểm nổi bật}{10}{subsubsection.2.2.3.3}%
+\contentsline {subsubsection}{\numberline {2.2.3.4}Ưu điểm và nhược điểm}{10}{subsubsection.2.2.3.4}%
+\contentsline {subsection}{\numberline {2.2.4}So sánh và lựa chọn giao thức}{11}{subsection.2.2.4}%
+\contentsline {subsubsection}{\numberline {2.2.4.1}So sánh các công nghệ truyền thông}{11}{subsubsection.2.2.4.1}%
+\contentsline {subsubsection}{\numberline {2.2.4.2}Lựa chọn và giải thích}{11}{subsubsection.2.2.4.2}%
+\contentsline {subsection}{\numberline {2.2.5}ESP32 NodeMCU-32S CH340 Ai-Thinker}{12}{subsection.2.2.5}%
+\contentsline {subsection}{\numberline {2.2.6}Cảm biến nhiệt độ, độ ẩm DHT11}{13}{subsection.2.2.6}%
+\contentsline {subsection}{\numberline {2.2.7}Cảm biến gia tốc 3 trục ADXL345}{14}{subsection.2.2.7}%
+\contentsline {subsection}{\numberline {2.2.8}Module GPS NEO-6MV2}{15}{subsection.2.2.8}%
+\contentsline {subsection}{\numberline {2.2.9}Module truyền thông LoRa}{16}{subsection.2.2.9}%
+\contentsline {section}{\numberline {2.3}Các kỹ thuật bảo mật trong IoT}{16}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Phân tích yêu cầu hệ thống}{17}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Yêu cầu chức năng}{17}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Người dùng}{17}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Hệ thống}{18}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Yêu cầu phi chức năng}{18}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Hiệu năng}{18}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Tính sẵn sàng}{18}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Khả năng mở rộng}{19}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Tính dễ sử dụng}{19}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}Tính tương thích}{19}{subsection.3.2.5}%
+\contentsline {subsection}{\numberline {3.2.6}Khả năng bảo trì}{19}{subsection.3.2.6}%
+\contentsline {section}{\numberline {3.3}Quy trình vận chuyển đạn dược}{20}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Các rủi ro cần giám sát}{20}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Use-case diagram}{20}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Activity diagram}{20}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Điều phối lộ trình}{20}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Quản lý hàng hoá}{22}{subsection.3.6.2}%
+\contentsline {subsection}{\numberline {3.6.3}Giám sát \& cập nhật trạng thái vận chuyển }{24}{subsection.3.6.3}%
+\contentsline {chapter}{\numberline {4}Thiết kế hệ thống}{27}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Sơ đồ kiến trúc tổng thể}{27}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Sơ đồ kết nối phần cứng}{27}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Thiết kế truyền thông dữ liệu}{27}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Thiết kế ứng dụng giám sát}{27}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Thiết kế giao diện quản lý}{27}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Thiết kế cơ chế bảo mật}{27}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Cài đặt và triển khai hệ thống}{29}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Cài đặt môi trường phát triển}{30}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Cài đặt firmware}{30}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Cài đặt backend}{30}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Cài đặt ứng dụng}{30}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Kết nối thiết bị}{30}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Triển khai hệ thống}{30}{section.5.6}%
+\contentsline {chapter}{\numberline {6}Kết quả và đánh giá}{31}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Mô phỏng vận chuyển}{32}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Độ ổn định truyền dữ liệu}{32}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Độ chính xác GPS}{32}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Độ chính xác của cảm biến}{32}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Độ trễ truyền thông}{32}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Khả năng cảnh báo}{32}{section.6.6}%
+\contentsline {section}{\numberline {6.7}So sánh và đánh giá}{32}{section.6.7}%
+\contentsline {chapter}{\numberline {7}Kết luận và hướng phát triển}{33}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Đánh giá chung}{33}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Hạn chế}{33}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Hướng phát triển}{33}{section.7.3}%
+\contentsline {chapter}{Phụ lục A}{35}{appendix*.19}%
+\contentsline {chapter}{Tài liệu tham khảo}{36}{appendix*.19}%
+\contentsline {chapter}{Danh mục thuật ngữ}{39}{appendix*.21}%
