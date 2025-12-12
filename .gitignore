@@ -1,0 +1,32 @@
+# Core LaTeX auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.lot
+*.lof
+*.glo
+*.idx
+*.ist
+*.acn
+*.acr
+*.alg
+*.bbl
+*.blg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.synctex(busy)
+*.nav
+*.snm
+*.vrb
+
+# PDF (Tùy chọn: Thường thì ta không nên up file PDF lên git vì dễ gây conflict binary, 
+# ai cần thì tự build từ source code. Nếu bạn muốn giữ PDF thì xóa dòng này đi)
+*.pdf
+
+# Editor backup files (file tạm của trình soạn thảo)
+*.bak
+*.swp
+*~
