@@ -10,7 +10,7 @@ Internet of Things (IoT) là thuật ngữ dùng để chỉ các đối tượn
 \subsubsection{Giới thiệu}
 LoRa, viết tắt của Long Range Radio, là một loại công nghệ hỗ trợ truyền dữ liệu trong những khoảng cách lên đến hàng chục km mà không cần thêm bất kỳ các mạch khuếch đại công suất nào. LoRa giúp việc truyền và nhận dữ liệu trở nên đơn giản hơn, tiết kiệm năng lượng tiêu thụ hiệu quả.
 
-Một mạng LoRa có thể cung cấp vùng phủ sóng tương tự như của một mạng di động. Trong một số trường hợp, các antenna Lora có thể kết hợp với antenna di động khi các tần số là gần nhau, do đó giúp tiết kiệm đáng kể chi phí. 
+Một mạng LoRa có thể cung cấp vùng phủ sóng tương tự như của một mạng di động. Trong một số trường hợp, các antenna Lora có thể kết hợp với antenna di động khi các tần số là gần nhau, từ đó giúp tiết kiệm đáng kể chi phí. 
 
 \begin{figure}[H]
     \centering
@@ -47,142 +47,103 @@ Khi sử dụng công nghệ LoRa, người dùng sẽ gặp khó khăn trong vi
 LoRa có khả năng truyền dữ liệu hạn chế và không phù hợp với các ứng dụng yêu cầu truyền dữ liệu lớn. Ngoài ra, để có thể triển khai một hệ thống LoRa hoàn chỉnh, cần có nhiều cổng và thiết bị kết nối, điều này làm tăng chi phí triển khai.
 
 \subsection{4G/5G}
-
 \subsubsection{Giới thiệu}
-Công nghệ mạng di động thế hệ thứ 4 (4G - LTE) và thế hệ thứ 5 (5G) là các chuẩn truyền thông không dây băng thông rộng, cung cấp khả năng kết nối Internet tốc độ cao cho các thiết bị di động. Trong các hệ thống IoT giám sát vận tải, 4G/5G đóng vai trò là kênh truyền thông chủ đạo (backhaul) hoặc kênh dự phòng quan trọng, giúp duy trì kết nối liên tục giữa phương tiện đang di chuyển và máy chủ trung tâm, đặc biệt là tại những khu vực không có sóng LoRa hoặc khi cần truyền tải dữ liệu đa phương tiện (hình ảnh, video).
+Mạng 4G và 5G là các thế hệ mạng di động băng thông rộng được sử dụng rộng rãi trong các hệ thống IoT yêu cầu tốc độ truyền dữ liệu cao, độ trễ thấp và phạm vi phủ sóng lớn. 
 
+Mạng 4G cung cấp tốc độ truyền tải cao hơn nhiều so với 3G, hỗ trợ tốt các ứng dụng IoT như camera giám sát, theo dõi phương tiện hoặc truyền dữ liệu thời gian thực. Mạng 5G là thế hệ mạng mới nhất với tốc độ vượt trội, độ trễ cực thấp, khả năng kết nối số lượng lớn thiết bị, đặc biệt phù hợp với các ứng dụng IoT quy mô lớn như xe tự hành, thành phố thông minh hoặc tự động hoá công nghiệp.
 \subsubsection{Nguyên lý hoạt động}
-Mạng 4G/5G hoạt động dựa trên cấu trúc các trạm thu phát sóng (BTS - Base Transceiver Station) được phân bố rộng khắp theo hình dạng tổ ong (cells).
-\begin{itemize}
-    \item \textbf{Mã hóa và điều chế:} Dữ liệu từ thiết bị IoT được mã hóa kỹ thuật số và điều chế (sử dụng kỹ thuật OFDM) để truyền qua sóng vô tuyến đến trạm BTS gần nhất.
-    \item \textbf{Chuyển mạch gói (Packet Switching):} Khác với các mạng di động thế hệ cũ sử dụng chuyển mạch kênh, 4G/5G sử dụng chuyển mạch gói hoàn toàn trên nền tảng IP, giúp tối ưu hóa việc truyền dữ liệu.
-    \item \textbf{Mạng lõi (Core Network):} Dữ liệu từ BTS được chuyển về mạng lõi để định tuyến, xác thực và chuyển tiếp đến đích là máy chủ ứng dụng hoặc Internet.
-\end{itemize}
+Mạng 4G và 5G đều hoạt động dựa trên kiến trúc mạng di động tổ ong, trong đó mỗi khu vực được bao phủ bởi các trạm gốc truyền nhận tín hiệu vô tuyến. Khi một thiết bị IoT hoặc thiết bị di động khởi tạo kết nối, tín hiệu sẽ được truyền đến trạm gốc gần nhất để thực hiện quá trình xác thực và thiết lập phiên làm việc với mạng lõi. Đối với 4G, mạng lõi EPC chịu trách nhiệm định tuyến gói dữ liệu và đảm bảo chất lượng truyền dẫn. Trong khi đó, 5G sử dụng kiến trúc hiện đại hơn, cho phép xử lý dữ liệu linh hoạt và hiệu quả thông qua các chức năng ảo hóa và tách rời.
+
+Sau khi kết nối được thiết lập, dữ liệu IoT được truyền dưới dạng gói IP qua trạm gốc, đi qua mạng lõi và đến server hoặc nền tảng cloud. Công nghệ 5G còn sử dụng các kỹ thuật tiên tiến như beamforming và Massive MIMO để tập trung tín hiệu theo hướng tối ưu, tăng tốc độ và giảm nhiễu. Ngoài ra, 5G hỗ trợ phân đoạn mạng, cho phép tạo ra nhiều “lát cắt” mạng độc lập nhằm phục vụ các nhóm ứng dụng có yêu cầu khác nhau, từ băng thông cao, độ trễ thấp cho đến số lượng kết nối lớn. Nhờ những cơ chế hoạt động này, 4G và đặc biệt là 5G có khả năng cung cấp tốc độ truyền tải nhanh, độ trễ thấp và hiệu suất kết nối ổn định cho các hệ thống IoT hiện đại.
 
 \subsubsection{Đặc điểm nổi bật}
-\begin{itemize}
-    \item \textbf{Tốc độ truyền tải cao:} 4G có thể đạt tốc độ lý thuyết lên tới hàng trăm Mbps, và 5G có thể đạt tới hàng chục Gbps, đáp ứng tốt nhu cầu truyền dữ liệu lớn thời gian thực.
-    \item \textbf{Độ trễ thấp:} Đặc biệt với 5G, độ trễ có thể giảm xuống mức dưới 10ms, cực kỳ quan trọng đối với các ứng dụng cảnh báo tức thời như giám sát đạn dược.
-    \item \textbf{Tính di động cao (Mobility):} Hỗ trợ duy trì kết nối ổn định ngay cả khi thiết bị di chuyển với tốc độ cao trên phương tiện vận tải.
-    \item \textbf{Vùng phủ sóng rộng:} Hạ tầng mạng 4G hiện nay đã bao phủ hầu hết các khu vực địa lý, đảm bảo khả năng giám sát liên tục.
-\end{itemize}
+Công nghệ 4G và 5G đều mang lại những bước tiến quan trọng trong lĩnh vực truyền thông không dây, đặc biệt đối với các hệ thống IoT hiện đại. Ở thế hệ 4G, tốc độ truyền tải dữ liệu được nâng lên đáng kể, đạt đến 100 Mbps đối với thiết bị di động và có thể lên tới 1 Gbps trong các kết nối cố định. Độ trễ cũng được cải thiện, giảm xuống chỉ còn 5–20 ms, giúp phản hồi nhanh hơn cho các ứng dụng thời gian thực. 4G sử dụng các công nghệ như OFDMA và MIMO để tăng băng thông, hỗ trợ nhiều thiết bị kết nối đồng thời, đảm bảo hiệu suất ổn định trong môi trường đông người dùng.
+
+Bước sang 5G, công nghệ này mang đến những đột phá vượt trội về tốc độ, độ trễ và khả năng kết nối. Tốc độ tải xuống lý thuyết có thể đạt tới 10 Gbps, nhanh hơn 4G từ 10 đến 100 lần, đồng thời độ trễ giảm xuống mức cực thấp chỉ khoảng 1 ms. Điều này cho phép 5G hỗ trợ tốt các ứng dụng yêu cầu phản hồi tức thời như xe tự hành, điều khiển robot từ xa, thực tế ảo. 5G cũng cho phép kết nối hàng triệu thiết bị trên mỗi km$^2$, đáp ứng nhu cầu của đô thị thông minh và các hệ thống IoT mật độ cao. Ngoài ra, nhờ ứng dụng sóng milimet, Massive MIMO và công nghệ phân mảnh mạng, 5G có khả năng tối ưu băng thông linh hoạt và tùy chỉnh tài nguyên theo từng loại dịch vụ, mang lại hiệu suất vượt trội trong nhiều tình huống sử dụng khác nhau.
 
 \subsubsection{Ưu điểm và nhược điểm}
-\begin{itemize}
-    \item \textbf{Ưu điểm:}
-    \begin{itemize}
-        \item Phạm vi phủ sóng toàn quốc, không cần tự xây dựng hạ tầng trạm thu phát như LoRaWAN.
-        \item Băng thông lớn, cho phép gửi dữ liệu cập nhật firmware (OTA) hoặc gửi log chi tiết dễ dàng.
-        \item Độ trễ thấp, đảm bảo tính thời gian thực (Real-time).
-    \end{itemize}
-    \item \textbf{Nhược điểm:}
-    \begin{itemize}
-        \item Tiêu thụ năng lượng cao hơn nhiều so với LoRa, đòi hỏi nguồn cấp ổn định từ phương tiện.
-        \item Chi phí vận hành cao hơn do phải trả phí thuê bao dữ liệu cho nhà mạng.
-        \item Phụ thuộc vào chất lượng sóng của nhà cung cấp dịch vụ viễn thông.
-    \end{itemize}
-\end{itemize}
+Công nghệ 4G và 5G mang lại nhiều lợi ích quan trọng trong các hệ thống IoT hiện đại. Với tốc độ truyền dữ liệu cao, 4G cho phép truyền tải video HD, chơi game trực tuyến và vận hành các dịch vụ yêu cầu băng thông rộng mà vẫn duy trì độ trễ thấp. Khi bước sang 5G, tốc độ còn được cải thiện vượt trội cùng với độ trễ cực thấp, giúp đáp ứng tốt các ứng dụng thời gian thực như điều khiển từ xa, xe tự hành hoặc các hệ thống giám sát thông minh. Chất lượng dịch vụ ổn định giúp mạng có thể xử lý đồng thời thoại, video và dữ liệu mà không ảnh hưởng đến hiệu năng. Ngoài ra, 5G còn hỗ trợ mật độ kết nối rất lớn, phù hợp cho các mô hình IoT quy mô cao trong đô thị thông minh hoặc công nghiệp.
 
-% ============================================================
-% 2.2.3 MQTT
-% ============================================================
+Tuy nhiên, cả 4G và 5G đều tồn tại một số hạn chế. Chi phí triển khai hạ tầng cao khiến việc phủ sóng đồng đều gặp khó khăn, đặc biệt tại khu vực nông thôn hoặc vùng sâu vùng xa. Việc xây dựng mạng 5G càng yêu cầu đầu tư lớn hơn do sử dụng nhiều trạm thu phát và băng tần cao. Thiết bị di động sử dụng mạng 4G/5G thường tiêu tốn năng lượng lớn hơn, làm giảm thời gian sử dụng pin. Ngoài ra, dù đã có nhiều cải tiến về bảo mật, các mạng này vẫn đối mặt với rủi ro bị tấn công do kiến trúc phức tạp, đặc biệt ở 5G. Người dùng cũng cần có thiết bị tương thích mới để tận dụng đầy đủ lợi ích của 5G, gây khó khăn cho quá trình phổ cập.
 \subsection{MQTT}
-
 \subsubsection{Giới thiệu}
-MQTT (Message Queuing Telemetry Transport) là một giao thức truyền thông điệp dạng publish-subscribe (xuất bản - đăng ký) cực kỳ nhẹ, được thiết kế riêng cho các thiết bị có băng thông hạn chế và độ trễ mạng cao. Đây là giao thức chuẩn "de facto" trong lĩnh vực IoT, hoạt động trên nền tảng TCP/IP, giúp kết nối các cảm biến và thiết bị di động với máy chủ đám mây một cách hiệu quả.
+MQTT, viết tắt của Message Queuing Telemetry Transport, là giao thức truyền thông được sử dụng cho các thiết bị IoT với băng thông thấp, độ tin cậy cao và khả năng được sử dụng trong mạng lưới không ổn định. 
+
+MQTT là một lựa chọn lý tưởng trong các môi trường mà giá mạng viễn thông đắt đỏ hoặc băng thông thấp hay thiếu tin cậy, hoặc khi chạy trên thiết bị nhúng bị giới hạn về tài nguyên tốc độ và bộ nhớ. Bởi vì giao thức này sử dụng băng thông thấp trong môi trường có độ trễ cao nên nó là một giao thức lý tưởng cho các ứng dụng M2M.
 
 \subsubsection{Nguyên lý hoạt động}
-Mô hình hoạt động của MQTT bao gồm ba thành phần chính:
-\begin{itemize}
-    \item \textbf{Publisher (Người xuất bản):} Là thiết bị IoT (trong dự án này là bộ thiết bị trên xe chở đạn) thu thập dữ liệu cảm biến và gửi đi.
-    \item \textbf{Broker (Môi giới):} Là máy chủ trung gian (ví dụ: Mosquitto, EMQX). Nhiệm vụ của Broker là nhận thông điệp từ Publisher và lọc, phân phối lại cho các Subscriber quan tâm.
-    \item \textbf{Subscriber (Người đăng ký):} Là ứng dụng giám sát hoặc backend server đăng ký nhận tin từ Broker.
-\end{itemize}
+MQTT hoạt động dựa trên mô hình Publish/Subscribe thông qua kiến trúc Client/Server, trong đó Broker đóng vai trò trung gian xử lý toàn bộ quá trình truyền thông. Các thiết bị IoT (Client) có thể gửi dữ liệu dưới dạng thông điệp đến một chủ đề với vai trò Publisher, hoặc đăng ký nhận thông điệp từ các chủ đề đó với vai trò Subscriber. Nhờ cơ chế tách biệt giữa nơi gửi và nơi nhận, MQTT giúp giảm tải băng thông, tối ưu tài nguyên và duy trì hiệu quả hoạt động ngay cả trong môi trường mạng yếu, rất phù hợp với các hệ thống IoT.
 
-Cơ chế hoạt động dựa trên \textbf{Topic (Chủ đề):} Khi thiết bị gửi dữ liệu, nó sẽ gửi vào một Topic cụ thể (ví dụ: \texttt{vehicle/truck01/temp}). Ứng dụng giám sát sẽ đăng ký Topic này để nhận dữ liệu ngay lập tức.
+Broker được xem như lõi trung tâm của toàn bộ hệ thống, chịu trách nhiệm tiếp nhận thông điệp từ Publisher, xử lý và phân phối chúng đến các Subscriber tương ứng. Bên cạnh nhiệm vụ chính này, Broker còn có thể đảm nhận các chức năng bổ trợ như quản lý hàng đợi, lưu trữ thông điệp, ghi log hệ thống, xác thực và mã hóa nhằm đảm bảo an toàn trong truyền thông. Chính nhờ sự linh hoạt và cấu trúc nhẹ, MQTT trở thành một trong những giao thức phổ biến nhất trong các ứng dụng IoT hiện nay.
 
-% Bạn có thể bỏ comment dòng dưới để chèn hình ảnh nếu có file ảnh
-% \begin{figure}[h]
-%     \centering
-%     \includegraphics[width=0.8\textwidth]{images/mqtt_architecture.png}
-%     \caption{Kiến trúc mô hình Publish-Subscribe của MQTT}
-%     \label{fig:mqtt_arch}
-% \end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{images/chapter_2/MQTT.jpg}
+    \caption{Minh hoạ về nguyên lý hoạt động của MQTT}
+    \label{fig:placeholder}
+\end{figure}
 
 \subsubsection{Đặc điểm nổi bật}
-\begin{itemize}
-    \item \textbf{Gọn nhẹ (Lightweight):} Header của gói tin MQTT rất nhỏ (tối thiểu chỉ 2 byte), giúp tiết kiệm băng thông 3G/4G và năng lượng.
-    \item \textbf{Chất lượng dịch vụ (QoS - Quality of Service):} MQTT cung cấp 3 mức độ tin cậy khi truyền tin, rất quan trọng cho giám sát hàng nguy hiểm:
-    \begin{itemize}
-        \item \textit{QoS 0:} Gửi tối đa 1 lần (có thể mất tin).
-        \item \textit{QoS 1:} Gửi ít nhất 1 lần (đảm bảo tin đến nơi, nhưng có thể lặp).
-        \item \textit{QoS 2:} Gửi chính xác 1 lần (đảm bảo tin đến và không lặp).
-    \end{itemize}
-    \item \textbf{Last Will and Testament (LWT):} Tính năng giúp Broker thông báo cho Server biết nếu thiết bị đột ngột mất kết nối (ví dụ: xe đi vào vùng mất sóng hoặc bị ngắt nguồn).
-    \item \textbf{Retained Messages:} Giúp thiết bị mới kết nối nhận được ngay trạng thái gần nhất của hệ thống.
-\end{itemize}
+Công nghệ MQTT sở hữu nhiều đặc điểm nổi bật giúp nó trở thành một trong những giao thức tối ưu cho các hệ thống IoT hiện đại. Trước hết, MQTT sử dụng mô hình truyền thông Pub/Sub, cho phép việc trao đổi thông điệp diễn ra theo hướng phân tán và tách biệt hoàn toàn giữa bên gửi và bên nhận. Nhờ đó, việc truyền tải dữ liệu diễn ra ngay lập tức mà không phụ thuộc vào nội dung hay bản chất của thông điệp, giúp giảm độ phức tạp và tài nguyên xử lý trên thiết bị. Giao thức này hoạt động dựa trên nền tảng TCP/IP, đảm bảo độ tin cậy trong truyền dẫn và duy trì kết nối ổn định giữa các thiết bị IoT.
+
+Một trong những ưu điểm quan trọng của MQTT là khả năng hỗ trợ ba mức chất lượng dịch vụ (Quality of Service, hay QoS), cho phép lựa chọn độ tin cậy phù hợp tùy theo ứng dụng. Ở mức QoS 0, thông điệp được gửi đúng một lần nhưng không có cơ chế xác nhận ngoài TCP/IP. Với QoS 1, phía gửi đảm bảo dữ liệu được nhận ít nhất một lần, có thể dẫn đến việc nhận trùng lặp thông điệp. Mức QoS 2 cung cấp độ tin cậy cao nhất khi đảm bảo mỗi thông điệp chỉ được nhận đúng một lần thông qua cơ chế bắt tay bốn bước. Bên cạnh đó, phần bao gói dữ liệu (packet) của MQTT rất nhỏ và được tối ưu đến mức tối thiểu, giúp giảm tải đáng kể cho đường truyền và phù hợp với các mạng băng thông thấp.
 
 \subsubsection{Ưu điểm và nhược điểm}
-\begin{itemize}
-    \item \textbf{Ưu điểm:}
-    \begin{itemize}
-        \item Sử dụng băng thông mạng cực kỳ hiệu quả, giảm chi phí 4G.
-        \item Hoạt động ổn định ngay cả trong điều kiện mạng chập chờn, độ trễ cao.
-        \item Dễ dàng mở rộng hệ thống (Scalability) lên hàng ngàn thiết bị mà không cần thay đổi kiến trúc.
-        \item Cơ chế bảo mật hỗ trợ xác thực (username/password) và mã hóa SSL/TLS.
-    \end{itemize}
-    \item \textbf{Nhược điểm:}
-    \begin{itemize}
-        \item Chạy trên nền TCP nên vẫn có độ trễ thiết lập kết nối cao hơn so với UDP (như CoAP).
-        \item Mô hình tập trung vào Broker, nếu Broker gặp sự cố thì toàn bộ hệ thống truyền tin sẽ bị gián đoạn (trừ khi thiết lập Cluster).
-    \end{itemize}
-\end{itemize}
+MQTT mang lại nhiều ưu điểm quan trọng nhờ cơ chế hoạt động nhẹ, linh hoạt và phù hợp với đặc thù của các hệ thống IoT. Với mô hình Pub/Sub và phần bao gói dữ liệu nhỏ, MQTT giúp truyền tải thông tin hiệu quả, giảm đáng kể băng thông tiêu thụ và tối ưu việc sử dụng tài nguyên mạng. Tính chất hoạt động này cũng giúp tăng khả năng mở rộng hệ thống và duy trì hiệu suất tốt trong điều kiện mạng yếu hoặc hạn chế. MQTT rất phù hợp cho các ứng dụng điều khiển, giám sát từ xa như trong SCADA, IoT công nghiệp, hay các hệ thống thu thập dữ liệu cảm biến. 
 
-% ============================================================
-% 2.2.4 So sánh và lựa chọn giao thức
-% ============================================================
+Ngoài ra, giao thức có chi phí vận hành thấp, hỗ trợ bảo mật thông qua các lớp giao thức như TLS/SSL và được tin dùng bởi nhiều tập đoàn lớn. Việc phát triển ứng dụng dựa trên MQTT cũng được đơn giản hóa, giúp rút ngắn thời gian triển khai, đồng thời cơ chế Pub/Sub cho phép thu thập lượng dữ liệu lớn với băng thông ít hơn so với các giao thức truyền thống.
+
+Tuy nhiên, MQTT cũng tồn tại một số hạn chế nhất định. Khi so sánh với CoAP, một giao thức hướng tài nguyên cho IoT, tốc độ truyền của MQTT đôi khi chậm hơn, đặc biệt trong các ứng dụng yêu cầu phản hồi tức thời. CoAP sử dụng mô hình tài nguyên tĩnh, trong khi MQTT hoạt động dựa trên cơ chế đăng ký động, khiến việc quản lý nội dung đôi khi phức tạp hơn. 
+
+Một nhược điểm khác là MQTT không tích hợp sẵn cơ chế mã hóa dữ liệu, buộc hệ thống phải sử dụng các giao thức bảo mật bổ sung như TLS/SSL để đảm bảo an toàn. Cuối cùng, khả năng mở rộng ở quy mô rất lớn vẫn là thách thức, do Broker trở thành điểm trung tâm cần xử lý lượng lớn kết nối đồng thời, dễ dẫn đến quá tải nếu không được tối ưu đúng cách.
+
 \subsection{So sánh và lựa chọn giao thức}
+Việc lựa chọn giao thức truyền thông phù hợp đóng vai trò then chốt trong hệ thống IoT giám sát và điều phối vận chuyển đạn dược, nơi yêu cầu truyền dữ liệu ổn định, phạm vi xa, tiêu thụ năng lượng thấp và đảm bảo an toàn trong môi trường quân sự. Ba lựa chọn phổ biến trong các hệ thống IoT hiện nay là LoRa, 4G/5G và MQTT. Mỗi công nghệ mang những đặc trưng riêng và đáp ứng những nhóm yêu cầu khác nhau.
 
-\subsubsection{So sánh các công nghệ truyền thông}
-Dựa trên các phân tích kỹ thuật ở trên, Bảng \ref{tab:so_sanh_protocol} dưới đây tóm tắt sự khác biệt giữa các công nghệ truyền thông phổ biến trong IoT là LoRa, 4G/5G và Wi-Fi để làm cơ sở cho việc lựa chọn.
+LoRa hoạt động ở dải tần ISM, sử dụng kỹ thuật trải phổ CSS, cho phép truyền dữ liệu tầm xa, tiêu thụ năng lượng rất thấp và chịu nhiễu tốt. Tốc độ truyền không cao nhưng phù hợp cho các gói dữ liệu cảm biến như GPS, nhiệt độ và cảnh báo rung/lắc. Điều này giúp LoRa đặc biệt phù hợp cho các thiết bị IoT chạy bằng pin và hoạt động trong môi trường di chuyển liên tục như phương tiện vận chuyển đạn dược.
 
-\begin{table}[h]
-    \centering
-    \caption{Bảng so sánh các công nghệ truyền thông IoT}
-    \label{tab:so_sanh_protocol}
-    \begin{tabular}{|p{3cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
-    \hline
-    \textbf{Tiêu chí} & \textbf{LoRa} & \textbf{4G/5G} & \textbf{Wi-Fi} \\ \hline
-    \textbf{Phạm vi phủ sóng} & Rất xa (lên đến 15km+) [119] & Rộng (theo hạ tầng nhà mạng) & Ngắn (vài chục mét) \\ \hline
-    \textbf{Tiêu thụ năng lượng} & Rất thấp (pin 5-10 năm) [126] & Cao & Trung bình/Cao \\ \hline
-    \textbf{Băng thông} & Thấp (giới hạn $\approx$ 100 bytes) [134] & Rất cao (Mbps - Gbps) & Rất cao \\ \hline
-    \textbf{Chi phí vận hành} & Thấp (không phí thuê bao) & Cao (cước phí data 3G/4G) & Thấp (tại điểm truy cập) \\ \hline
-    \textbf{Độ trễ} & Cao & Thấp & Rất thấp \\ \hline
-    \textbf{Khả năng triển khai} & Mạng riêng linh hoạt (Private Network) & Phụ thuộc hạ tầng viễn thông & Phụ thuộc điểm truy cập cục bộ \\ \hline
-    \end{tabular}
+Ngược lại, 4G/5G cung cấp tốc độ cao, độ trễ thấp và khả năng truyền dữ liệu thời gian thực. 4G thích hợp cho các hệ thống cần truyền dữ liệu liên tục như video, trong khi 5G hỗ trợ băng thông lớn, độ trễ chỉ vài mili-giây và khả năng kết nối thiết bị dày đặc. Tuy nhiên, cả 4G và 5G đều tiêu thụ năng lượng cao hơn đáng kể, phụ thuộc vào hạ tầng viễn thông và phát sinh chi phí vận hành (SIM, gói dữ liệu). Điều này làm chúng kém phù hợp hơn cho thiết bị IoT chạy pin và yêu cầu hoạt động dài ngày.
+
+Trong khi đó, MQTT không phải là công nghệ truyền sóng, mà là giao thức tầng ứng dụng chạy trên TCP/IP, thường được dùng kết hợp với 4G/5G, Wi-Fi hoặc Ethernet. MQTT phù hợp cho truyền dữ liệu nhẹ, ổn định, nhưng không thể đảm bảo phạm vi rộng nếu lớp vật lý bên dưới không đáp ứng. Do đó, MQTT không phải lựa chọn thay thế cho LoRa hay 4G/5G mà chỉ đóng vai trò giao thức truyền tải khi thiết bị sử dụng mạng IP.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{3cm}|p{3.3cm}|p{3.3cm}|p{3.3cm}|}
+\hline
+\textbf{Tiêu chí} & \textbf{LoRa} & \textbf{4G/5G} & \textbf{MQTT} \\ 
+\hline
+
+Phạm vi & 2--15 km, không phụ thuộc hạ tầng nhà mạng & Toàn quốc, phụ thuộc trạm BTS & Phụ thuộc mạng IP (4G/5G/Wi-Fi) \\ 
+\hline
+
+Năng lượng & Rất thấp & Cao & Trung bình (tuỳ mạng dưới) \\ 
+\hline
+
+Tốc độ & Thấp (0.3–50 kbps) & Cao đến rất cao (Mbps–Gbps) & Phụ thuộc 4G/5G/Wi-Fi \\ 
+\hline
+
+Loại dữ liệu & Cảm biến, GPS, cảnh báo & Video, dữ liệu lớn, real-time & Telemetry, log nhẹ \\ 
+\hline
+
+Độ ổn định & Cao ở vùng xa & Phụ thuộc hạ tầng & Phụ thuộc lớp mạng dưới \\ 
+\hline
+
+Chi phí & Rất thấp & Cao (SIM, data) & Thấp \\ 
+\hline
+
+\end{tabular}
+\caption{So sánh giữa LoRa, 4G/5G và MQTT}
 \end{table}
 
-\subsubsection{Lựa chọn và giải thích}
-Dựa trên yêu cầu đặc thù của đề tài "Ứng dụng IoT trong giám sát và điều phối vận chuyển đạn dược", nhóm thực hiện quyết định lựa chọn công nghệ \textbf{LoRa} làm giao thức truyền thông chính cho các thiết bị giám sát gắn trên phương tiện, kết hợp với giao thức MQTT ở tầng ứng dụng. Các lý do chính cho sự lựa chọn này bao gồm:
+Dựa trên yêu cầu của hệ thống giám sát và điều phối vận chuyển đạn dược, bao gồm truyền dữ liệu cảm biến (GPS, nhiệt độ, rung/lắc), hoạt động tầm xa, độ ổn định cao, chi phí vận hành thấp và thiết bị tiêu thụ năng lượng nhỏ, nhóm quyết định lựa chọn LoRa làm giao thức truyền thông chính. LoRa đáp ứng tốt nhất các tiêu chí của môi trường quân sự, đặc biệt trong các tuyến đường xa khu vực dân cư, nơi hạ tầng viễn thông 4G/5G có thể không ổn định. 4G/5G chỉ được xem xét như tùy chọn bổ sung cho các khu vực có hạ tầng mạnh hoặc khi cần truyền dữ liệu dung lượng lớn.
 
-\begin{itemize}
-    \item \textbf{Phù hợp với đặc điểm dữ liệu:} Hệ thống giám sát vận chuyển đạn dược chủ yếu thu thập các thông số dạng chuỗi số liệu nhỏ như: toạ độ GPS, nhiệt độ, độ ẩm và thông số rung động [56]. Các gói tin này có kích thước nhỏ, hoàn toàn phù hợp với giới hạn tải trọng (payload) của LoRa [121, 134].
-    
-    \item \textbf{Tối ưu hoá năng lượng cho thiết bị di động:} Quá trình vận chuyển có thể kéo dài nhiều giờ hoặc nhiều ngày. LoRa có ưu điểm vượt trội về tiết kiệm năng lượng [124], cho phép thiết bị giám sát hoạt động bền bỉ bằng pin mà không cần nguồn cấp điện liên tục từ xe, đảm bảo an toàn cháy nổ trong môi trường vận chuyển đạn dược.
-    
-    \item \textbf{Khả năng hoạt động độc lập và bảo mật:} Với LoRa, nhóm có thể thiết lập một mạng riêng (Private LoRaWAN) mà không phụ thuộc hoàn toàn vào sóng di động của nhà mạng [129]. Điều này đặc biệt quan trọng trong các khu vực quân sự hoặc vùng sâu vùng xa nơi sóng 4G có thể không ổn định. Ngoài ra, chuẩn mã hoá AES128 tích hợp sẵn của LoRa giúp tăng cường tính bảo mật cho dữ liệu nhạy cảm [131].
-    
-    \item \textbf{Chi phí triển khai thấp:} Các module LoRa (như Ra-02) và vi điều khiển ESP32 có chi phí thấp, dễ dàng thay thế và bảo trì, phù hợp với phạm vi triển khai thử nghiệm của đề tài [154].
-\end{itemize}
-
-Mặc dù LoRa có nhược điểm về độ trễ và băng thông thấp so với 4G/5G, nhưng với mục tiêu giám sát trạng thái môi trường và vị trí (không yêu cầu truyền hình ảnh/video trực tiếp), sự đánh đổi này là hợp lý để đạt được sự ổn định về năng lượng và khoảng cách truyền tin.
+\section{Các loại cảm biến, thiết bị sử dụng}
 \subsection{ESP32 NodeMCU-32S CH340 Ai-Thinker}
 ESP32 NodeMCU-32S CH340 Ai-Thinker được phát triển trên nền Vi điều khiển trung tâm là ESP32 SoC với công nghệ Wifi, BLE và kiến trúc ARM mới nhất hiện nay, kit có thiết kế phần cứng, firmware và cách sử dụng tương tự Kit NodeMCU ESP8266, với ưu điểm là cách sử dụng dễ dàng, ra chân đầy đủ, tích hợp mạch nạp và giao tiếp UART CH340, thích hợp với các nghiên cứu, ứng dụng về Wifi, BLE, IoT và điều khiển, thu thập dữ liệu qua mạng.
 
 \begin{table}[H]
 \centering
 \begin{tabular}{|p{4cm}|p{8cm}|}
-\rowcolor{gray!15}
 \hline
 \textbf{Thông số} & \textbf{Giá trị} \\
 \hline
@@ -224,7 +185,6 @@ DHT11 là cảm biến nhiệt độ, độ ẩm rất thông dụng hiện nay 
 \begin{table}[H]
 \centering
 \begin{tabular}{|p{6cm}|p{4cm}|}
-\rowcolor{gray!15}
 \hline
 \textbf{Thông số} & \textbf{Giá trị} \\
 \hline
@@ -259,7 +219,6 @@ Cảm biến gia tốc 3 trục ADXL345 được dùng để đo gia tốc hoặ
 \begin{table}[H]
 \centering
 \begin{tabular}{|p{4cm}|p{6cm}|}
-\rowcolor{gray!15}
 \hline
 \textbf{Thông số} & \textbf{Giá trị} \\
 \hline
@@ -296,7 +255,6 @@ Module GPS Ublox có đầu ra TTL nối tiếp, đồng thời có đèn LED hi
 \begin{table}[H]
 \centering
 \begin{tabular}{|p{4.5cm}|p{3cm}|}
-\rowcolor{gray!15}
 \hline
 \textbf{Thông số} & \textbf{Giá trị} \\
 \hline
@@ -325,29 +283,15 @@ Baud rate mặc định & 9600\\
     \label{fig:placeholder}
 \end{figure}
 
-\subsection{Module truyền thông LoRa Ra-08H Kit (ASR6601)}
-Để đảm bảo khả năng truyền dữ liệu tầm xa với độ ổn định cao, đề tài sử dụng Kit phát triển Ra-08H do Ai-Thinker sản xuất. Module này được xây dựng dựa trên SoC (System on Chip) ASR6601, tích hợp vi xử lý 32-bit ARM Cortex-M4 và chip thu phát LoRa trong cùng một gói phần cứng.
+\subsection{Module truyền thông LoRa}
+Kit phát triển LoraWan SoC ASR6601 868/915MHz Ra-08H Development Board Ai-Thinker được sản xuất bởi Ai-Thinker sử dụng chip SoC ASR6601 là sự kết hợp giữa MCU kiến trúc 32-bit RISC và chuẩn truyền sóng Lora, rất thích hợp cho các ứng dụng xây dựng mạng truyền sóng LoraWan, chuẩn Lora mang đến hai yếu tố quan trọng là tiết kiệm năng lượng và khoảng cách phát siêu xa, ngoài ra nó còn có khả năng cấu hình để tạo thành mạng truyền nhận nên hiện tại được phát triển và sử dụng rất nhiều trong các nghiên cứu về IoT.
 
-Khác với các module thế hệ cũ chỉ đóng vai trò thu phát vật lý (như SX1278), Ra-08H là một module thông minh có khả năng tự xử lý giao thức LoRaWAN. Trong hệ thống này, Ra-08H kết nối với vi điều khiển trung tâm ESP32 thông qua giao tiếp UART, hoạt động ở dải tần số cao (868/915 MHz) giúp tín hiệu xuyên vật cản tốt hơn và phù hợp với các chuẩn công nghiệp hiện đại. Đặc biệt, phiên bản "H" (High Power) hỗ trợ công suất phát lên tới +22dBm, giúp tối ưu hóa khoảng cách truyền trong điều kiện vận chuyển thực tế.
-
-\begin{table}[h]
+\begin{figure}[H]
     \centering
-    \caption{Thông số kỹ thuật của module LoRa Ra-08H Kit}
-    \label{tab:spec_ra08h}
-    \begin{tabular}{|p{5cm}|p{5cm}|}
-    \hline
-    \textbf{Thông số} & \textbf{Giá trị} \\ \hline
-    SoC điều khiển & ASR6601CB (ARM Cortex-M4) \\ \hline
-    Dải tần số hỗ trợ & 803 MHz $\sim$ 930 MHz (868/915 MHz) \\ \hline
-    Công suất phát (Tx) & Tối đa +22 dBm \\ \hline
-    Độ nhạy thu (Rx) & -140 dBm \\ \hline
-    Giao tiếp với ESP32 & UART (AT Commands) \\ \hline
-    Điện áp hoạt động & 3.3V (cấp qua cổng USB hoặc chân pin) \\ \hline
-    Khoảng cách truyền & > 10km (điều kiện lý tưởng) \\ \hline
-    Bộ nhớ & 128KB Flash, 16KB SRAM \\ \hline
-    \end{tabular}
-\end{table}
-
+    \includegraphics[width=0.35\linewidth]{images/chapter_2/Module LoRa.png}
+    \caption{Module LoRa Ra-08H Development Board Ai-Thinker}
+    \label{fig:placeholder}
+\end{figure}
 \section{Các kỹ thuật bảo mật trong IoT}
 Bảo mật là yếu tố sống còn trong hệ thống giám sát vận chuyển hàng hóa quân sự. Đề tài tập trung vào ba khía cạnh bảo mật chính:
 
