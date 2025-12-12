@@ -1,6 +1,7 @@
 \usepackage{a4wide,amssymb,epsfig,latexsym,multicol,array,hhline,fancyhdr}
 \usepackage[utf8]{vietnam} 
-\usepackage{amssymb,gensymb,textcomp} \usepackage{array,multicol,multirow,siunitx,tabularx}
+\usepackage{amssymb,gensymb,textcomp} 
+\usepackage{array,multicol,multirow,siunitx,tabularx}
 \usepackage{graphicx} 
 \usepackage{float}
 \usepackage{multicol}
@@ -22,9 +23,16 @@
    \@setfontsize\normalsize{14pt}{18pt} % chữ 14pt, khoảng cách dòng 16pt
 }
 \normalsize
+
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+\renewcommand{\thetable}{\thesection.\arabic{table}}
+
 \usepackage{diagbox}
-\usepackage[table]{xcolor}
-\usepackage{color}
+\usepackage{xcolor}
 \definecolor{light-gray}{gray}{0.95}
 \newcommand{\code}[1]{\colorbox{light-gray}{\texttt{#1}}}
 \usepackage{titlesec}
@@ -301,7 +309,6 @@
 \makeatother
 
 % The package belong to this particular document.
-\usepackage{xcolor}
 \usepackage{listings}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}

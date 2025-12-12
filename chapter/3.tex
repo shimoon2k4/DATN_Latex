@@ -60,8 +60,33 @@
     \item Phải cung cấp đầy đủ tài liệu kỹ thuật và hướng dẫn sử dụng.
 \end{itemize}
 \section{Quy trình vận chuyển đạn dược}
+Quy trình vận chuyển đạn dược được tổ chức theo một chuỗi bước nghiêm ngặt nhằm đảm bảo an toàn tuyệt đối cho phương tiện, hàng hóa và nhân sự. Hệ thống IoT đóng vai trò hỗ trợ giám sát toàn bộ quá trình, kết hợp với các quy định truyền thống của công tác vận chuyển quân sự để nâng cao mức độ an toàn và khả năng ứng phó sự cố.
+
+Trước khi xuất phát, phương tiện và lô đạn dược được kiểm tra toàn diện về tình trạng kỹ thuật, bao gói, niêm phong và khối lượng theo đúng tiêu chuẩn an toàn. Các cảm biến IoT như nhiệt độ, độ rung và GPS được kích hoạt, kiểm tra tín hiệu và xác thực kết nối với hệ thống trung tâm. Điều phối viên tiến hành cấu hình tuyến đường, thông số giám sát và thiết lập vùng địa lý cho chuyến đi.
+
+Tại điểm xuất phát, đạn được xếp lên phương tiện theo đúng quy định về an toàn và trọng tải. Sau khi hoàn tất, lực lượng phụ trách thực hiện các bước xác nhận bàn giao cần thiết cho tài xế và ghi nhận thông tin vào hệ thống trước khi khởi hành. 
+
+Khi phương tiện bắt đầu di chuyển, thiết bị IoT trên xe sẽ gửi dữ liệu định kỳ về hệ thống trung tâm, bao gồm vị trí GPS, tốc độ, nhiệt độ và độ rung. Hệ thống dựa trên các dữ liệu này để tự động cập nhật trạng thái chuyến đi và hiển thị lộ trình theo thời gian thực, giúp điều phối viên theo dõi và nắm bắt tình hình liên tục.
+
+Trong suốt hành trình, hệ thống IoT có nhiệm vụ giám sát và phát hiện các điều kiện bất thường như nhiệt độ vượt ngưỡng, rung/lắc mạnh, lệch khỏi tuyến đường quy định, dừng quá lâu ngoài khu vực cho phép hoặc mất kết nối truyền thông. Khi xảy ra sự cố, hệ thống sẽ phát cảnh báo ngay lập tức để điều phối viên kịp thời chỉ đạo, có thể yêu cầu dừng kiểm tra, điều chỉnh hướng di chuyển hoặc huy động lực lượng hỗ trợ gần nhất.
+
+Khi xe đến điểm nhận, tài xế và lực lượng tại kho đích tiến hành kiểm tra niêm phong, xác nhận bàn giao và hoàn tất các thủ tục theo quy định. Thông tin về thời gian, vị trí và nhân sự tiếp nhận được hệ thống ghi nhận đầy đủ.
+
+Sau khi bàn giao hoàn tất, toàn bộ dữ liệu liên quan đến chuyến vận chuyển như lộ trình thực tế, thông số giám sát, cảnh báo và các bước xử lý được lưu trữ trên hệ thống. Các dữ liệu này phục vụ công tác đánh giá rủi ro, truy vết và tối ưu hóa các nhiệm vụ vận chuyển trong tương lai.
 
 \section{Các rủi ro cần giám sát}
+Trong quá trình vận chuyển đạn dược, tồn tại nhiều rủi ro tiềm ẩn có thể ảnh hưởng trực tiếp đến an toàn con người, phương tiện và hàng hoá. Để giảm thiểu những nguy cơ này, hệ thống IoT được triển khai nhằm giám sát liên tục, phát hiện sớm bất thường và hỗ trợ điều phối xử lý kịp thời. 
+
+Một trong những rủi ro quan trọng là nhiệt độ, bởi đạn dược rất nhạy cảm với môi trường nóng, vì khi xe di chuyển qua khu vực nhiệt độ cao hoặc dừng lâu dưới trời nắng, nhiệt độ bên trong thùng chứa có thể vượt quá ngưỡng an toàn, đòi hỏi hệ thống phải cảnh báo ngay lập tức. 
+
+Bên cạnh đó, rung và lắc mạnh do đường xấu, phanh gấp hoặc va chạm cũng là yếu tố nguy hiểm, có thể ảnh hưởng đến độ ổn định của đạn, cảm biến rung giúp phát hiện các xung lực bất thường và gửi cảnh báo cho điều phối viên. 
+
+Hệ thống cũng cần phát hiện lệch lộ trình, bởi việc phương tiện đi sai đường có thể dẫn đến nguy cơ an ninh, xâm nhập khu vực cấm hoặc rơi vào tình huống bị theo dõi. Ngoài ra, dừng hoặc bất động bất thường là dấu hiệu của sự cố hoặc can thiệp trái phép, vì vậy dữ liệu thời gian dừng được phân tích để đánh giá mức độ nguy hiểm.
+
+Một rủi ro khác là mất tín hiệu hoặc mất kết nối truyền thông, khiến thiết bị không thể gửi dữ liệu về trung tâm, khi đó, hệ thống phải ghi nhớ dữ liệu và đồng bộ lại khi kết nối được phục hồi. Vấn đề an ninh thiết bị cũng đặc biệt quan trọng, bởi thiết bị IoT có thể bị truy cập trái phép hoặc gửi dữ liệu giả mạo nếu thiếu cơ chế bảo vệ, do đó cần áp dụng mã hóa, ký số và xác thực hai chiều.
+
+Bên cạnh các yếu tố kỹ thuật, hệ thống còn phải tính đến sự cố phương tiện, chẳng hạn như hỏng động cơ, thủng lốp hoặc tai nạn, thường thể hiện qua các tín hiệu rung bất thường, dừng đột ngột hoặc mất tín hiệu. Nguy hiểm nhất là rủi ro cháy nổ, có thể xảy ra khi nhiệt độ tăng nhanh, va chạm mạnh hoặc rò rỉ nhiên liệu; do vậy các cảm biến phải giám sát chặt chẽ để đưa ra cảnh báo sớm.
+
 
 \section{Use-case diagram}
 \begin{figure}[H]
