@@ -1,12 +1,153 @@
 \chapter{Thiết kế hệ thống}
 \section{Sơ đồ kiến trúc tổng thể}
+Sơ đồ khối chức năng của hệ thống được thể hiện trong \autoref{SDK}. Trung tâm của hệ thống là khối xử lý trung tâm, chịu trách nhiệm thu nhận dữ liệu từ các cảm biến rung, nhiệt độ và GPS, thực hiện tiền xử lý, mã hóa và quản lý luồng thông tin. Khối nguồn đảm bảo cung cấp điện áp ổn định cho toàn bộ hệ thống. Sau khi xử lý, dữ liệu được hiển thị cục bộ trên màn hình và đồng thời truyền qua LoRa/LoRaWAN đến Gateway trước khi chuyển tiếp lên Cloud/Server. Tại đây, dữ liệu được lưu trữ trong cơ sở dữ liệu, quản lý bởi MQTT Broker và tích hợp với khối bảo mật cùng ứng dụng di động để hỗ trợ giám sát, cảnh báo và ra quyết định từ xa.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\linewidth]{images/SoDoKhoi.png}
+    \caption{Sơ đồ khối của toàn bộ hệ thống}
+    \label{SDK}
+\end{figure}
+
+Toàn bộ hệ thống được cấp điện bởi khối nguồn, đảm bảo cung cấp mức điện áp 5V ổn định cho các khối cảm biến, xử lý, hiển thị và truyền thông. Việc duy trì nguồn điện liên tục và ổn định là yếu tố then chốt để đảm bảo thiết bị có thể giám sát hành trình vận chuyển đạn dược mà không bị gián đoạn.
+
+Khối cảm biến đóng vai trò thu thập dữ liệu môi trường và trạng thái chuyển động của phương tiện. Cảm biến rung giám sát các dao động bất thường trong quá trình vận chuyển, cảm biến DHT20 theo dõi nhiệt độ và độ ẩm nhằm đảm bảo điều kiện bảo quản đạn dược luôn nằm trong ngưỡng an toàn, module GPS cung cấp thông tin vị trí địa lý theo thời gian thực, giúp hệ thống giám sát chính xác lộ trình và phát hiện các sai lệch hướng di chuyển.
+
+Bên cạnh đó, khối hiển thị sử dụng màn hình LCD cho phép hiển thị trực tiếp các thông số môi trường ngay tại phương tiện vận chuyển. Điều này giúp người vận hành có thể theo dõi nhanh mà không cần phụ thuộc hoàn toàn vào kết nối mạng. Khi xuất hiện tình huống như nhiệt độ tăng cao, độ rung vượt ngưỡng hoặc phương tiện rời khỏi tuyến đường cho phép, khối cảnh báo ngay lập tức kích hoạt tín hiệu cảnh báo và gửi thông báo đến ứng dụng quản lý trên thiết bị di động.
+
+Dữ liệu sau khi được xử lý tại thiết bị sẽ được truyền đi thông qua khối truyền dữ liệu LoRa/LoRaWAN. Công nghệ LoRa cho phép truyền dữ liệu tầm xa với mức tiêu thụ năng lượng thấp, phù hợp với yêu cầu của môi trường vận chuyển quân sự, nơi địa hình thường phức tạp và liên lạc phải duy trì ổn định. Tín hiệu từ các node cảm biến được chuyển đến LoRaWAN Gateway, đóng vai trò cầu nối giữa thiết bị tại hiện trường và không gian lưu trữ trên Cloud. Gateway hỗ trợ quản lý nhiều thiết bị cùng lúc, mã hóa dữ liệu nhận được và chuyển tiếp lên nền tảng server qua giao thức bảo mật MQTT.
+
+Tại tầng xử lý dữ liệu trung tâm, Cloud/Server đảm nhiệm vai trò tiếp nhận dữ liệu từ Gateway, xử lý, phân loại và lưu trữ trong cơ sở dữ liệu. MQTT Broker được sử dụng để đảm bảo việc truyền nhận dữ liệu giữa các thiết bị và ứng dụng giám sát diễn ra đồng bộ, ổn định theo thời gian thực. Tại đây, người quản lý có thể xem lại lịch sử hành trình, phân tích dữ liệu hoặc đánh giá các chỉ số an toàn trong suốt quá trình vận chuyển.
+
+Xuyên suốt toàn bộ hệ thống là khối bảo mật, tích hợp ở từng tầng từ cảm biến, Gateway cho tới Cloud. Các cơ chế mã hóa dữ liệu, xác thực thiết bị và kiểm soát quyền truy cập giúp đảm bảo rằng mọi thông tin liên quan đến vận chuyển đạn dược đều được bảo vệ, tránh nguy cơ truy cập trái phép hoặc rò rỉ dữ liệu.
+
+Cuối cùng, ứng dụng di động đóng vai trò giao diện tương tác với người quản lý. Ứng dụng hiển thị trạng thái vận chuyển theo thời gian thực, cung cấp bản đồ số để theo dõi lộ trình và nhận cảnh báo tức thời khi hệ thống ghi nhận bất kỳ sự cố nào. Nhờ đó, người quản lý có thể ra quyết định nhanh chóng và điều phối phương tiện hiệu quả hơn.
 
 \section{Sơ đồ kết nối phần cứng}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{images/week/week_3/hardware-interface.png}
+    \caption{Sơ đồ kết nối phần cứng của hệ thống}
+    \label{hardware-interface}
+\end{figure}
+
+Sơ đồ kết nối phần cứng minh họa trong \autoref{hardware-interface} thể hiện kiến trúc tổng thể của các thành phần điện tử trong hệ thống giám sát vận chuyển đạn dược. Trung tâm của toàn bộ cấu trúc là ESP32, đóng vai trò vi điều khiển chính, chịu trách nhiệm thu thập dữ liệu từ các cảm biến, truyền thông với các module ngoại vi và gửi dữ liệu đến backend thông qua LoRa. ESP32 đồng thời được cấp nguồn trực tiếp từ khối Power, đảm bảo toàn bộ hệ thống hoạt động ổn định và liên tục.
+
+Các cảm biến môi trường và trạng thái được kết nối trực tiếp đến ESP32 thông qua các giao thức phù hợp. Cảm biến DHT11 sử dụng giao tiếp I2C, cho phép truyền dữ liệu nhiệt độ và độ ẩm theo chu kỳ về vi điều khiển. Tương tự, cảm biến gia tốc ADXL345 được kết nối qua giao tiếp I2C hoặc SPI, hỗ trợ ESP32 thu thập thông tin về rung/lắc và chuyển động của phương tiện trong quá trình vận chuyển. Các kết nối này giúp hệ thống ghi nhận đầy đủ các yếu tố ảnh hưởng đến an toàn của lô đạn dược.
+
+Đối với việc xác định vị trí, hệ thống sử dụng module GPS NEO-6MV2, kết nối với ESP32 thông qua giao tiếp UART. Module GPS đảm nhiệm việc thu thập toạ độ thời gian thực và truyền về vi điều khiển. Dữ liệu định vị sau đó được ESP32 xử lý và gửi đi, đảm bảo phương tiện luôn được giám sát chặt chẽ trên bản đồ. Module GPS cũng được kết nối với antenna ngoài để cải thiện khả năng thu tín hiệu trong điều kiện môi trường phức tạp.
+
+Để truyền dữ liệu về trung tâm, ESP32 sử dụng module LoRa, kết nối thông qua chuẩn SPI. Module LoRa đảm nhiệm việc gửi dữ liệu tầm xa, năng lượng thấp, phù hợp với đặc thù vận chuyển quân sự. Toàn bộ thông tin bao gồm nhiệt độ, độ ẩm, rung/lắc và vị trí GPS được ESP32 tổng hợp và gửi sang LoRa Module, sau đó truyền về Gateway của hệ thống.
 
 \section{Thiết kế truyền thông dữ liệu}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\linewidth]{images/DFD.png}
+    \caption{Mô phỏng luồng dữ liệu tổng quan của hệ thống}
+    \label{data-flow}
+\end{figure}
+
+Hệ thống truyền thông dữ liệu được thiết kế nhằm đảm bảo rằng mọi thông tin thu thập từ phương tiện vận chuyển đều được truyền về trung tâm một cách ổn định, liên tục và an toàn. Mô phỏng luồng dữ liệu tổng quan được thể hiện trong \autoref{data-flow}, mô tả đầy đủ hành trình mà dữ liệu đi qua từ khi được tạo ra tại lớp cảm biến đến lúc được trình bày trên bảng điều khiển cho người quản lý.
+
+Ở lớp thấp nhất, các cảm biến đóng vai trò là nguồn tạo dữ liệu. Ba nhóm cảm biến chính gồm GPS, cảm biến nhiệt độ, độ ẩm và cảm biến rung/lắc, liên tục ghi nhận các thông số liên quan đến vị trí phương tiện, điều kiện môi trường và trạng thái chuyển động. Các dữ liệu này mang tính thô và cần được xử lý thêm trước khi truyền đi.
+
+Toàn bộ dữ liệu thô được chuyển tới khối xử lý cục bộ (MCU/Board), nơi thực hiện các tác vụ như lọc nhiễu tín hiệu, định dạng dữ liệu và kiểm tra tính hợp lệ. Việc xử lý sơ bộ giúp giảm tải cho hệ thống trung tâm, đồng thời đảm bảo dữ liệu truyền đi có cấu trúc rõ ràng, giảm rủi ro sai lệch hoặc nhiễu trong quá trình truyền.
+
+Dữ liệu sau khi được chuẩn hóa sẽ được chuyển sang module truyền thông, với hai công nghệ chính là LoRa và 4G/5G. LoRa đóng vai trò nền tảng truyền thông chính của hệ thống nhờ ưu thế về tầm xa, độ ổn định và mức tiêu thụ năng lượng thấp, rất phù hợp với bối cảnh vận chuyển quân sự. Trong khi đó, 4G/5G được xem như kênh bổ trợ giúp duy trì liên lạc trong trường hợp thiết bị đi vào khu vực không phủ sóng LoRa hoặc môi trường truyền dẫn quá nhiễu.
+
+Tại trung tâm, dữ liệu được tiếp nhận bởi máy chủ. Máy chủ có nhiệm vụ lưu trữ, xử lý sâu hơn và phân tích dữ liệu theo các thuật toán phát hiện bất thường. Từ đây, các thông tin quan trọng như cảnh báo, thống kê hay trạng thái vận chuyển sẽ được cập nhật liên tục lên hệ thống giao diện người dùng.
+
+Cuối chuỗi truyền thông là dashboard giám sát, nơi dữ liệu được biểu diễn dưới dạng bản đồ hành trình, biểu đồ nhiệt độ, đồ thị rung/lắc và các cảnh báo theo thời gian thực. Dashboard đóng vai trò then chốt, giúp người quản lý dễ dàng theo dõi toàn bộ quá trình vận chuyển và ra quyết định nhanh chóng khi phát hiện tình huống bất thường.
+
+Thông qua thiết kế truyền thông dữ liệu này, toàn bộ quá trình từ thu thập, xử lý, truyền tải đến hiển thị được đảm bảo tính liên tục, đáng tin cậy và hiệu quả. Đây là nền tảng quan trọng giúp hệ thống vận hành ổn định trong thực tế, đặc biệt trong các tình huống yêu cầu an toàn cao như vận chuyển đạn dược.
 
 \section{Thiết kế ứng dụng giám sát}
+Để hỗ trợ việc xây dựng và triển khai ứng dụng giám sát, hệ thống được tổ chức theo kiến trúc tách biệt giữa Backend (xử lý thiết bị IoT) và Frontend (ứng dụng giám sát). Cách tổ chức repository theo hướng Implementation View nhằm đảm bảo việc phát triển, mở rộng và bảo trì được thuận lợi.
 
-\section{Thiết kế giao diện quản lý}
+\subsection{Backend}
+
+Backend chịu trách nhiệm thu thập dữ liệu từ các cảm biến, thực hiện mã hoá và truyền dữ liệu, đồng thời giao tiếp với hệ thống giám sát trung tâm. Thành phần này đóng vai trò là nguồn cung cấp dữ liệu cốt lõi cho ứng dụng theo dõi trạng thái vận chuyển trong toàn bộ hệ thống.
+
+Cấu trúc thư mục của Backend được tổ chức rõ ràng nhằm hỗ trợ quá trình phát triển, kiểm thử và triển khai trên vi điều khiển ESP32. Các thành phần chính bao gồm mã nguồn, tài liệu và bộ kiểm thử, được sắp xếp theo từng thư mục chức năng như dưới đây:
+
+\begin{itemize}
+    \item \texttt{src/} - Chứa toàn bộ mã nguồn chạy trên ESP32
+    \begin{itemize}
+        \item \texttt{main.c} - Vòng lặp chính của chương trình.
+        \item \texttt{sensors.c/.h} - Thu thập dữ liệu từ GPS, nhiệt độ, độ rung/lắc.
+        \item \texttt{comm\_mqtt.c/.h}, \texttt{comm\_coap.c/.h} - Giao tiếp bằng giao thức MQTT/CoAP.
+        \item \texttt{lora\_driver.c/.h} - Truyền dữ liệu qua mạng LoRa.
+        \item \texttt{security.c/.h} - Thực hiện mã hoá và xác thực thiết bị.
+        \item \texttt{utils.c/.h} - Các hàm tiện ích dùng chung.
+    \end{itemize}
+
+    \item \texttt{tests/} - Chứa các kịch bản kiểm thử cảm biến, truyền thông và bảo mật.
+
+    \item \texttt{docs/} - Lưu trữ sơ đồ mạch, tài liệu kiến trúc và hướng dẫn triển khai Backend.
+\end{itemize}
+
+\subsection{Frontend}
+
+Frontend được phát triển bằng Flutter, đóng vai trò cung cấp giao diện trực quan để giám sát trạng thái vận chuyển theo thời gian thực. Ứng dụng hỗ trợ hiển thị bản đồ, cảnh báo, lịch sử dữ liệu và tình trạng của thiết bị trên nền tảng di động hoặc web. Toàn bộ cấu trúc mã nguồn được tổ chức theo mô hình rõ ràng giúp quá trình phát triển, mở rộng và bảo trì trở nên thuận tiện hơn.
+
+Cấu trúc thư mục của Frontend bao gồm các thành phần chính như sau:
+
+\begin{itemize}
+    \item \texttt{lib/} -- Thư mục mã nguồn chính của ứng dụng Flutter
+    \begin{itemize}
+        \item \texttt{main.dart} -- Điểm khởi động của ứng dụng.
+        \item \texttt{screens/} -- Chứa các màn hình chức năng như Dashboard, MapScreen, AlertScreen và HistoryScreen.
+        \item \texttt{widgets/} -- Các thành phần giao diện được tái sử dụng trong nhiều màn hình.
+        \item \texttt{services/} -- Thực hiện kết nối API và xử lý dữ liệu nhận từ Backend.
+        \item \texttt{models/} -- Định nghĩa các mô hình dữ liệu như \textit{Sensor}, \textit{Alert}, \textit{History}.
+        \item \texttt{utils/} -- Chứa các hàm tiện ích và cấu hình chung của ứng dụng.
+    \end{itemize}
+
+    \item \texttt{assets/} -- Lưu trữ hình ảnh, biểu tượng và các tệp cấu hình.
+
+    \item \texttt{docs/} -- Bao gồm tài liệu thiết kế giao diện, tài liệu kiến trúc Frontend và hướng dẫn sử dụng ứng dụng.
+\end{itemize}
+
+\section{Thiết kế giao diện người dùng}
+\autoref{UI1} mô tả các giao diện liên quan đến chức năng đăng nhập và đăng ký. Người dùng có thể tạo tài khoản mới hoặc đăng nhập vào hệ thống để bắt đầu sử dụng các tính năng giám sát vận chuyển đạn dược.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{images/week/week9/065_UI_1.jpg}
+    \caption{Các giao diện liên quan đến phần đăng nhập, đăng ký}
+    \label{UI1}
+\end{figure}
+
+Tiếp theo, \autoref{UI2} thể hiện giao diện trang Home, nơi tổng hợp các thông tin quan trọng ở dạng tóm tắt. Trang này đóng vai trò trung tâm điều hướng, cung cấp các mục chính như tổng quan, lịch trình vận chuyển và cảnh báo trong ngày.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{images/week/week9/065_UI_2.jpg}
+    \caption{Các giao diện liên quan đến trang \textbf{Home}}
+    \label{UI2}
+\end{figure}
+
+\autoref{UI3} minh hoạ giao diện trang Maps, cho phép theo dõi vị trí các phương tiện vận chuyển đạn dược theo thời gian thực. Bản đồ tích hợp các điểm đánh dấu thể hiện trạng thái, tuyến đường di chuyển, và các cảnh báo. Người dùng có thể tương tác trực tiếp với bản đồ để xem thêm thông tin chi tiết về từng phương tiện hoặc tuyến vận chuyển.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/week/week9/065_UI_3.jpg}
+    \caption{Các giao diện liên quan đến trang \textbf{Maps}}
+    \label{UI3}
+\end{figure}
+
+Trong \autoref{UI4}, giao diện Dashboard được thể hiện, cung cấp các biểu đồ thống kê và thông số quan trọng, hoặc các thông tin phân tích theo thời gian. Mục tiêu của dashboard là hỗ trợ người vận hành đưa ra quyết định nhanh chóng dựa trên dữ liệu trực quan.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.25\linewidth]{images/week/week9/065_UI_4.jpg}
+    \caption{Các giao diện liên quan đến trang \textbf{Dashboard}}
+    \label{UI4}
+\end{figure}
+
+Cuối cùng, \autoref{UI5} mô tả trang Profile, nơi người dùng có thể xem và chỉnh sửa thông tin cá nhân, thay đổi cài đặt tài khoản, hoặc đăng xuất khỏi hệ thống. Giao diện được thiết kế đơn giản, tập trung vào sự rõ ràng và dễ thao tác.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{images/week/week9/065_UI_5.jpg}
+    \caption{Các giao diện liên quan đến trang \textbf{Profile}}
+    \label{UI5}
+\end{figure}
+
 
 \section{Thiết kế cơ chế bảo mật}

@@ -12,7 +12,18 @@
 \contentsline {figure}{\numberline {3.6.1}{\ignorespaces Activity diagram: Điều phối lộ trình}}{25}{figure.caption.18}%
 \contentsline {figure}{\numberline {3.6.2}{\ignorespaces Activity diagram: Quản lý hàng hoá}}{27}{figure.caption.19}%
 \contentsline {figure}{\numberline {3.6.3}{\ignorespaces Activity diagram: Giám sát \& cập nhật trạng thái vận chuyển}}{29}{figure.caption.20}%
+\contentsline {figure}{\numberline {3.7.1}{\ignorespaces Sequence diagram: Điều phối lộ trình}}{31}{figure.caption.21}%
+\contentsline {figure}{\numberline {3.7.2}{\ignorespaces Sequence diagram: Quản lý hàng hoá}}{33}{figure.caption.22}%
+\contentsline {figure}{\numberline {3.7.3}{\ignorespaces Sequence diagram: Giám sát \& cập nhật trạng thái vận chuyển}}{35}{figure.caption.23}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1.1}{\ignorespaces Sơ đồ khối của toàn bộ hệ thống}}{37}{figure.caption.24}%
+\contentsline {figure}{\numberline {4.2.1}{\ignorespaces Sơ đồ kết nối phần cứng của hệ thống}}{39}{figure.caption.25}%
+\contentsline {figure}{\numberline {4.3.1}{\ignorespaces Mô phỏng luồng dữ liệu tổng quan của hệ thống}}{40}{figure.caption.26}%
+\contentsline {figure}{\numberline {4.5.1}{\ignorespaces Các giao diện liên quan đến phần đăng nhập, đăng ký}}{43}{figure.caption.27}%
+\contentsline {figure}{\numberline {4.5.2}{\ignorespaces Các giao diện liên quan đến trang \textbf {Home}}}{43}{figure.caption.28}%
+\contentsline {figure}{\numberline {4.5.3}{\ignorespaces Các giao diện liên quan đến trang \textbf {Maps}}}{44}{figure.caption.29}%
+\contentsline {figure}{\numberline {4.5.4}{\ignorespaces Các giao diện liên quan đến trang \textbf {Dashboard}}}{44}{figure.caption.30}%
+\contentsline {figure}{\numberline {4.5.5}{\ignorespaces Các giao diện liên quan đến trang \textbf {Profile}}}{45}{figure.caption.31}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

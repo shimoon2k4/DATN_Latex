@@ -292,4 +292,18 @@ Kit phát triển LoraWan SoC ASR6601 868/915MHz Ra-08H Development Board Ai-Thi
     \caption{Module LoRa Ra-08H Development Board Ai-Thinker}
     \label{fig:placeholder}
 \end{figure}
+
 \section{Các kỹ thuật bảo mật trong IoT}
+
+\subsection{Mã hóa dữ liệu (Confidentiality)}
+Để đảm bảo dữ liệu (tọa độ, trạng thái đạn dược) không bị nghe lén trong quá trình truyền tải qua không gian, hệ thống sử dụng thuật toán mã hóa AES-128 (Advanced Encryption Standard). Trước khi gửi gói tin từ ESP32 qua LoRa hoặc 4G, dữ liệu payload sẽ được mã hóa bằng một khóa bí mật (Secret Key) chỉ được biết bởi thiết bị gửi và máy chủ nhận.
+
+\subsection{Xác thực thiết bị (Authentication)}
+Hệ thống ngăn chặn các thiết bị lạ giả mạo thành xe vận chuyển bằng cơ chế xác thực.
+\begin{itemize}
+    \item \textbf{Với MQTT:} Sử dụng Username/Password và Client ID định danh cho từng thiết bị khi kết nối vào Broker.
+    \item \textbf{Với LoRa:} Sử dụng cơ chế xác thực ABP (Activation By Personalization) hoặc OTAA (Over-The-Air Activation) để đảm bảo chỉ các node đã đăng ký mới được tham gia mạng.
+\end{itemize}
+
+\subsection{Toàn vẹn dữ liệu (Integrity)}
+Để đảm bảo dữ liệu không bị thay đổi hoặc làm sai lệch trên đường truyền, hệ thống sử dụng kỹ thuật Checksum hoặc HMAC (Hash-based Message Authentication Code). Phía nhận sẽ tính toán lại mã kiểm tra và so sánh với mã nhận được; nếu không khớp, gói tin sẽ bị loại bỏ để tránh xử lý sai thông tin.

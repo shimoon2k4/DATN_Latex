@@ -194,3 +194,48 @@ Sơ đồ hoạt động này minh hoạ pipeline thu thập -- xác thực -- l
   \label{fig:act-giam-sat}
 \end{figure}
 
+\section{Sequence diagram}
+Phần này trình bày ba sơ đồ trình tự tương ứng với ba khối chức năng cốt lõi của hệ thống: \textbf{Điều phối lộ trình}, \textbf{Quản lý hàng hoá} và \textbf{Giám sát \& cập nhật trạng thái vận chuyển}. Mỗi sơ đồ mô tả chi tiết chuỗi tương tác theo thời gian giữa ba thành phần chính: \emph{Dashboard} (giao diện người dùng), \emph{Hệ thống} (xử lý nghiệp vụ) và \emph{Thiết bị} (thiết bị/ứng dụng triển khai tại hiện trường). Thông qua các sơ đồ này, quá trình xử lý tác vụ, phản hồi và đồng bộ dữ liệu giữa các thành phần được biểu diễn một cách rõ ràng, hỗ trợ cho việc thiết kế, hiện thực và đánh giá hệ thống.
+
+\subsection{Điều phối lộ trình}
+
+Trong chức năng điều phối lộ trình, Dashboard đóng vai trò khởi tạo yêu cầu điều phối bao gồm tập đơn hàng, các ràng buộc vận hành, khoảng thời gian giao (\emph{time windows}) và các khu vực hạn chế. Hệ thống tiếp nhận yêu cầu, kiểm tra tính hợp lệ, tải dữ liệu đội xe, kho và đơn hàng, đồng thời xây dựng ma trận chi phí hoặc thời gian. Dựa trên các dữ liệu này, hệ thống giải bài toán tối ưu (VRP/VRPTW) để sinh ra kế hoạch lộ trình cùng các chỉ số đánh giá (KPI), sau đó gửi kết quả về Dashboard để người vận hành xem trước.
+
+Quá trình xử lý phân nhánh thành hai hướng chính. Trường hợp kế hoạch được phê duyệt, hệ thống tiến hành công bố lộ trình và chuyển danh sách điểm dừng, thời gian dự kiến (ETA) đến Thiết bị, đồng thời tạo \emph{geofence} và các điểm kiểm soát dọc tuyến. Ngược lại, nếu người vận hành thực hiện chỉnh sửa, Dashboard gửi lại ràng buộc cập nhật, hệ thống chạy lại thuật toán tối ưu và trả về kế hoạch mới kèm theo so sánh KPI giữa hai phiên bản.
+
+Khi vận hành thực tế diễn ra, Hệ thống và Thiết bị hoạt động song song. Thiết bị gửi dữ liệu \emph{telemetry} định kỳ để hệ thống ghi lại lịch sử, cập nhật tiến độ và tính toán ETA theo thời gian thực, sau đó hiển thị trên Dashboard. Đồng thời, hệ thống liên tục đánh giá điều kiện giao thông và phát hiện lệch tuyến để đưa ra gợi ý điều hướng lại khi cần thiết.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/week/week_3/sequence_điều phối lộ trình.png}
+  \caption{Sequence diagram: Điều phối lộ trình}
+  \label{fig:sd-dieu-phoi}
+\end{figure}
+
+\subsection{Quản lý hàng hoá}
+
+Trong chức năng quản lý hàng hoá, Dashboard khởi tạo lô/kiện với các thông tin mô tả như danh sách vật phẩm, trọng lượng, hoặc điều kiện bảo quản yêu cầu. Hệ thống tiếp nhận yêu cầu, sinh mã định danh (QR/Tag) cho từng lô/kiện và lưu lại các ràng buộc như mức nhiệt độ cho phép hay ngưỡng rung, sau đó trả mã về để gắn hoặc in nhãn. Khi phân bổ hàng hóa, Dashboard gán các lô/kiện cho phương tiện hoặc thiết bị, và hệ thống cập nhật ánh xạ giữa lô hàng, phương tiện và thiết bị giám sát tương ứng.
+
+Trong quá trình đối soát, thiết bị gửi sự kiện liên quan đến niêm phong hoặc phát hiện can thiệp trái phép. Hệ thống ghi nhận trạng thái, đánh dấu cảnh báo và cập nhật về Dashboard. Khi cần kiểm đếm, Dashboard gửi danh sách QR đã quét, hệ thống kiểm tra và đối chiếu với dữ liệu gốc để xác định chênh lệch, cảnh báo thiếu hoặc thừa, hoặc xác nhận tình trạng \emph{sẵn sàng xuất kho} nếu kết quả trùng khớp.
+
+Trong suốt hành trình vận chuyển, hệ thống duy trì vòng giám sát điều kiện bảo quản. Thiết bị định kỳ gửi dữ liệu nhiệt độ, rung và mức pin. Hệ thống so sánh giá trị gửi lên với ngưỡng đặt trước; nếu có vi phạm, cảnh báo được tạo và gửi tới Dashboard đồng thời phát lệnh xử lý về Thiết bị. Nếu các giá trị vẫn trong ngưỡng an toàn, trạng thái ổn định được cập nhật liên tục để người vận hành theo dõi.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/week/week_3/sequence_quản lý hàng hóa.png}
+  \caption{Sequence diagram: Quản lý hàng hoá}
+  \label{fig:sd-hang-hoa}
+\end{figure}
+
+\subsection{Giám sát \& cập nhật trạng thái vận chuyển}
+
+Chức năng giám sát và cập nhật trạng thái vận chuyển dựa trên luồng dữ liệu \emph{telemetry} do Thiết bị gửi định kỳ trong khoảng 5--15 giây. Dữ liệu bao gồm vị trí GPS, tốc độ, nhiệt độ, mức rung, dung lượng pin và chất lượng tín hiệu. Hệ thống xử lý dữ liệu theo cơ chế \emph{upsert}, đánh giá theo các luật giám sát như geofence, lệch tuyến, vi phạm nhiệt độ hoặc mất tín hiệu. Trên cơ sở đó, luồng xử lý được phân thành hai trường hợp: nếu phát hiện vi phạm, Hệ thống tạo thẻ cảnh báo (kèm vị trí hiện tại), hiển thị trên Dashboard và gửi lệnh xử lý xuống thiết bị như dừng an toàn, kiểm tra hoặc điều hướng lại tuyến; nếu không có vi phạm, hệ thống tiếp tục cập nhật tiến độ và ETA theo thời gian thực.
+
+Trong trường hợp thiết bị mất kết nối, hệ thống phát hiện dựa trên thời gian im lặng vượt ngưỡng, đánh dấu thiết bị ở trạng thái \emph{offline} và thông báo vị trí cuối cùng cho Dashboard để người vận hành triển khai xác minh. Bên cạnh đó, hệ thống hỗ trợ cơ chế checkpoint/timeline, trong đó thiết bị gửi các mốc quan trọng như rời kho, đến điểm giao hoặc hoàn tất chuyến, giúp xây dựng dòng thời gian vận chuyển phục vụ truy vết và đánh giá hiệu suất.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/week/week_3/sequence_giám sát.png}
+  \caption{Sequence diagram: Giám sát \& cập nhật trạng thái vận chuyển}
+  \label{fig:sd-giam-sat}
+\end{figure}
