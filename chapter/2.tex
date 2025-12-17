@@ -5,6 +5,30 @@ Internet of Things (IoT) là thuật ngữ dùng để chỉ các đối tượn
 
 "Thing" trong Internet of Things, có thể là một trang trại động vật với bộ tiếp sóng chip sinh học, một chiếc xe ô tô tích hợp các cảm biến để cảnh báo lái xe khi lốp quá non, hoặc bất kỳ đồ vật nào do tự nhiên sinh ra hoặc do con người sản xuất ra mà có thể được gán với một địa chỉ IP và được cung cấp khả năng truyền tải dữ liệu qua mạng lưới.
 
+% ============================================================
+% 2.2 Các mô hình kiến trúc hệ thống IoT% ============================================================
+\section{Các mô hình kiến trúc hệ thống IoT}
+Việc lựa chọn kiến trúc hệ thống đóng vai trò then chốt trong việc định hình hiệu năng, độ trễ và khả năng mở rộng của một giải pháp IoT. Hiện nay, có ba mô hình xử lý dữ liệu chính đang được áp dụng rộng rãi: Điện toán đám mây (Cloud Computing), Điện toán biên (Edge Computing) và Kiến trúc lai (Hybrid Cloud-Edge).
+
+\subsection{Điện toán đám mây (Cloud Computing)}
+Điện toán đám mây là mô hình tập trung hóa, trong đó toàn bộ dữ liệu từ các thiết bị cảm biến (Device Layer) được truyền trực tiếp về các máy chủ trung tâm (Cloud Server) để lưu trữ và xử lý. Ưu điểm lớn nhất của mô hình này là khả năng lưu trữ không giới hạn và sức mạnh tính toán khổng lồ, cho phép thực hiện các thuật toán phức tạp như Big Data hay Machine Learning trên tập dữ liệu lịch sử.
+
+Tuy nhiên, đối với các ứng dụng yêu cầu phản hồi thời gian thực như giám sát vận chuyển hàng hóa nguy hiểm, mô hình Cloud thuần túy bộc lộ nhiều hạn chế. Độ trễ mạng (Latency) cao do khoảng cách truyền tải xa và sự phụ thuộc hoàn toàn vào kết nối Internet là những rào cản lớn. Trong trường hợp phương tiện di chuyển vào vùng mất sóng, dữ liệu sẽ bị gián đoạn, dẫn đến việc mất khả năng giám sát và cảnh báo tức thời.
+
+\subsection{Điện toán biên (Edge Computing)}
+Trái ngược với Cloud, điện toán biên di dời khả năng xử lý tính toán từ trung tâm mạng xuống các thiết bị ở rìa mạng (Edge Devices), gần với nguồn sinh dữ liệu. Trong mô hình này, các Gateway hoặc các nút cảm biến thông minh sẽ trực tiếp thu thập, lọc nhiễu và xử lý dữ liệu sơ bộ trước khi quyết định có gửi đi hay không.
+
+Điện toán biên giải quyết triệt để bài toán về độ trễ và băng thông. Các cảnh báo nguy cấp (như nhiệt độ vượt ngưỡng, va đập mạnh) được xử lý và phát ra ngay tại chỗ (Local Alert) mà không cần chờ phản hồi từ máy chủ. Điều này đặc biệt quan trọng trong vận chuyển đạn dược, nơi mili-giây phản hồi có thể quyết định sự an toàn. Mặc dù vậy, thiết bị biên thường bị giới hạn về năng lượng và khả năng lưu trữ, không phù hợp để quản lý dữ liệu dài hạn.
+
+\subsection{Kiến trúc lai (Hybrid Cloud-Edge)}
+Nhận thấy ưu và nhược điểm riêng biệt của hai mô hình trên, kiến trúc lai Hybrid Cloud-Edge ra đời như một giải pháp dung hòa tối ưu. Trong kiến trúc này, quy trình xử lý dữ liệu được phân chia thành hai tầng rõ rệt:
+\begin{itemize}
+    \item \textbf{Tầng biên (Edge Layer):} Đảm nhận các tác vụ yêu cầu thời gian thực (Real-time processing). Thiết bị tại biên (ESP32 Gateway) sẽ thu thập dữ liệu cảm biến, thực hiện lọc nhiễu (ví dụ: thuật toán Kalman hoặc trung bình trượt) và đưa ra các quyết định cảnh báo tức thời nếu phát hiện bất thường. Đồng thời, nó đóng gói và nén dữ liệu để tối ưu hóa băng thông truyền tải.
+    \item \textbf{Tầng đám mây (Cloud Layer):} Đóng vai trò là kho lưu trữ trung tâm (Centralized Storage) và trung tâm điều phối. Dữ liệu đã qua xử lý từ tầng biên được đồng bộ lên Cloud để lưu trữ dài hạn, phục vụ cho việc hiển thị Dashboard, phân tích xu hướng và trích xuất báo cáo hậu cần.
+\end{itemize}
+
+Dựa trên yêu cầu đặc thù của đề tài về việc giám sát vận chuyển đạn dược – một bài toán đòi hỏi cả sự phản ứng tức thời tại hiện trường (Edge) và khả năng quản lý tập trung từ xa (Cloud), nhóm nghiên cứu quyết định lựa chọn *Kiến trúc Hybrid Cloud-Edge* làm nền tảng thiết kế hệ thống. Sự kết hợp này đảm bảo hệ thống vẫn có thể hoạt động cảnh báo cục bộ ngay cả khi mất kết nối mạng (Offline Mode), đồng thời vẫn duy trì được cái nhìn toàn cảnh cho người điều phối khi có kết nối trở lại.
+
 \section{Các giao thức truyền thông trong IoT}
 \subsection{LoRa}
 \subsubsection{Giới thiệu}
