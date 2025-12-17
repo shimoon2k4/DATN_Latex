@@ -127,6 +127,6 @@
 \contentsline {section}{\numberline {7.1}Đánh giá chung}{67}{section.7.1}%
 \contentsline {section}{\numberline {7.2}Hạn chế}{68}{section.7.2}%
 \contentsline {section}{\numberline {7.3}Hướng phát triển}{68}{section.7.3}%
-\contentsline {chapter}{Phụ lục A}{69}{appendix*.45}%
-\contentsline {chapter}{Tài liệu tham khảo}{70}{appendix*.45}%
-\contentsline {chapter}{Danh mục thuật ngữ}{73}{appendix*.47}%
+\contentsline {chapter}{Phụ lục A}{71}{appendix*.45}%
+\contentsline {chapter}{Tài liệu tham khảo}{72}{appendix*.45}%
+\contentsline {chapter}{Danh mục thuật ngữ}{75}{appendix*.47}%

@@ -10,4 +10,26 @@ Nhìn chung, hệ thống đã đạt được các mục tiêu nghiên cứu ba
 
 \section{Hạn chế}
 
+Mặc dù hệ thống IoT giám sát và điều phối vận chuyển đạn dược đã đạt được các mục tiêu đề ra ban đầu, đề tài vẫn tồn tại một số hạn chế nhất định do điều kiện triển khai thực tế và giới hạn về nguồn lực.
+
+Thứ nhất, việc kiểm thử khoảng cách truyền thông của công nghệ LoRa còn bị giới hạn. Các thí nghiệm truyền tín hiệu chủ yếu được thực hiện trong phạm vi hẹp (khu vực phòng thí nghiệm và khuôn viên ký túc xá), chưa thể đánh giá đầy đủ hiệu năng của LoRa trong các điều kiện thực tế như địa hình phức tạp, khoảng cách xa hàng chục kilomet hoặc môi trường có nhiều vật cản. Điều này khiến kết quả đo chỉ mang tính tham khảo và chưa phản ánh toàn diện khả năng triển khai trong thực tế quy mô lớn.
+
+Thứ hai, nhóm gặp khó khăn trong việc mô phỏng đầy đủ các kịch bản truyền thông LoRa. Do thiếu các công cụ mô phỏng chuyên dụng cho LoRa ở tầng vật lý và tầng mạng, việc đánh giá các tình huống như nhiễu sóng, mất gói, va chạm kênh hay hoạt động đồng thời của nhiều node vẫn còn hạn chế. Phần lớn các thử nghiệm được thực hiện theo phương pháp thủ công, chưa thể tự động hóa hoặc mở rộng quy mô mô phỏng.
+
+Thứ ba, do giới hạn về chi phí và thời gian, hệ thống mới dừng lại ở mức độ nguyên mẫu (prototype) và chưa được hoàn thiện thành một hệ thống triển khai thực tế. Các thành phần phần cứng chưa được tích hợp vào vỏ bảo vệ chuyên dụng, chưa đáp ứng các tiêu chuẩn công nghiệp hoặc quân sự về độ bền, chống rung và chống thời tiết. Ngoài ra, hạ tầng mạng, máy chủ và các cơ chế dự phòng cũng chưa được triển khai đầy đủ để đảm bảo khả năng vận hành liên tục trong thời gian dài.
+
+Những hạn chế nêu trên là các yếu tố khách quan trong khuôn khổ của một đồ án tốt nghiệp, đồng thời cũng là cơ sở quan trọng để định hướng cho các nghiên cứu và phát triển tiếp theo trong tương lai.
+
 \section{Hướng phát triển}
+
+Dựa trên các kết quả đạt được và những hạn chế còn tồn tại, đề tài có thể được tiếp tục phát triển theo nhiều hướng nhằm nâng cao tính hoàn thiện và khả năng ứng dụng thực tế của hệ thống.
+
+Trong giai đoạn tiếp theo, hệ thống có thể được nâng cấp từ mô hình LoRa P2P sang LoRaWAN. Việc sử dụng LoRaWAN giúp quản lý tập trung các node, hỗ trợ xác thực thiết bị, mã hóa đầu cuối và khả năng mở rộng quy mô lớn với nhiều gateway. Điều này đặc biệt phù hợp khi triển khai hệ thống trong môi trường thực tế với nhiều phương tiện vận chuyển hoạt động đồng thời trên diện rộng.
+
+Bên cạnh đó, ứng dụng giám sát cần được tối ưu cả về hiệu năng lẫn trải nghiệm người dùng. Các hướng cải tiến bao gồm tối ưu cơ chế đồng bộ dữ liệu thời gian thực, giảm độ trễ hiển thị, cải thiện giao diện trực quan trên bản đồ và dashboard, cũng như bổ sung các chức năng phân quyền và nhật ký hoạt động chi tiết cho từng vai trò người dùng.
+
+Một hướng phát triển quan trọng khác là tích hợp các cơ chế bảo mật nâng cao và học máy. Hệ thống có thể được mở rộng với các thuật toán học máy nhằm phân tích dữ liệu lịch sử, phát hiện bất thường một cách thông minh hơn thay vì chỉ dựa trên ngưỡng cố định. Đồng thời, các kỹ thuật bảo mật nâng cao như quản lý khóa động, xác thực đa lớp và phát hiện tấn công bất thường cũng có thể được áp dụng để tăng mức độ an toàn cho hệ thống.
+
+Cuối cùng, hệ thống có thể được kết hợp với các thuật toán tối ưu lộ trình vận chuyển. Dựa trên dữ liệu GPS, trạng thái giao thông và các ràng buộc an toàn, hệ thống có thể đề xuất hoặc tự động điều chỉnh lộ trình tối ưu nhằm giảm thời gian vận chuyển, hạn chế rủi ro và nâng cao hiệu quả điều phối. Hướng phát triển này giúp chuyển hệ thống từ vai trò giám sát thuần túy sang hỗ trợ ra quyết định thông minh trong công tác vận chuyển.
+
+Các hướng phát triển nêu trên không chỉ giúp hoàn thiện hệ thống về mặt kỹ thuật mà còn mở ra khả năng ứng dụng thực tế rộng rãi hơn trong các bài toán giám sát và điều phối vận chuyển trong tương lai.
