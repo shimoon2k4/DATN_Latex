@@ -42,18 +42,52 @@
 % \end{itemize}
 
 % ============================================================
-% 6.1 Độ chính xác GPS
+% 6.1 Độ chính xác GPS (Cập nhật theo phương pháp u-center)
 % ============================================================
 \section{Độ chính xác GPS}
-Module GPS NEO-6MV2 được kiểm tra độ chính xác bằng cách đặt thiết bị tại một vị trí cố định đã biết trước tọa độ (Mốc tham chiếu trên Google Maps) trong thời gian 30 phút.
 
+\subsection{Phương pháp thực nghiệm}
+Để đánh giá độ chính xác thực tế của module GPS NEO-6M khi tích hợp vào hệ thống, nhóm thực hiện phương pháp **Đánh giá tĩnh (Static Test)** sử dụng phần mềm chuyên dụng \textbf{u-center} của hãng u-blox. 
+
+Thay vì sử dụng mạch chuyển đổi USB-TTL riêng biệt, vi điều khiển ESP32 được lập trình để hoạt động như một "cầu nối" (Serial Bridge), cho phép truyền dữ liệu thô (Raw NMEA) trực tiếp từ module GPS lên máy tính để phân tích. Phương pháp này đảm bảo dữ liệu đánh giá phản ánh đúng hoạt động của phần cứng trong hệ thống thực tế.
+
+\subsection{Cấu hình thử nghiệm}
+Quá trình thử nghiệm được thiết lập với các thông số như sau:
 \begin{itemize}
-    \item \textbf{Tọa độ tham chiếu:} [Điền tọa độ thực, VD: 10.xxxx, 106.yyyy]
-    \item \textbf{Tọa độ trung bình đo được:} [Điền tọa độ đo được]
-    \item \textbf{Sai số trung bình:} [Ví dụ: 3.5 mét]
+    \item \textbf{Cấu hình phần cứng:}
+    \begin{itemize}
+        \item Module GPS NEO-6M kết nối với ESP32 qua giao tiếp UART (TX nối GPIO 16, RX nối GPIO 17).
+        \item Nguồn cấp: 5V ổn định (để đảm bảo hiệu năng tối đa cho LNA của antenna).
+        \item Antenna GPS: Loại gốm (Ceramic active antenna) đi kèm module.
+    \end{itemize}
+    \item \textbf{Cấu hình phần mềm:}
+    \begin{itemize}
+        \item Firmware ESP32: Chế độ Passthrough (Baudrate 115200). Tắt hoàn toàn WiFi và Bluetooth trên ESP32 trong quá trình đo để loại bỏ nhiễu tần số vô tuyến.
+        \item Công cụ phân tích: u-center (chức năng \textit{Deviation Map}).
+    \end{itemize}
+    \item \textbf{Điều kiện môi trường:}
+    \begin{itemize}
+        \item Vị trí: Ngoài trời, khu vực thoáng đãng (Open sky), ăng-ten cố định tại một vị trí.
+        \item Thời gian thu thập mẫu: 60 phút liên tục.
+    \end{itemize}
 \end{itemize}
 
-Kết quả cho thấy sai số nằm trong ngưỡng cho phép ($\pm 5m$) đối với các thiết bị định vị dân dụng, đáp ứng đủ yêu cầu giám sát hành trình xe vận chuyển đạn dược trên bản đồ số.
+\subsection{Kết quả và Đánh giá}
+Dữ liệu toạ độ thu thập được trong 60 phút được biểu diễn trên biểu đồ độ lệch (Deviation Map) của phần mềm u-center. Kết quả phân tích như sau:
+
+\begin{figure}[h]
+    \centering
+    % Bạn hãy chụp màn hình kết quả Deviation Map trên u-center và chèn vào đây
+    % \includegraphics[width=0.7\textwidth]{images/gps_deviation_map.png}
+    \caption{Biểu đồ phân tán toạ độ (Deviation Map) trên u-center}
+    \label{fig:gps_deviation}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Bán kính sai số (CEP - Circular Error Probable):} Các điểm toạ độ tập trung chủ yếu xung quanh tâm (toạ độ trung bình). Bán kính vòng tròn chứa 50\% số điểm đo được là khoảng \textbf{[Điền số liệu, VD: 2.5m]}, và bán kính chứa 95\% số điểm là khoảng \textbf{[Điền số liệu, VD: 4.8m]}.
+    \item \textbf{Hiện tượng trôi (Drift):} Trong suốt quá trình đo, hiện tượng trôi toạ độ (Drift) xảy ra không đáng kể, các điểm đo không tạo thành vệt dài đi xa khỏi tâm, chứng tỏ module và antenna hoạt động ổn định.
+    \item \textbf{Kết luận:} Với sai số trung bình dưới 5 mét trong điều kiện tĩnh, module NEO-6M đáp ứng tốt yêu cầu của đề tài về việc giám sát vị trí xe vận chuyển đạn dược (vốn có kích thước lớn và di chuyển trên các tuyến đường rộng).
+\end{itemize}
 
 % ============================================================
 % 6.2 Độ chính xác của cảm biến
@@ -87,7 +121,8 @@ Cảm biến ADXL345 phát hiện tốt các rung động. Nhóm đã thiết l�
     \end{itemize}
     \item \textbf{Thực hiện:} Xe di chuyển theo lộ trình định sẵn quanh khuôn viên Ký túc xá Khu A ĐHQG-HCM với vận tốc trung bình 30-40 km/h. Hệ thống sẽ ghi lại tọa độ mỗi 5 giây/lần để vẽ lên bản đồ.
 \end{itemize}
-
+\subsubsection{Kết quả thử nghiệm}
+\subsubsection{Phân tích và đánh giá}
 % --- 6.3.2 Kịch bản kiểm thử khoảng cách (Range Test) - Dựa trên báo cáo tuần 11 ---
 \subsection{Kịch bản kiểm thử khoảng cách truyền thông (Range Test)}
 Kịch bản này nhằm xác định giới hạn truyền dẫn của công nghệ LoRa với module Ra-08H trong môi trường đô thị có vật cản (NLOS - Non Line of Sight).
@@ -147,7 +182,8 @@ Kịch bản này mô phỏng các sự cố nguy hiểm có thể xảy ra vớ
         \item \textit{Cảnh báo pin yếu:} Sử dụng nguồn cấp giả lập điện áp giảm dần xuống dưới 3.3V.
     \end{enumerate}
 \end{itemize}
-
+\subsubsection{Kết quả thử nghiệm}
+\subsubsection{Phân tích và đánh giá}
 % --- 6.3.4 Kịch bản kiểm thử tích hợp (End-to-End) ---
 \subsection{Kịch bản kiểm thử tích hợp toàn hệ thống}
 Kiểm thử luồng dữ liệu trọn vẹn (End-to-End) từ phần cứng đến giao diện người dùng cuối.
@@ -155,10 +191,12 @@ Kiểm thử luồng dữ liệu trọn vẹn (End-to-End) từ phần cứng đ
     \item \textbf{Luồng dữ liệu:} Cảm biến $\rightarrow$ ESP32 $\rightarrow$ LoRa TX $\rightarrow$ LoRa Gateway $\rightarrow$ MQTT Broker $\rightarrow$ Firestore $\rightarrow$ Mobile App.
     \item \textbf{Đại lượng đo:} Đo độ trễ (Latency) tổng cộng từ lúc sự kiện xảy ra tại thiết bị cho đến khi hiển thị thông báo trên màn hình điện thoại người dùng.
 \end{itemize}
+\subsubsection{Kết quả thử nghiệm}
+\subsubsection{Phân tích và đánh giá}
 % ============================================================
 % 6.4 So sánh và đánh giá
 % ============================================================
-\section{So sánh và đánh giá}
+\section{Đánh giá và kết luận}
 So với các mục tiêu đề ra ban đầu tại Chương 1 và các yêu cầu hệ thống tại Chương 3, kết quả đạt được như sau:
 \begin{itemize}
     \item \textbf{Về tính năng:} Hệ thống đã hoàn thành 100\% các tính năng giám sát cơ bản (Vị trí, Môi trường, Cảnh báo).

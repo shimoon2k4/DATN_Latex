@@ -1,13 +1,142 @@
 \chapter{Cài đặt và triển khai hệ thống}
-\lipsum[1-3]
+
+% ============================================================
+% 5.1 Cài đặt môi trường phát triển
+% ============================================================
 \section{Cài đặt môi trường phát triển}
 
-\section{Cài đặt firmware}
+\subsection{Môi trường phát triển phần cứng}
+Để xây dựng hệ thống, nhóm sử dụng các bộ kit phát triển và công cụ nạp phần cứng sau:
+\begin{itemize}
+    \item \textbf{Kit phát triển LoRa:} Sử dụng 02 bộ Kit Ra-08H (tích hợp SoC ASR6601) đóng vai trò là Node truyền (TX) và Gateway nhận (RX)[cite: 504].
+    \item \textbf{Vi điều khiển trung tâm:} Kit phát triển ESP32 NodeMCU (xử lý dữ liệu cảm biến và kết nối WiFi).
+    \item \textbf{Công cụ nạp và debug:}
+    \begin{itemize}
+        \item Mạch chuyển đổi USB-to-TTL (CP2102 hoặc CH340) để nạp code và xem log từ Ra-08H.
+        \item Cáp Micro-USB truyền dữ liệu cho ESP32.
+    \end{itemize}
+\end{itemize}
 
+\subsection{Môi trường phát triển phần mềm}
+Các công cụ phần mềm được sử dụng để lập trình cho vi điều khiển, backend và ứng dụng di động bao gồm:
+\begin{itemize}
+    \item \textbf{Lập trình ESP32:} Visual Studio Code với Extension PlatformIO (Framework Arduino).
+    \item \textbf{Lập trình Backend:} Ngôn ngữ Python 3.x (cho script Bridge) và Google Firebase Console (quản lý cơ sở dữ liệu).
+    \item \textbf{Lập trình Mobile App:} Flutter SDK (phiên bản mới nhất) và Android Studio (để giả lập và build file APK)[cite: 1282].
+    \item \textbf{MQTT Broker:} Phần mềm Mosquitto MQTT cài đặt trên hệ điều hành Windows[cite: 1244].
+\end{itemize}
+
+\subsection{Môi trường phát triển firmware Lora P2P}
+Do module Ra-08H sử dụng SoC ASR6601 (ARM Cortex-M4), quy trình phát triển yêu cầu bộ công cụ chuyên biệt từ hãng sản xuất[cite: 618, 619]:
+\begin{itemize}
+    \item \textbf{IDE:} Keil $\mu$Vision 5 (MDK-ARM) để biên dịch mã nguồn C.
+    \item \textbf{SDK:} ASR6601 SDK cung cấp các thư viện driver và ví dụ mẫu (pingpong).
+    \item \textbf{Công cụ tạo Project:} \texttt{KeilProjectGen} (script giúp tạo file dự án \texttt{.uvprojx} từ mã nguồn SDK).
+    \item \textbf{Công cụ nạp:} \textbf{TremoProg} v1.0 để nạp file binary vào flash của chip ASR6601.
+\end{itemize}
+
+% ============================================================
+% 5.2 Cài đặt firmware cho Node Lora P2P
+% ============================================================
+\section{Cài đặt firmware cho Node Lora P2P}
+
+\subsection{Các bước build Lora P2P firmware}
+Quy trình biên dịch và nạp firmware cho Ra-08H được thực hiện qua các bước sau [cite: 622-628]:
+\begin{enumerate}
+    \item \textbf{Chuẩn bị Source Code:} Sử dụng mã nguồn ví dụ \texttt{pingpong} trong SDK, sau đó tùy chỉnh thành phiên bản \texttt{pingpong\_uart}.
+    \item \textbf{Tạo Project Keil:} Chạy script \texttt{KeilProjectGen.exe} để sinh file project cấu hình đúng cho ASR6601.
+    \item \textbf{Biên dịch (Build):} Mở project bằng Keil $\mu$Vision 5, thực hiện Build target. Kết quả thành công sẽ tạo ra file \texttt{pingpong.bin}.
+    \item \textbf{Nạp (Flash):}
+    \begin{itemize}
+        \item Kết nối chân BOOT0 của Ra-08H lên mức cao (3.3V) và nhấn Reset để vào chế độ nạp.
+        \item Mở phần mềm \texttt{TremoProg}, chọn cổng COM, chọn file \texttt{.bin} và nhấn "Download".
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Quá trình phát triển firmware Lora P2P}
+Nhóm đã phát triển hai phiên bản firmware riêng biệt cho Node gửi và Node nhận dựa trên giao thức LoRa P2P (Peer-to-Peer).
+
+\subsubsection{Node TX (Truyền tin)}
+Firmware cho Node TX được lập trình để hoạt động như một bộ chuyển đổi "UART to LoRa":
+\begin{itemize}
+    \item \textbf{Cấu hình UART:} Khởi tạo UART1 với baudrate 115200 để giao tiếp với ESP32[cite: 637].
+    \item \textbf{Xử lý đệm (Buffering):} Tăng kích thước bộ đệm (\texttt{BUFFER\_SIZE}) lên 256 bytes để chứa đủ chuỗi JSON từ cảm biến[cite: 636].
+    \item \textbf{Logic hoạt động:} Vi xử lý liên tục lắng nghe cổng UART. Khi nhận được ký tự kết thúc dòng (\texttt{\textbackslash n}), nó sẽ đóng gói toàn bộ dữ liệu trong bộ đệm và gọi hàm \texttt{Radio.Send()} để phát sóng qua LoRa [cite: 638-640].
+\end{itemize}
+
+\subsubsection{Node RX (Gateway nhận tin)}
+Firmware cho Node RX đóng vai trò là Gateway, chuyển đổi "LoRa to UART":
+\begin{itemize}
+    \item \textbf{Sự kiện nhận (OnRxDone):} Khi module LoRa nhận được gói tin, hàm callback \texttt{OnRxDone} được kích hoạt[cite: 687].
+    \item \textbf{Làm giàu dữ liệu:} Firmware trích xuất thêm thông số cường độ tín hiệu (RSSI) và tỷ lệ tín hiệu trên nhiễu (SNR) của gói tin vừa nhận.
+    \item \textbf{Đóng gói JSON:} Dữ liệu payload gốc, RSSI và SNR được đóng gói lại thành một chuỗi JSON mới (ví dụ: \texttt{\{"raw":"...", "rssi":-80, "snr":9\}}) và gửi ra cổng UART để ESP32 hoặc máy tính xử lý tiếp[cite: 714].
+\end{itemize}
+
+% ============================================================
+% 5.3 Cài đặt backend
+% ============================================================
 \section{Cài đặt backend}
 
+\subsection{Cấu hình MQTT Broker}
+Nhóm sử dụng \textbf{Mosquitto} làm MQTT Broker. Để cho phép các thiết bị trong mạng LAN kết nối và gửi dữ liệu, file cấu hình \texttt{mosquitto.conf} được thiết lập như sau [cite: 1250-1252]:
+\begin{verbatim}
+listener 1883 0.0.0.0      # Lắng nghe trên mọi IP
+allow_anonymous true       # Cho phép kết nối không cần mật khẩu (dev)
+\end{verbatim}
+Đồng thời, quy tắc tường lửa (Firewall) trên máy chủ Windows đã được mở cho cổng 1883 (Inbound Rule)[cite: 1304].
+
+\subsection{Triển khai Python Bridge}
+Script \texttt{mqtt\_to\_firestore.py} được phát triển để làm cầu nối giữa MQTT và Firebase[cite: 509]:
+\begin{itemize}
+    \item \textbf{Chức năng:} Lắng nghe topic từ Gateway, phân tích cú pháp JSON lồng nhau (trường "raw") và trích xuất dữ liệu cảm biến thực tế.
+    \item \textbf{Lưu trữ:} Sử dụng thư viện \texttt{firebase-admin} để ghi dữ liệu vào Firestore theo cấu trúc 2 lớp: \textit{Latest State} (cho App realtime) và \textit{History} (cho lưu trữ lịch sử) [cite: 531-540].
+\end{itemize}
+
+% ============================================================
+% 5.4 Cài đặt ứng dụng
+% ============================================================
 \section{Cài đặt ứng dụng}
 
-\section{Kết nối thiết bị}
+\subsection{Cấu trúc dự án Flutter}
+Ứng dụng di động được xây dựng bằng Flutter với cấu trúc thư mục \texttt{lib/} được tổ chức rõ ràng [cite: 1146-1168]:
+\begin{itemize}
+    \item \texttt{screens/}: Chứa các màn hình giao diện (Login, Home, Map, Dashboard).
+    \item \texttt{components/}: Chứa các Widget tái sử dụng (TransportCard, SectionCard).
+    \item \texttt{services/}: Chứa logic xử lý kết nối (MqttService).
+\end{itemize}
 
+\subsection{Tích hợp dịch vụ MQTT}
+Dịch vụ \texttt{MqttService} trong ứng dụng thực hiện kết nối tới Broker và đăng ký (subscribe) topic dạng wildcard: \texttt{ammo\_transport/+/telemetry}[cite: 1295]. Điều này cho phép ứng dụng tự động phát hiện và hiển thị dữ liệu từ bất kỳ thiết bị nào đang hoạt động trong hệ thống.
+
+% ============================================================
+% 5.5 Kết nối thiết bị
+% ============================================================
+\section{Kết nối thiết bị}
+Để đảm bảo giao tiếp ổn định giữa vi điều khiển trung tâm và module truyền thông, sơ đồ đấu dây giữa ESP32 và Ra-08H (Node TX) được thực hiện như sau [cite: 724-726]:
+
+\begin{table}[h]
+    \centering
+    \caption{Sơ đồ kết nối phần cứng Node TX}
+    \label{tab:wiring}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Chân ESP32} & \textbf{Chân Ra-08H} & \textbf{Chức năng} \\ \hline
+    GPIO 17 (TX2) & RX & Gửi dữ liệu JSON sang LoRa \\ \hline
+    GPIO 16 (RX2) & TX & Nhận phản hồi debug \\ \hline
+    GND & GND & Đồng bộ mức tín hiệu (Bắt buộc) \\ \hline
+    3.3V / 5V & VCC & Cấp nguồn cho module \\ \hline
+    \end{tabular}
+\end{table}
+
+% ============================================================
+% 5.6 Triển khai hệ thống
+% ============================================================
 \section{Triển khai hệ thống}
+Quy trình khởi động và vận hành toàn bộ hệ thống (End-to-End) bao gồm các bước [cite: 581-585]:
+
+\begin{enumerate}
+    \item \textbf{Bước 1 - Khởi động Server:} Bật dịch vụ Mosquitto MQTT và chạy script Python Bridge để sẵn sàng nhận và lưu trữ dữ liệu.
+    \item \textbf{Bước 2 - Khởi động Gateway (Node RX):} Cấp nguồn cho Gateway. Thiết bị sẽ kết nối WiFi và lắng nghe gói tin LoRa.
+    \item \textbf{Bước 3 - Khởi động Node Giám sát (Node TX):} Gắn thiết bị lên phương tiện. ESP32 bắt đầu đọc cảm biến, đóng gói JSON và gửi qua UART tới Ra-08H để phát sóng.
+    \item \textbf{Bước 4 - Giám sát:} Người dùng mở ứng dụng di động, đăng nhập và theo dõi vị trí, nhiệt độ, độ rung của phương tiện được cập nhật theo thời gian thực trên bản đồ số.
+\end{enumerate}
