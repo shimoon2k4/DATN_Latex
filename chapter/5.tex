@@ -250,3 +250,31 @@ theo dõi các thông tin giám sát như vị trí, nhiệt độ và độ run
 Dữ liệu được cập nhật theo thời gian thực và hiển thị trực quan trên bản đồ số,
 qua đó cho phép người dùng giám sát trạng thái vận hành của phương tiện một
 cách liên tục và hiệu quả.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|p{8cm}|}
+        \hline
+        \textbf{Thành phần} & \textbf{Vai trò trong hệ thống} \\ \hline
+        Node TX (ESP32 + Ra-08H) & 
+        Thu thập dữ liệu từ các cảm biến (GPS, nhiệt độ, độ rung), đóng gói dữ liệu
+        dưới dạng JSON và truyền dữ liệu không dây qua giao thức LoRa P2P. \\ \hline
+        Node RX (Gateway LoRa) & 
+        Nhận dữ liệu từ các Node TX thông qua LoRa, trích xuất thông tin tín hiệu
+        (RSSI, SNR) và chuyển tiếp dữ liệu lên tầng mạng IP thông qua UART và MQTT. \\ \hline
+        MQTT Broker (Mosquitto) & 
+        Đóng vai trò trung gian phân phối dữ liệu, cho phép các thành phần trong hệ
+        thống trao đổi dữ liệu theo mô hình publish/subscribe. \\ \hline
+        Python Bridge & 
+        Phân tích và xử lý dữ liệu từ MQTT, chuyển đổi định dạng dữ liệu và lưu trữ
+        vào cơ sở dữ liệu Firebase phục vụ giám sát thời gian thực và lưu trữ lịch sử. \\ \hline
+        Firebase (Firestore) & 
+        Lưu trữ dữ liệu giám sát của hệ thống, bao gồm trạng thái hiện tại và dữ liệu
+        lịch sử, hỗ trợ đồng bộ dữ liệu cho ứng dụng di động. \\ \hline
+        Ứng dụng di động (Flutter) & 
+        Hiển thị thông tin giám sát như vị trí, nhiệt độ và độ rung của phương tiện
+        theo thời gian thực, hỗ trợ người dùng theo dõi trạng thái vận chuyển. \\ \hline
+    \end{tabular}
+    \caption{Tóm tắt vai trò các thành phần trong hệ thống}
+    \label{tab:system_components}
+\end{table}

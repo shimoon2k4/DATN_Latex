@@ -101,21 +101,21 @@
 \contentsline {section}{\numberline {6.3}Các kịch bản thử nghiệm}{57}{section.6.3}%
 \contentsline {subsection}{\numberline {6.3.1}Kịch bản mô phỏng vận chuyển}{57}{subsection.6.3.1}%
 \contentsline {subsubsection}{\numberline {6.3.1.1}Kết quả thử nghiệm}{57}{subsubsection.6.3.1.1}%
-\contentsline {subsubsection}{\numberline {6.3.1.2}Phân tích và đánh giá}{57}{subsubsection.6.3.1.2}%
-\contentsline {subsection}{\numberline {6.3.2}Kịch bản kiểm thử khoảng cách truyền thông (Range Test)}{57}{subsection.6.3.2}%
-\contentsline {subsubsection}{\numberline {6.3.2.1}Kết quả thử nghiệm}{58}{subsubsection.6.3.2.1}%
-\contentsline {subsubsection}{\numberline {6.3.2.2}Phân tích và Đánh giá}{58}{subsubsection.6.3.2.2}%
-\contentsline {subsection}{\numberline {6.3.3}Kịch bản kiểm thử chức năng cảnh báo}{59}{subsection.6.3.3}%
-\contentsline {subsubsection}{\numberline {6.3.3.1}Kết quả thử nghiệm}{59}{subsubsection.6.3.3.1}%
-\contentsline {subsubsection}{\numberline {6.3.3.2}Phân tích và đánh giá}{59}{subsubsection.6.3.3.2}%
-\contentsline {subsection}{\numberline {6.3.4}Kịch bản kiểm thử tích hợp toàn hệ thống}{59}{subsection.6.3.4}%
-\contentsline {subsubsection}{\numberline {6.3.4.1}Kết quả thử nghiệm}{60}{subsubsection.6.3.4.1}%
-\contentsline {subsubsection}{\numberline {6.3.4.2}Phân tích và đánh giá}{60}{subsubsection.6.3.4.2}%
-\contentsline {section}{\numberline {6.4}Đánh giá và kết luận}{60}{section.6.4}%
-\contentsline {chapter}{\numberline {7}Kết luận và hướng phát triển}{61}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Đánh giá chung}{61}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Hạn chế}{61}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Hướng phát triển}{61}{section.7.3}%
-\contentsline {chapter}{Phụ lục A}{63}{appendix*.35}%
-\contentsline {chapter}{Tài liệu tham khảo}{64}{appendix*.35}%
-\contentsline {chapter}{Danh mục thuật ngữ}{67}{appendix*.37}%
+\contentsline {subsubsection}{\numberline {6.3.1.2}Phân tích và đánh giá}{59}{subsubsection.6.3.1.2}%
+\contentsline {subsection}{\numberline {6.3.2}Kịch bản kiểm thử khoảng cách truyền thông (Range Test)}{59}{subsection.6.3.2}%
+\contentsline {subsubsection}{\numberline {6.3.2.1}Kết quả thử nghiệm}{59}{subsubsection.6.3.2.1}%
+\contentsline {subsubsection}{\numberline {6.3.2.2}Phân tích và Đánh giá}{59}{subsubsection.6.3.2.2}%
+\contentsline {subsection}{\numberline {6.3.3}Kịch bản kiểm thử chức năng cảnh báo}{60}{subsection.6.3.3}%
+\contentsline {subsubsection}{\numberline {6.3.3.1}Kết quả thử nghiệm}{61}{subsubsection.6.3.3.1}%
+\contentsline {subsubsection}{\numberline {6.3.3.2}Phân tích và đánh giá}{61}{subsubsection.6.3.3.2}%
+\contentsline {subsection}{\numberline {6.3.4}Kịch bản kiểm thử tích hợp toàn hệ thống}{61}{subsection.6.3.4}%
+\contentsline {subsubsection}{\numberline {6.3.4.1}Kết quả thử nghiệm}{62}{subsubsection.6.3.4.1}%
+\contentsline {subsubsection}{\numberline {6.3.4.2}Phân tích và đánh giá}{62}{subsubsection.6.3.4.2}%
+\contentsline {section}{\numberline {6.4}Đánh giá kết quả}{62}{section.6.4}%
+\contentsline {chapter}{\numberline {7}Kết luận và hướng phát triển}{63}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Đánh giá chung}{63}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Hạn chế}{63}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Hướng phát triển}{63}{section.7.3}%
+\contentsline {chapter}{Phụ lục A}{65}{appendix*.38}%
+\contentsline {chapter}{Tài liệu tham khảo}{66}{appendix*.38}%
+\contentsline {chapter}{Danh mục thuật ngữ}{69}{appendix*.40}%
