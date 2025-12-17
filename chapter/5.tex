@@ -243,8 +243,77 @@ Thay vì sử dụng phương pháp hỏi vòng (polling) truyền thống gây 
 %     \end{tabular}
 % \end{table}
 
-Trong quá trình triển khai thực tế, nhóm đặc biệt chú trọng đến vấn đề cấp nguồn, đảm bảo dòng điện đủ lớn để đáp ứng các đỉnh tiêu thụ (peak current) khi module LoRa thực hiện phát sóng, tránh hiện tượng sụt áp gây reset vi điều khiển.
+% Trong quá trình triển khai thực tế, nhóm đặc biệt chú trọng đến vấn đề cấp nguồn, đảm bảo dòng điện đủ lớn để đáp ứng các đỉnh tiêu thụ (peak current) khi module LoRa thực hiện phát sóng, tránh hiện tượng sụt áp gây reset vi điều khiển.
+% ============================================================
+% 5.5 Kết nối và tích hợp thiết bị
+% ============================================================
+\section{Kết nối và tích hợp thiết bị}
 
+Hệ thống bao gồm hai khối phần cứng chính: Node TX (Sensor Node) gắn trên phương tiện vận chuyển và Node RX (Gateway) đặt tại trạm giám sát. Cả hai đều sử dụng vi điều khiển ESP32 làm bộ xử lý trung tâm và module Ra-08H để truyền thông LoRa P2P.
+
+\subsection{Sơ đồ kết nối Node TX (Sensor Node)}
+Node TX chịu trách nhiệm thu thập dữ liệu từ đa cảm biến và gửi đi. Dựa trên mã nguồn firmware, sơ đồ đấu nối giữa ESP32 và các module ngoại vi được mô tả chi tiết trong Bảng \ref{tab:wiring_tx}.
+
+\begin{table}[h]
+    \centering
+    \caption{Sơ đồ chân kết nối phần cứng Node TX}
+    \label{tab:wiring_tx}
+    \begin{tabular}{|p{3cm}|p{2.5cm}|p{3cm}|p{4cm}|}
+    \hline
+    \textbf{Module} & \textbf{Giao tiếp} & \textbf{Chân ESP32} & \textbf{Chân Module} \\ \hline
+    \multirow{2}{*}{LoRa Ra-08H} & \multirow{2}{*}{UART1} & GPIO 26 (TX) & RX \\ \cline{3-4} 
+     & & GPIO 25 (RX) & TX \\ \hline
+    \multirow{2}{*}{GPS NEO-6M} & \multirow{2}{*}{UART2} & GPIO 17 (TX) & RX \\ \cline{3-4} 
+     & & GPIO 16 (RX) & TX \\ \hline
+    DHT11 & GPIO & GPIO 14 & DATA \\ \hline
+    \multirow{2}{*}{ADXL345} & \multirow{2}{*}{I2C} & GPIO 21 (SDA) & SDA \\ \cline{3-4} 
+     & & GPIO 22 (SCL) & SCL \\ \hline
+    Nguồn & Power & 3.3V / GND & VCC / GND \\ \hline
+    \end{tabular}
+\end{table}
+
+
+
+\textbf{Lưu ý cấu hình trong Firmware:}
+\begin{itemize}
+    \item \textbf{LoRa UART:} Sử dụng \texttt{HardwareSerial(1)} với tốc độ Baudrate là \textbf{115200} để đảm bảo đồng bộ với firmware của Ra-08H.
+    \item \textbf{GPS UART:} Sử dụng tốc độ \textbf{9600} baud tiêu chuẩn của module NEO-6M.
+    \item \textbf{Cảm biến gia tốc ADXL345:} Sử dụng giao tiếp I2C mặc định của ESP32 (Wire library).
+\end{itemize}
+
+\subsection{Sơ đồ kết nối Node RX (Gateway Node)}
+Node RX đóng vai trò nhận dữ liệu LoRa và chuyển tiếp. Cấu hình phần cứng tối giản hơn, chỉ bao gồm ESP32 kết nối với module LoRa Ra-08H để thực hiện chức năng Gateway.
+
+\begin{table}[h]
+    \centering
+    \caption{Sơ đồ chân kết nối phần cứng Node RX}
+    \label{tab:wiring_rx}
+    \begin{tabular}{|p{3cm}|p{2.5cm}|p{3cm}|p{4cm}|}
+    \hline
+    \textbf{Module} & \textbf{Giao tiếp} & \textbf{Chân ESP32} & \textbf{Chân Module} \\ \hline
+    \multirow{2}{*}{LoRa Ra-08H} & \multirow{2}{*}{UART1} & GPIO 26 (TX) & RX \\  
+     & & GPIO 25 (RX) & TX \\ \hline
+    Máy tính (Server) & UART0 (USB) & USB Port & USB Port \\ \hline
+    \end{tabular}
+\end{table}
+
+
+\subsection{Tích hợp dữ liệu (Data Integration)}
+Để đảm bảo tính toàn vẹn dữ liệu khi truyền giữa ESP32 và Ra-08H, hệ thống sử dụng định dạng chuỗi \textbf{JSON}. Trong tác vụ \texttt{TaskLoraSend} của ESP32, các dữ liệu cảm biến rời rạc được đóng gói thành một bản tin duy nhất trước khi gửi qua UART tới module LoRa.
+
+Cấu trúc bản tin JSON được định nghĩa như sau:
+\begin{lstlisting}[language=C, caption={Đoạn code đóng gói JSON trên Node TX}]
+snprintf(payload, sizeof(payload),
+  "{\"device_id\":\"Ra-08H-Node1\","
+  "\"timestamp\":%lu,"
+  "\"temp\":%.2f,"
+  "\"battery\":%.2f,"
+  "\"gps\":{\"lat\":%.4f,\"lng\":%.4f},"
+  "\"rssi_lora\":%d}\n",
+  timestamp, temp, battery, lat, lng, rssi);
+\end{lstlisting}
+
+Việc sử dụng JSON giúp Node RX dễ dàng giải mã (parse) và Gateway có thể đẩy trực tiếp dữ liệu này lên MQTT Broker mà không cần xử lý định dạng phức tạp.
 % ============================================================
 % 5.6 Quy trình vận hành hệ thống
 % ============================================================

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.5)  17 DEC 2025 18:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.5)  17 DEC 2025 19:07
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1813,7 +1813,7 @@ Package hyperref Info: Link coloring ON on input line 4.
 \openout2 = `frontmatter/front-page.aux'.
 
 (./frontmatter/front-page.tex
-<images/LogoBK.png, id=487, 417.4797pt x 417.4797pt>
+<images/LogoBK.png, id=503, 417.4797pt x 417.4797pt>
 File: images/LogoBK.png Graphic file (type png)
 <use images/LogoBK.png>
 Package pdftex.def Info: images/LogoBK.png  used on input line 21.
@@ -1981,7 +1981,7 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  []
 
 [5]
-<images/chapter_2/LoRa.png, id=779, 402.90524pt x 140.9265pt>
+<images/chapter_2/LoRa.png, id=803, 402.90524pt x 140.9265pt>
 File: images/chapter_2/LoRa.png Graphic file (type png)
 <use images/chapter_2/LoRa.png>
 Package pdftex.def Info: images/chapter_2/LoRa.png  used on input line 17.
@@ -2029,7 +2029,7 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  []
 
 [9]
-<images/chapter_2/MQTT.jpg, id=799, 963.6pt x 557.08125pt>
+<images/chapter_2/MQTT.jpg, id=823, 963.6pt x 557.08125pt>
 File: images/chapter_2/MQTT.jpg Graphic file (type jpg)
 <use images/chapter_2/MQTT.jpg>
 Package pdftex.def Info: images/chapter_2/MQTT.jpg  used on input line 81.
@@ -2116,7 +2116,7 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  []
 
 [13]
-<images/chapter_2/ESP32.png, id=817, 580.41844pt x 349.305pt>
+<images/chapter_2/ESP32.png, id=841, 580.41844pt x 349.305pt>
 File: images/chapter_2/ESP32.png Graphic file (type png)
 <use images/chapter_2/ESP32.png>
 Package pdftex.def Info: images/chapter_2/ESP32.png  used on input line 177.
@@ -2130,12 +2130,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.47603pt}.
 
 [14 <./images/chapter_2/ESP32.png>]
-<images/chapter_2/DHT11.jpg, id=823, 602.25pt x 363.3575pt>
+<images/chapter_2/DHT11.jpg, id=847, 602.25pt x 363.3575pt>
 File: images/chapter_2/DHT11.jpg Graphic file (type jpg)
 <use images/chapter_2/DHT11.jpg>
 Package pdftex.def Info: images/chapter_2/DHT11.jpg  used on input line 212.
 (pdftex.def)             Requested size: 154.35889pt x 93.12897pt.
-<images/chapter_2/ADXL345.jpg, id=824, 2007.5pt x 2007.5pt>
+<images/chapter_2/ADXL345.jpg, id=848, 2007.5pt x 2007.5pt>
 File: images/chapter_2/ADXL345.jpg Graphic file (type jpg)
 <use images/chapter_2/ADXL345.jpg>
 Package pdftex.def Info: images/chapter_2/ADXL345.jpg  used on input line 245.
@@ -2154,7 +2154,7 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  []
 
 [15 <./images/chapter_2/DHT11.jpg>]
-<images/chapter_2/GPS.jpg, id=832, 2007.5pt x 2007.5pt>
+<images/chapter_2/GPS.jpg, id=856, 2007.5pt x 2007.5pt>
 File: images/chapter_2/GPS.jpg Graphic file (type jpg)
 <use images/chapter_2/GPS.jpg>
 Package pdftex.def Info: images/chapter_2/GPS.jpg  used on input line 281.
@@ -2168,7 +2168,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.47603pt}.
 
 [16 <./images/chapter_2/ADXL345.jpg>]
-<images/chapter_2/Module LoRa.png, id=837, 465.99094pt x 313.9228pt>
+<images/chapter_2/Module LoRa.png, id=861, 465.99094pt x 313.9228pt>
 File: images/chapter_2/Module LoRa.png Graphic file (type png)
 <use images/chapter_2/Module LoRa.png>
 Package pdftex.def Info: images/chapter_2/Module LoRa.png  used on input line 291.
@@ -2239,7 +2239,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.47603pt}.
 
 [22]
-<images/chapter_3/usecase.png, id=864, 552.26324pt x 443.85825pt>
+<images/chapter_3/usecase.png, id=888, 552.26324pt x 443.85825pt>
 File: images/chapter_3/usecase.png Graphic file (type png)
 <use images/chapter_3/usecase.png>
 Package pdftex.def Info: images/chapter_3/usecase.png  used on input line 94.
@@ -2258,7 +2258,7 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  []
 
 [23 <./images/chapter_3/usecase.png>]
-<images/week/week_3/activity_điều phối.png, id=870, 585.387pt x 520.94624pt>
+<images/week/week_3/activity_điều phối.png, id=895, 585.387pt x 520.94624pt>
 File: images/week/week_3/activity_điều phối.png Graphic file (type png)
 <use images/week/week_3/activity_điều phối.png>
 Package pdftex.def Info: images/week/week_3/activity_điều phối.png  used on input line 127.
@@ -2289,7 +2289,7 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  []
 
 [25 <./images/week/week_3/activity_điều phối.png>]
-<images/week/week_3/activity_quản lý.png, id=882, 491.436pt x 519.1395pt>
+<images/week/week_3/activity_quản lý.png, id=907, 491.436pt x 519.1395pt>
 File: images/week/week_3/activity_quản lý.png Graphic file (type png)
 <use images/week/week_3/activity_quản lý.png>
 Package pdftex.def Info: images/week/week_3/activity_quản lý.png  used on input line 161.
@@ -2316,7 +2316,7 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  []
 
 [27 <./images/week/week_3/activity_quản lý.png>]
-<images/week/week_3/activity_giám sát.png, id=893, 526.96875pt x 522.15076pt>
+<images/week/week_3/activity_giám sát.png, id=917, 526.96875pt x 522.15076pt>
 File: images/week/week_3/activity_giám sát.png Graphic file (type png)
 <use images/week/week_3/activity_giám sát.png>
 Package pdftex.def Info: images/week/week_3/activity_giám sát.png  used on input line 192.
@@ -2343,7 +2343,7 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  []
 
 [29 <./images/week/week_3/activity_giám sát.png>]
-<images/week/week_3/sequence_điều phối lộ trình.png, id=903, 397.485pt x 572.1375pt>
+<images/week/week_3/sequence_điều phối lộ trình.png, id=927, 397.485pt x 572.1375pt>
 File: images/week/week_3/sequence_điều phối lộ trình.png Graphic file (type png)
 <use images/week/week_3/sequence_điều phối lộ trình.png>
 Package pdftex.def Info: images/week/week_3/sequence_điều phối lộ trình.png  used on input line 210.
@@ -2370,7 +2370,7 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  []
 
 [31 <./images/week/week_3/sequence_điều phối lộ trình.png>]
-<images/week/week_3/sequence_quản lý hàng hóa.png, id=914, 478.78876pt x 588.39825pt>
+<images/week/week_3/sequence_quản lý hàng hóa.png, id=938, 478.78876pt x 588.39825pt>
 File: images/week/week_3/sequence_quản lý hàng hóa.png Graphic file (type png)
 <use images/week/week_3/sequence_quản lý hàng hóa.png>
 Package pdftex.def Info: images/week/week_3/sequence_quản lý hàng hóa.png  used on input line 225.
@@ -2397,7 +2397,7 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  []
 
 [33 <./images/week/week_3/sequence_quản lý hàng hóa.png>]
-<images/week/week_3/sequence_giám sát.png, id=924, 531.1845pt x 587.796pt>
+<images/week/week_3/sequence_giám sát.png, id=948, 531.1845pt x 587.796pt>
 File: images/week/week_3/sequence_giám sát.png Graphic file (type png)
 <use images/week/week_3/sequence_giám sát.png>
 Package pdftex.def Info: images/week/week_3/sequence_giám sát.png  used on input line 238.
@@ -2433,7 +2433,7 @@ Underfull \hbox (badness 2020) has occurred while \output is active
 
 ]
 Ch\uhorn \ohorn ng 4.
-<images/SoDoKhoi.png, id=939, 674.52pt x 398.6895pt>
+<images/SoDoKhoi.png, id=963, 674.52pt x 398.6895pt>
 File: images/SoDoKhoi.png Graphic file (type png)
 <use images/SoDoKhoi.png>
 Package pdftex.def Info: images/SoDoKhoi.png  used on input line 7.
@@ -2452,7 +2452,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.47603pt}.
 
 [38]
-<images/week/week_3/hardware-interface.png, id=950, 754.31813pt x 246.1697pt>
+<images/week/week_3/hardware-interface.png, id=974, 754.31813pt x 246.1697pt>
 File: images/week/week_3/hardware-interface.png Graphic file (type png)
 <use images/week/week_3/hardware-interface.png>
 Package pdftex.def Info: images/week/week_3/hardware-interface.png  used on input line 29.
@@ -2471,7 +2471,7 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  []
 
 [39 <./images/week/week_3/hardware-interface.png>]
-<images/DFD.png, id=957, 422.7795pt x 509.5035pt>
+<images/DFD.png, id=981, 422.7795pt x 509.5035pt>
 File: images/DFD.png Graphic file (type png)
 <use images/DFD.png>
 Package pdftex.def Info: images/DFD.png  used on input line 45.
@@ -2507,7 +2507,7 @@ Overfull \hbox (0.79161pt too wide) in paragraph at lines 99--100
 []\T5/cmtt/m/n/14 screens/ \T5/ptm/m/n/14 -- Ch�a c�c m�n h�nh ch�c n�ng nh� Dash-board, Map-Screen,
  []
 
-<images/week/week9/065_UI_1.jpg, id=969, 1020.81375pt x 461.725pt>
+<images/week/week9/065_UI_1.jpg, id=993, 1020.81375pt x 461.725pt>
 File: images/week/week9/065_UI_1.jpg Graphic file (type jpg)
 <use images/week/week9/065_UI_1.jpg>
 Package pdftex.def Info: images/week/week9/065_UI_1.jpg  used on input line 115.
@@ -2520,12 +2520,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.47603pt}.
 
 [42]
-<images/week/week9/065_UI_2.jpg, id=975, 1009.7725pt x 464.73625pt>
+<images/week/week9/065_UI_2.jpg, id=999, 1009.7725pt x 464.73625pt>
 File: images/week/week9/065_UI_2.jpg Graphic file (type jpg)
 <use images/week/week9/065_UI_2.jpg>
 Package pdftex.def Info: images/week/week9/065_UI_2.jpg  used on input line 123.
 (pdftex.def)             Requested size: 352.81552pt x 162.37646pt.
-<images/week/week9/065_UI_3.jpg, id=977, 489.83pt x 461.725pt>
+<images/week/week9/065_UI_3.jpg, id=1001, 489.83pt x 461.725pt>
 File: images/week/week9/065_UI_3.jpg Graphic file (type jpg)
 <use images/week/week9/065_UI_3.jpg>
 Package pdftex.def Info: images/week/week9/065_UI_3.jpg  used on input line 131.
@@ -2544,12 +2544,12 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  []
 
 [43 <./images/week/week9/065_UI_1.jpg> <./images/week/week9/065_UI_2.jpg>]
-<images/week/week9/065_UI_4.jpg, id=984, 227.85126pt x 468.75125pt>
+<images/week/week9/065_UI_4.jpg, id=1008, 227.85126pt x 468.75125pt>
 File: images/week/week9/065_UI_4.jpg Graphic file (type jpg)
 <use images/week/week9/065_UI_4.jpg>
 Package pdftex.def Info: images/week/week9/065_UI_4.jpg  used on input line 139.
 (pdftex.def)             Requested size: 110.25443pt x 226.82909pt.
-<images/week/week9/065_UI_5.jpg, id=986, 1008.76875pt x 469.755pt>
+<images/week/week9/065_UI_5.jpg, id=1010, 1008.76875pt x 469.755pt>
 File: images/week/week9/065_UI_5.jpg Graphic file (type jpg)
 <use images/week/week9/065_UI_5.jpg>
 Package pdftex.def Info: images/week/week9/065_UI_5.jpg  used on input line 147.
@@ -2647,6 +2647,20 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.47603pt}.
 
 [52]
+Underfull \hbox (badness 10000) in paragraph at lines 269--269
+[]|\T5/ptm/m/n/14 GPIO 21
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 270--270
+[]|\T5/ptm/m/n/14 GPIO 22
+ []
+
+
+Overfull \hbox (2.56523pt too wide) in paragraph at lines 279--280
+[]\T5/ptm/b/n/14 LoRa UART: \T5/ptm/m/n/14 S� d�ng \T5/cmtt/m/n/14 HardwareSerial(1) \T5/ptm/m/n/14 v�i t�c ^^_� Bau-drate l� \T5/ptm/b/n/14 115200
+ []
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 16.47603pt, for example:
@@ -2659,7 +2673,16 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  [][][]\T5/ptm/b/n/18 5[]
  []
 
-[53])
+[53]
+Underfull \hbox (badness 10000) in paragraph at lines 296--296
+[]|\T5/ptm/m/n/14 M�y t�nh
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 296--296
+[]|\T5/ptm/m/n/14 UART0
+ []
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 16.47603pt, for example:
@@ -2667,7 +2690,28 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-4.47603pt}.
 
-[54]
+[54])
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 16.47603pt, for example:
+(fancyhdr)                \setlength{\headheight}{16.47603pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-4.47603pt}.
+
+
+Underfull \hbox (badness 2020) has occurred while \output is active
+ [][][]\T5/ptm/b/n/18 5[]
+ []
+
+[55]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 16.47603pt, for example:
+(fancyhdr)                \setlength{\headheight}{16.47603pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-4.47603pt}.
+
+[56]
 \openout2 = `chapter/6.aux'.
 
  (./chapter/6.tex
@@ -2677,7 +2721,7 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  [][][]\T5/ptm/b/n/18 6[]
  []
 
-[55
+[57
 
 
 
@@ -2690,14 +2734,14 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-4.47603pt}.
 
-[56]
+[58]
 
-LaTeX Warning: Reference `app(1)' on page 57 undefined on input line 132.
+LaTeX Warning: Reference `app(1)' on page 59 undefined on input line 132.
 
 
-LaTeX Warning: Reference `app(2)' on page 57 undefined on input line 132.
+LaTeX Warning: Reference `app(2)' on page 59 undefined on input line 132.
 
-<images/chapper_6/app(1).png, id=1104, 496.85625pt x 627.34375pt>
+<images/chapper_6/app(1).png, id=1146, 496.85625pt x 627.34375pt>
 File: images/chapper_6/app(1).png Graphic file (type png)
 <use images/chapper_6/app(1).png>
 Package pdftex.def Info: images/chapper_6/app(1).png  used on input line 139.
@@ -2714,8 +2758,8 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  [][][]\T5/ptm/b/n/18 6[]
  []
 
-[57]
-<images/chapper_6/app(2).png, id=1109, 482.80376pt x 621.32124pt>
+[59]
+<images/chapper_6/app(2).png, id=1151, 482.80376pt x 621.32124pt>
 File: images/chapper_6/app(2).png Graphic file (type png)
 <use images/chapper_6/app(2).png>
 Package pdftex.def Info: images/chapper_6/app(2).png  used on input line 146.
@@ -2728,7 +2772,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-4.47603pt}.
 
-[58 <./images/chapper_6/app(1).png> <./images/chapper_6/app(2).png>]
+[60 <./images/chapper_6/app(1).png> <./images/chapper_6/app(2).png>]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -2744,7 +2788,7 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  [][][]\T5/ptm/b/n/18 6[]
  []
 
-[59]
+[61]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 16.47603pt, for example:
@@ -2752,7 +2796,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-4.47603pt}.
 
-[60]
+[62]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.62804pt, for example:
@@ -2765,7 +2809,7 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  [][][]\T5/ptm/b/n/18 6[]
  []
 
-[61])
+[63])
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 16.47603pt, for example:
@@ -2773,7 +2817,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-4.47603pt}.
 
-[62]
+[64]
 \openout2 = `chapter/7.aux'.
 
  (./chapter/7.tex
@@ -2783,22 +2827,22 @@ Underfull \hbox (badness 2020) has occurred while \output is active
  [][][]\T5/ptm/b/n/18 7[]
  []
 
-[63
+[65
 
 
 
 
-] [64
+] [66
 
 
 
-] [65]
+] [67]
 \openout2 = `appendix/a.aux'.
 
  (./appendix/a.tex)
 \openout2 = `backmatter/references.aux'.
 
- (./backmatter/references.tex [66
+ (./backmatter/references.tex [68
 
 
 
@@ -2808,18 +2852,18 @@ Underfull \hbox (badness 2020) has occurred while \output is active
 
 LaTeX Warning: Empty `thebibliography' environment on input line 6.
 
-) [67]
+) [69]
 \openout2 = `backmatter/glossary.aux'.
 
- (./backmatter/glossary.tex [68
+ (./backmatter/glossary.tex [70
 
 
 
 
 ]
 No file report.gls.
-) [69]
-runsystem(latexminted cleantemp  --timestamp 20251217184634 E98D2F001DA5678B39482EFBDF5770DC)...executed safely (allowed).
+) [71]
+runsystem(latexminted cleantemp  --timestamp 20251217190743 E98D2F001DA5678B39482EFBDF5770DC)...executed safely (allowed).
 
  
 enddocument/afterlastpage (AED): lastpage setting LastPage.
@@ -2836,21 +2880,21 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 8E3843DBDBEB791FB7BB330A754F1B58;23688.
+(rerunfilecheck)             Checksum: 7BA769B33E617D78E80322CCAF45FC89;24759.
  ) 
 Here is how much of TeX's memory you used:
- 69732 strings out of 467538
- 1650608 string characters out of 5423725
- 2955616 words of memory out of 5000000
- 97317 multiletter control sequences out of 15000+600000
+ 69773 strings out of 467538
+ 1651174 string characters out of 5423725
+ 2955878 words of memory out of 5000000
+ 97341 multiletter control sequences out of 15000+600000
  683483 words of font info for 107 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  123i,13n,145p,2548b,1326s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/symbol/usyr.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/urwvn/utmb8v.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/urwvn/utmbi8v.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/urwvn/utmr8v.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/urwvn/utmri8v.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/vnr/vntt12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/vnr/vntt8.pfb>
-Output written on report.pdf (87 pages, 4570950 bytes).
+Output written on report.pdf (89 pages, 4577407 bytes).
 PDF statistics:
- 1292 PDF objects out of 1440 (max. 8388607)
- 1125 compressed objects within 12 object streams
- 299 named destinations out of 1000 (max. 500000)
- 1098 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1337 PDF objects out of 1440 (max. 8388607)
+ 1168 compressed objects within 12 object streams
+ 316 named destinations out of 1000 (max. 500000)
+ 1130 words of extra memory for PDF output out of 10000 (max. 10000000)
 
