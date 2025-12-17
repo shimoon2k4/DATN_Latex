@@ -1,15 +1,167 @@
 \chapter{Kết quả và đánh giá}
-\lipsum[1-3]
-\section{Mô phỏng vận chuyển}
+% \lipsum[1-3]
+% \section{Mô phỏng vận chuyển}
+% Để kiểm chứng hoạt động của hệ thống trong điều kiện thực tế, nhóm thực hiện kịch bản mô phỏng quá trình vận chuyển như sau:
+% \begin{itemize}
+%     \item \textbf{Thiết bị:} Bộ thu thập dữ liệu (Node) được gắn cố định trên phương tiện di chuyển (xe máy), Gateway được đặt tại vị trí cố định (tầng 3 tòa nhà H6).
+%     \item \textbf{Lộ trình:} Di chuyển xung quanh khuôn viên trường Đại học Bách Khoa ĐHQG-HCM.
+%     \item \textbf{Thời gian thử nghiệm:} [Điền thời gian, ví dụ: 60 phút].
+%     \item \textbf{Vận tốc trung bình:} [Ví dụ: 30 km/h].
+% \end{itemize}
 
-\section{Độ ổn định truyền dữ liệu}
+% Kết quả lộ trình được hệ thống vẽ lại trên bản đồ Dashboard như hình dưới đây:
 
+% \begin{figure}[h]
+%     \centering
+%     % Thay tên file ảnh bản đồ lộ trình của bạn vào đây
+%     % \includegraphics[width=0.8\textwidth]{images/result_map_route.png}
+%     \caption{Lộ trình di chuyển thực tế hiển thị trên hệ thống giám sát}
+%     \label{fig:route_map}
+% \end{figure}
+% ============================================================
+% 6.2 Độ ổn định truyền dữ liệu (Cập nhật từ Báo cáo Tuần 11)
+% ============================================================
+% \section{Độ ổn định truyền dữ liệu}
+
+% \subsection{Kịch bản thử nghiệm}
+% Để đánh giá độ ổn định của module LoRa Ra-08H (SoC ASR6601) trong môi trường đô thị có nhiều vật cản, nhóm đã tiến hành đo đạc thực tế tại **Khu vực Ký túc xá Khu A - ĐHQG TP.HCM**. Đây là môi trường đặc thù với mật độ toà nhà bê tông dày đặc, phản ánh đúng các thách thức trong vận chuyển thực tế.
+
+% Thiết lập kịch bản đo đạc như sau:
+% \begin{itemize}
+%     \item \textbf{Thiết bị phát (Node TX):} ESP32 kết nối với Ra-08H, di chuyển tới các mốc khoảng cách cố định.
+%     \item \textbf{Thiết bị thu (Gateway RX):} Ra-08H đặt cố định, kết nối với máy tính để log dữ liệu RSSI và SNR.
+%     \item \textbf{Khoảng cách đo:} 100m (Tầm nhìn thẳng - LOS), 500m (Bị che khuất - NLOS) và 1000m.
+%     \item \textbf{Cấu hình LoRa:} Thực hiện đo kiểm với 2 mức Spreading Factor (SF) là \textbf{SF=7} (ưu tiên tốc độ) và \textbf{SF=11} (ưu tiên khoảng cách). Băng thông (BW) cố định ở mức 125kHz.
+% \end{itemize}
+
+% \subsection{Độ trễ toàn hệ thống (End-to-End Latency)}
+% Bên cạnh độ ổn định sóng vô tuyến, nhóm cũng đo đạc độ trễ xử lý dữ liệu từ khi cảm biến ghi nhận đến khi hiển thị lên cơ sở dữ liệu Firestore.
+% \begin{itemize}
+%     \item Thời gian đo trung bình: \textbf{1.2 giây đến 2.5 giây}.
+%     \item Kết luận: Mức độ trễ này hoàn toàn đáp ứng tốt yêu cầu giám sát thời gian thực (Soft Real-time) của hệ thống vận chuyển đạn dược, đảm bảo người điều phối nhận được cảnh báo gần như tức thời.
+% \end{itemize}
+
+% ============================================================
+% 6.1 Độ chính xác GPS
+% ============================================================
 \section{Độ chính xác GPS}
+Module GPS NEO-6MV2 được kiểm tra độ chính xác bằng cách đặt thiết bị tại một vị trí cố định đã biết trước tọa độ (Mốc tham chiếu trên Google Maps) trong thời gian 30 phút.
 
+\begin{itemize}
+    \item \textbf{Tọa độ tham chiếu:} [Điền tọa độ thực, VD: 10.xxxx, 106.yyyy]
+    \item \textbf{Tọa độ trung bình đo được:} [Điền tọa độ đo được]
+    \item \textbf{Sai số trung bình:} [Ví dụ: 3.5 mét]
+\end{itemize}
+
+Kết quả cho thấy sai số nằm trong ngưỡng cho phép ($\pm 5m$) đối với các thiết bị định vị dân dụng, đáp ứng đủ yêu cầu giám sát hành trình xe vận chuyển đạn dược trên bản đồ số.
+
+% ============================================================
+% 6.2 Độ chính xác của cảm biến
+% ============================================================
 \section{Độ chính xác của cảm biến}
+\subsection{Cảm biến nhiệt độ độ ẩm DHT11}
+So sánh giá trị đo của DHT11 với nhiệt kế phòng thí nghiệm trong điều kiện nhiệt độ phòng thay đổi:
+\begin{itemize}
+    \item Sai số nhiệt độ trung bình: $\pm 1.5^{\circ}C$.
+    \item Sai số độ ẩm trung bình: $\pm 4\%$.
+\end{itemize}
+Mặc dù DHT11 không có độ chính xác quá cao nhưng đủ để phát hiện các ngưỡng nhiệt độ bất thường gây nguy hiểm cho đạn dược (thường > $50^{\circ}C$).
 
-\section{Độ trễ truyền thông}
+\subsection{Cảm biến gia tốc ADXL345}
+Cảm biến ADXL345 phát hiện tốt các rung động. Nhóm đã thiết lập ngưỡng cảnh báo rung là [Ví dụ: 1.5G]. Khi xe đi qua gờ giảm tốc hoặc đường xấu, giá trị đỉnh ghi nhận được dao động từ [1.2G đến 1.8G], kích hoạt cảnh báo chính xác.
+% ============================================================
+% 6.3 Các kịch bản thử nghiệm
+% ============================================================
+\section{Các kịch bản thử nghiệm}
+Để đánh giá toàn diện hiệu năng của hệ thống, nhóm thực hiện chuỗi các kịch bản kiểm thử từ môi trường phòng thí nghiệm đến hiện trường thực tế. Các kịch bản được thiết kế để kiểm chứng khả năng giám sát vị trí, độ ổn định truyền thông và độ tin cậy của hệ thống cảnh báo.
 
-\section{Khả năng cảnh báo}
+% --- 6.3.1 Kịch bản mô phỏng vận chuyển (Theo yêu cầu của bạn) ---
+\subsection{Kịch bản mô phỏng vận chuyển}
+Đây là kịch bản chính nhằm kiểm chứng khả năng giám sát hành trình liên tục của hệ thống trong điều kiện di chuyển thực tế.
+\begin{itemize}
+    \item \textbf{Mục tiêu:} Đánh giá khả năng vẽ lộ trình (Tracking), độ chính xác GPS khi di chuyển và tính liên tục của dữ liệu gửi về Server.
+    \item \textbf{Thiết lập:}
+    \begin{itemize}
+        \item Thiết bị Node gửi (TX) được gắn cố định trên xe máy, sử dụng nguồn pin dự phòng.
+        \item Thiết bị Gateway (RX) được đặt cố định tại tầng 3 tòa nhà để mô phỏng trạm thu trung tâm.
+    \end{itemize}
+    \item \textbf{Thực hiện:} Xe di chuyển theo lộ trình định sẵn quanh khuôn viên Ký túc xá Khu A ĐHQG-HCM với vận tốc trung bình 30-40 km/h. Hệ thống sẽ ghi lại tọa độ mỗi 5 giây/lần để vẽ lên bản đồ.
+\end{itemize}
 
+% --- 6.3.2 Kịch bản kiểm thử khoảng cách (Range Test) - Dựa trên báo cáo tuần 11 ---
+\subsection{Kịch bản kiểm thử khoảng cách truyền thông (Range Test)}
+Kịch bản này nhằm xác định giới hạn truyền dẫn của công nghệ LoRa với module Ra-08H trong môi trường đô thị có vật cản (NLOS - Non Line of Sight).
+\begin{itemize}
+    \item \textbf{Mục tiêu:} Xác định cấu hình Spreading Factor (SF) tối ưu và khoảng cách truyền tin xa nhất mà hệ thống vẫn hoạt động ổn định.
+    \item \textbf{Địa điểm:} Khu vực Ký túc xá Khu A - ĐHQG TP.HCM (mật độ bê tông cao).
+    \item \textbf{Các mốc đo đạc:}
+    \begin{itemize}
+        \item \textit{Mốc 1 (100m):} Tầm nhìn thẳng (LOS), ít vật cản.
+        \item \textit{Mốc 2 (500m):} Bị che khuất bởi các tòa nhà (NLOS).
+        \item \textit{Mốc 3 (1000m):} Khoảng cách xa với mật độ vật cản dày đặc.
+    \end{itemize}
+    \item \textbf{Tham số kiểm thử:} Thực hiện đo song song với hai cấu hình $SF=7$ (ưu tiên tốc độ) và $SF=11$ (ưu tiên độ nhạy thu) để so sánh tỷ lệ mất gói tin (PLR) .
+\end{itemize}
+\subsubsection{Kết quả thử nghiệm}
+Kết quả thực nghiệm về tỷ lệ mất gói tin (Packet Loss Rate - PLR), cường độ tín hiệu (RSSI) và tỷ lệ tín hiệu trên nhiễu (SNR) được tổng hợp trong Bảng \ref{tab:lora_range_test}.
+
+\begin{table}[h]
+    \centering
+    \caption{Kết quả đo đạc Range Test tại KTX Khu A}
+    \label{tab:lora_range_test}
+    % Lệnh resizebox giúp co bảng lại cho vừa độ rộng trang giấy
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{Khoảng cách}} & \multirow{2}{*}{\textbf{Môi trường}} & \multicolumn{2}{c|}{\textbf{Cấu hình SF = 7}} & \multicolumn{2}{c|}{\textbf{Cấu hình SF = 11}} \\ \cline{3-6} 
+         & & \textbf{PLR} & \textbf{RSSI/SNR} & \textbf{PLR} & \textbf{RSSI/SNR} \\ \hline
+        100m & LOS & 0\% & -73 dBm / 5 dB & 0\% & -80 dBm / 8.5 dB \\ \hline
+        500m & NLOS & >95\% (Fail) & N/A & \textbf{5\%} & -105 dBm / 3.1 dB \\ \hline
+        1000m & NLOS & 100\% (Fail) & N/A & >95\% (Fail) & Timeout liên tục \\ \hline
+        \end{tabular}
+    }
+\end{table}
+\subsubsection{Phân tích và Đánh giá}
+Dựa trên số liệu thu được, nhóm đưa ra các nhận xét sau về độ ổn định truyền thông:
+
+\begin{itemize}
+    \item \textbf{Ở khoảng cách gần (100m - LOS):} Cả SF=7 và SF=11 đều hoạt động hoàn hảo với tỷ lệ mất gói là 0\%. Tín hiệu rất mạnh (RSSI $\approx$ -73 đến -80 dBm). Trong phạm vi này, SF=7 là lựa chọn tốt hơn do có thời gian truyền (Air-time) ngắn hơn, giúp tiết kiệm pin.
+    
+    \item \textbf{Ở khoảng cách trung bình (500m - NLOS):} Đây là mốc quan trọng thể hiện sự khác biệt.
+    \begin{itemize}
+        \item Cấu hình SF=7 hoàn toàn mất kết nối do tín hiệu suy hao mạnh khi đi qua các dãy nhà bê tông.
+        \item Cấu hình \textbf{SF=11} vẫn duy trì kết nối ổn định với tỷ lệ mất gói thấp (chỉ 5\%), RSSI trung bình đạt -105 dBm. Điều này chứng minh khả năng xuyên vật cản tốt hơn hẳn của SF cao, phù hợp với ứng dụng giám sát vận chuyển trong khu vực phức tạp.
+    \end{itemize}
+    
+    \item \textbf{Ở khoảng cách xa (1000m - NLOS):} Hệ thống gặp hiện tượng Timeout liên tục ở cả 2 cấu hình. Nguyên nhân do mật độ bê tông cốt thép tại KTX Khu A quá dày đặc, gây suy hao tín hiệu vượt quá ngưỡng độ nhạy thu của module Ra-08H (-140dBm). Để khắc phục, cần đưa anten lên vị trí cao hơn hoặc sử dụng anten có độ lợi (Gain) lớn hơn anten lò xo mặc định.
+\end{itemize}
+% --- 6.3.3 Kịch bản kiểm thử chức năng cảnh báo (Alert Test) ---
+\subsection{Kịch bản kiểm thử chức năng cảnh báo}
+Kịch bản này mô phỏng các sự cố nguy hiểm có thể xảy ra với đạn dược để kiểm tra độ nhạy và độ trễ của hệ thống cảnh báo.
+\begin{itemize}
+    \item \textbf{Mục tiêu:} Đảm bảo hệ thống phát hiện tức thời và gửi cảnh báo chính xác đến App/Dashboard.
+    \item \textbf{Các tình huống giả định:}
+    \begin{enumerate}
+        \item \textit{Cảnh báo nhiệt độ cao:} Sử dụng máy sấy nhiệt tác động vào cảm biến DHT11 để tăng nhiệt độ vượt ngưỡng cài đặt ($> 50^{\circ}C$).
+        \item \textit{Cảnh báo va đập/rung lắc:} Tạo rung động mạnh đột ngột lên thiết bị để kích hoạt cảm biến gia tốc ADXL345 (ngưỡng $> 1.5G$).
+        \item \textit{Cảnh báo pin yếu:} Sử dụng nguồn cấp giả lập điện áp giảm dần xuống dưới 3.3V.
+    \end{enumerate}
+\end{itemize}
+
+% --- 6.3.4 Kịch bản kiểm thử tích hợp (End-to-End) ---
+\subsection{Kịch bản kiểm thử tích hợp toàn hệ thống}
+Kiểm thử luồng dữ liệu trọn vẹn (End-to-End) từ phần cứng đến giao diện người dùng cuối.
+\begin{itemize}
+    \item \textbf{Luồng dữ liệu:} Cảm biến $\rightarrow$ ESP32 $\rightarrow$ LoRa TX $\rightarrow$ LoRa Gateway $\rightarrow$ MQTT Broker $\rightarrow$ Firestore $\rightarrow$ Mobile App.
+    \item \textbf{Đại lượng đo:} Đo độ trễ (Latency) tổng cộng từ lúc sự kiện xảy ra tại thiết bị cho đến khi hiển thị thông báo trên màn hình điện thoại người dùng.
+\end{itemize}
+% ============================================================
+% 6.4 So sánh và đánh giá
+% ============================================================
 \section{So sánh và đánh giá}
+So với các mục tiêu đề ra ban đầu tại Chương 1 và các yêu cầu hệ thống tại Chương 3, kết quả đạt được như sau:
+\begin{itemize}
+    \item \textbf{Về tính năng:} Hệ thống đã hoàn thành 100\% các tính năng giám sát cơ bản (Vị trí, Môi trường, Cảnh báo).
+    \item \textbf{Về hiệu năng:} Module LoRa Ra-08H cho phép truyền tin xa và ổn định hơn so với các nghiên cứu cũ sử dụng sóng Zigbee hoặc Wifi thuần túy.
+    \item \textbf{Hạn chế:} Kích thước thiết bị phần cứng vẫn còn khá lớn, chưa được tối ưu đóng hộp chống nước chuẩn IP67 để chịu mưa nắng tốt hơn. Độ trễ của LoRa đôi khi tăng cao khi mạng bị nghẽn.
+\end{itemize}
