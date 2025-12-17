@@ -6,19 +6,40 @@
 \section{Cài đặt môi trường phát triển}
 
 \subsection{Môi trường phát triển phần cứng}
-Để triển khai hệ thống IoT giám sát vận chuyển đạn dược, nhóm sử dụng nhiều bộ kit
-phát triển phần cứng khác nhau, đảm nhiệm các vai trò riêng trong kiến trúc tổng thể.
-Cụ thể, hai bộ kit LoRa Ra-08H tích hợp SoC ASR6601 được sử dụng lần lượt làm Node
-truyền (TX) và Gateway nhận (RX), đảm nhiệm chức năng truyền thông không dây
-tầm xa theo giao thức LoRa P2P. Vi điều khiển trung tâm của hệ thống là kit phát triển
-ESP32 NodeMCU, có nhiệm vụ thu thập dữ liệu từ các cảm biến, xử lý sơ bộ và
-truyền dữ liệu tới Gateway thông qua giao tiếp UART kết hợp với kết nối WiFi.
+% Để triển khai hệ thống IoT giám sát vận chuyển đạn dược, nhóm sử dụng nhiều bộ kit
+% phát triển phần cứng khác nhau, đảm nhiệm các vai trò riêng trong kiến trúc tổng thể.
+% Cụ thể, hai bộ kit LoRa Ra-08H tích hợp SoC ASR6601 được sử dụng lần lượt làm Node
+% truyền (TX) và Gateway nhận (RX), đảm nhiệm chức năng truyền thông không dây
+% tầm xa theo giao thức LoRa P2P. Vi điều khiển trung tâm của hệ thống là kit phát triển
+% ESP32 NodeMCU, có nhiệm vụ thu thập dữ liệu từ các cảm biến, xử lý sơ bộ và
+% truyền dữ liệu tới Gateway thông qua giao tiếp UART kết hợp với kết nối WiFi.
 
-Trong quá trình nạp chương trình và kiểm thử hệ thống, nhóm sử dụng mạch chuyển đổi
-USB-to-TTL để nạp firmware và theo dõi log debug của module
-Ra-08H, đồng thời sử dụng cáp Micro-USB để nạp chương trình và cấp nguồn cho
-vi điều khiển ESP32. Việc lựa chọn các công cụ này giúp quá trình phát triển,
-gỡ lỗi và triển khai hệ thống diễn ra thuận tiện và ổn định.
+% Trong quá trình nạp chương trình và kiểm thử hệ thống, nhóm sử dụng mạch chuyển đổi
+% USB-to-com để nạp firmware và theo dõi log debug của module
+% Ra-08H, đồng thời sử dụng cáp Micro-USB để nạp chương trình và cấp nguồn cho
+% vi điều khiển ESP32. Việc lựa chọn các công cụ này giúp quá trình phát triển,
+% gỡ lỗi và triển khai hệ thống diễn ra thuận tiện và ổn định.
+\subsubsection{Môi trường phát triển firmware LoRa P2P}
+Do module Ra-08H sử dụng SoC ASR6601 dựa trên kiến trúc ARM Cortex-M4, quá trình phát
+triển firmware cho hệ thống LoRa P2P yêu cầu bộ công cụ chuyên biệt do nhà sản xuất
+cung cấp. Trong quá trình hiện thực, nhóm sử dụng môi trường phát triển Keil
+$\mu$Vision~5 (MDK-ARM) để biên dịch và quản lý mã nguồn ngôn ngữ C cho vi điều khiển.
+Đây là công cụ phổ biến trong phát triển hệ thống nhúng, hỗ trợ tốt cho kiến trúc
+ARM và tích hợp đầy đủ các chức năng build, debug và quản lý bộ nhớ.
+
+Bên cạnh đó, ASR6601 SDK được sử dụng làm nền tảng phát triển firmware, cung cấp
+các thư viện driver phần cứng, cấu hình radio LoRa và các ví dụ mẫu, trong đó có
+chương trình \texttt{pingpong} được nhóm lựa chọn làm cơ sở để phát triển giao thức
+truyền thông LoRa P2P. Việc sử dụng SDK chính hãng giúp đảm bảo tính tương thích,
+ổn định và rút ngắn thời gian triển khai hệ thống.
+
+Để thuận tiện cho việc tạo và cấu hình dự án, nhóm đã sử dụng công cụ hỗ trợ mang tên
+\texttt{KeilProjectGen}, là một script hỗ trợ sinh tự động file dự án
+\texttt{.uvprojx} từ cấu trúc mã nguồn của SDK. Công cụ này giúp giảm thiểu các lỗi
+cấu hình thủ công và đảm bảo sự đồng nhất giữa các project firmware.
+Cuối cùng, quá trình nạp firmware vào bộ nhớ flash của chip ASR6601 được thực hiện
+thông qua phần mềm TremoProg phiên bản~1.0, cho phép nạp file binary trực tiếp
+vào module Ra-08H một cách nhanh chóng và ổn định.
 
 
 \subsection{Môi trường phát triển phần mềm}
@@ -42,28 +63,6 @@ trò là nền tảng lưu trữ và đồng bộ dữ liệu thời gian thực
 MQTT được cài đặt trên hệ điều hành Windows để làm MQTT Broker, chịu trách nhiệm
 quản lý kết nối, phân phối và truyền tải dữ liệu giữa các thành phần trong hệ thống.
 
-
-\subsection{Môi trường phát triển firmware LoRa P2P}
-Do module Ra-08H sử dụng SoC ASR6601 dựa trên kiến trúc ARM Cortex-M4, quá trình phát
-triển firmware cho hệ thống LoRa P2P yêu cầu bộ công cụ chuyên biệt do nhà sản xuất
-cung cấp. Trong quá trình hiện thực, nhóm sử dụng môi trường phát triển Keil
-$\mu$Vision~5 (MDK-ARM) để biên dịch và quản lý mã nguồn ngôn ngữ C cho vi điều khiển.
-Đây là công cụ phổ biến trong phát triển hệ thống nhúng, hỗ trợ tốt cho kiến trúc
-ARM và tích hợp đầy đủ các chức năng build, debug và quản lý bộ nhớ.
-
-Bên cạnh đó, ASR6601 SDK được sử dụng làm nền tảng phát triển firmware, cung cấp
-các thư viện driver phần cứng, cấu hình radio LoRa và các ví dụ mẫu, trong đó có
-chương trình \texttt{pingpong} được nhóm lựa chọn làm cơ sở để phát triển giao thức
-truyền thông LoRa P2P. Việc sử dụng SDK chính hãng giúp đảm bảo tính tương thích,
-ổn định và rút ngắn thời gian triển khai hệ thống.
-
-Để thuận tiện cho việc tạo và cấu hình dự án, nhóm đã sử dụng công cụ hỗ trợ mang tên
-\texttt{KeilProjectGen}, là một script hỗ trợ sinh tự động file dự án
-\texttt{.uvprojx} từ cấu trúc mã nguồn của SDK. Công cụ này giúp giảm thiểu các lỗi
-cấu hình thủ công và đảm bảo sự đồng nhất giữa các project firmware.
-Cuối cùng, quá trình nạp firmware vào bộ nhớ flash của chip ASR6601 được thực hiện
-thông qua phần mềm TremoProg phiên bản~1.0, cho phép nạp file binary trực tiếp
-vào module Ra-08H một cách nhanh chóng và ổn định.
 
 % ============================================================
 % 5.2 Cài đặt firmware cho Node Lora P2P
