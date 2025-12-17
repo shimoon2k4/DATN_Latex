@@ -87,15 +87,149 @@ Một rủi ro khác là mất tín hiệu hoặc mất kết nối truyền th�
 
 Bên cạnh các yếu tố kỹ thuật, hệ thống còn phải tính đến sự cố phương tiện, chẳng hạn như hỏng động cơ, thủng lốp hoặc tai nạn, thường thể hiện qua các tín hiệu rung bất thường, dừng đột ngột hoặc mất tín hiệu. Nguy hiểm nhất là rủi ro cháy nổ, có thể xảy ra khi nhiệt độ tăng nhanh, va chạm mạnh hoặc rò rỉ nhiên liệu; do vậy các cảm biến phải giám sát chặt chẽ để đưa ra cảnh báo sớm.
 
-
-\section{Use-case diagram}
+\section{Use-case}
+\subsection{Use-case diagram}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{images/chapter_3/usecase.png}
     \caption{Usecase diagram}
     \label{fig:placeholder}
 \end{figure}
-\textbf{Đặc tả diagram}
+
+\subsection{Đặc tả use-case}
+\subsubsection{Use-case 1: Quản lý hàng hoá}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Mục} & \textbf{Mô tả} \\ \hline
+Use-case ID & UC01 \\ \hline
+Use-case Name & Quản lý hàng hóa \\ \hline
+Actor & Bộ phận kho \\ \hline
+Description & Bộ phận kho quản lý thông tin hàng hóa trước khi vận chuyển, bao gồm tạo mới, cập nhật và theo dõi trạng thái hàng hóa. \\ \hline
+Pre-condition & Người dùng thuộc bộ phận kho đã đăng nhập hệ thống. \\ \hline
+Post-condition & Thông tin hàng hóa được lưu và sẵn sàng cho quá trình điều phối vận chuyển. \\ \hline
+Normal flow &
+1. Bộ phận kho chọn chức năng \textbf{Quản lý hàng hóa}. \newline
+2. Hệ thống hiển thị danh sách hàng hóa. \newline
+3. Người dùng thêm mới hoặc chỉnh sửa thông tin hàng hóa. \newline
+4. Người dùng xác nhận lưu. \newline
+5. Hệ thống kiểm tra dữ liệu và cập nhật vào cơ sở dữ liệu. \\ \hline
+Alternative flow &
+(3a) Dữ liệu không hợp lệ: Hệ thống thông báo lỗi, yêu cầu nhập lại. \\ \hline
+\end{tabularx}
+\caption{Đặc tả Use-case UC01: Quản lý hàng hóa}
+\end{table}
+
+\subsubsection{Use-case 2: Điều phối lộ trình}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+Use-case ID & UC02 \\ \hline
+Use-case Name & Điều phối lộ trình \\ \hline
+Actor & Bộ phận kho, Bộ phận vận chuyển \\ \hline
+Description & Hệ thống hỗ trợ xây dựng và quản lý lộ trình vận chuyển dựa trên phương tiện, vị trí và trạng thái hàng hóa. \\ \hline
+Pre-condition & Hàng hóa và phương tiện đã được khai báo trong hệ thống. \\ \hline
+Post-condition & Lộ trình vận chuyển được tạo và phân công cho bộ phận vận chuyển. \\ \hline
+Normal flow &
+1. Người dùng chọn chức năng \textbf{Điều phối lộ trình}. \newline
+2. Hệ thống truy xuất thông tin hàng hóa và phương tiện. \newline
+3. Người dùng thiết lập hoặc điều chỉnh lộ trình. \newline
+4. Hệ thống lưu lộ trình và chuyển sang trạng thái chờ vận chuyển. \\ \hline
+Alternative flow &
+(2a) Thiếu dữ liệu phương tiện: Hệ thống thông báo không thể tạo lộ trình. \\ \hline
+\end{tabularx}
+\caption{Đặc tả Use-case UC02: Điều phối lộ trình}
+\end{table}
+
+\subsubsection{Use-case 3: Nhận lệnh vận chuyển}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+Use-case ID & UC03 \\ \hline
+Use-case Name & Nhận lệnh vận chuyển \\ \hline
+Actor & Bộ phận vận chuyển \\ \hline
+Description & Nhân viên vận chuyển nhận lệnh và thông tin lộ trình từ hệ thống để bắt đầu quá trình vận chuyển. \\ \hline
+Pre-condition & Lộ trình vận chuyển đã được tạo. \\ \hline
+Post-condition & Trạng thái vận chuyển được cập nhật sang đang thực hiện. \\ \hline
+Normal flow &
+1. Nhân viên đăng nhập hệ thống. \newline
+2. Chọn \textbf{Nhận lệnh vận chuyển}. \newline
+3. Hệ thống hiển thị thông tin lộ trình và hàng hóa. \newline
+4. Nhân viên xác nhận bắt đầu vận chuyển. \\ \hline
+Alternative flow &
+(4a) Nhân viên từ chối lệnh: Hệ thống ghi nhận và báo về bộ phận kho. \\ \hline
+\end{tabularx}
+\caption{Đặc tả Use-case UC03: Nhận lệnh vận chuyển}
+\end{table}
+
+\subsubsection{Use-case 4: Cập nhật trạng thái vận chuyển}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+Use-case ID & UC04 \\ \hline
+Use-case Name & Cập nhật trạng thái vận chuyển \\ \hline
+Actor & Bộ phận vận chuyển, Hệ thống \\ \hline
+Description & Trạng thái vận chuyển được cập nhật liên tục dựa trên dữ liệu IoT (GPS, nhiệt độ, độ rung, thời gian). \\ \hline
+Pre-condition & Quá trình vận chuyển đang diễn ra. \\ \hline
+Post-condition & Trạng thái mới được lưu và hiển thị cho các bộ phận liên quan. \\ \hline
+Normal flow &
+1. Thiết bị IoT gửi dữ liệu về hệ thống. \newline
+2. Hệ thống cập nhật trạng thái vận chuyển. \newline
+3. Hệ thống hiển thị vị trí GPS, nhiệt độ, độ rung và thời gian. \\ \hline
+Alternative flow &
+(1a) Mất kết nối thiết bị: Hệ thống ghi nhận trạng thái gián đoạn. \\ \hline
+\end{tabularx}
+\caption{Đặc tả Use-case UC04: Cập nhật trạng thái vận chuyển}
+\end{table}
+
+\subsubsection{Use-case 5: Giám sát vận chuyển}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+Use-case ID & UC05 \\ \hline
+Use-case Name & Giám sát vận chuyển \\ \hline
+Actor & Bộ phận an ninh \\ \hline
+Description & Bộ phận an ninh theo dõi tình trạng vận chuyển theo thời gian thực nhằm phát hiện các dấu hiệu bất thường. \\ \hline
+Pre-condition & Dữ liệu vận chuyển đang được cập nhật. \\ \hline
+Post-condition & Các bất thường được ghi nhận hoặc cảnh báo. \\ \hline
+Normal flow &
+1. Bộ phận an ninh truy cập chức năng \textbf{Giám sát vận chuyển}. \newline
+2. Hệ thống hiển thị trạng thái và dữ liệu cảm biến. \newline
+3. Người dùng theo dõi và đánh giá tình trạng vận chuyển. \\ \hline
+Alternative flow &
+(3a) Phát hiện bất thường: Chuyển sang UC06. \\ \hline
+\end{tabularx}
+\caption{Đặc tả Use-case UC05: Giám sát vận chuyển}
+\end{table}
+
+\subsubsection{Use-case 6: Phát hiện bất thường và gửi cảnh báo}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+Use-case ID & UC06 \\ \hline
+Use-case Name & Phát hiện bất thường và gửi cảnh báo \\ \hline
+Actor & Hệ thống, Bộ phận an ninh \\ \hline
+Description & Hệ thống tự động phát hiện các giá trị bất thường và gửi cảnh báo khẩn cấp. \\ \hline
+Pre-condition & Có dữ liệu cảm biến từ quá trình vận chuyển. \\ \hline
+Post-condition & Cảnh báo được gửi đến bộ phận liên quan. \\ \hline
+Normal flow &
+1. Hệ thống phân tích dữ liệu cảm biến. \newline
+2. Phát hiện giá trị vượt ngưỡng cho phép. \newline
+3. Hệ thống tạo cảnh báo khẩn cấp. \newline
+4. Gửi cảnh báo đến bộ phận an ninh. \\ \hline
+Alternative flow &
+(2a) Dữ liệu nhiễu: Hệ thống bỏ qua và tiếp tục giám sát. \\ \hline
+\end{tabularx}
+\caption{Đặc tả Use-case UC06: Phát hiện bất thường và gửi cảnh báo}
+\end{table}
+
+
 
 \section{Activity diagram}
 \subsection{Điều phối lộ trình}
