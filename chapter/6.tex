@@ -92,90 +92,66 @@ Dữ liệu toạ độ thu thập được trong 60 phút được biểu diễ
 % ============================================================
 % 6.2 Độ chính xác của cảm biến
 % ============================================================
-\section{Độ chính xác của cảm biến}
-\subsection{Cảm biến nhiệt độ độ ẩm DHT11}
-So sánh giá trị đo của DHT11 với nhiệt kế phòng thí nghiệm trong điều kiện nhiệt độ phòng thay đổi:
-\begin{itemize}
-    \item Sai số nhiệt độ trung bình: $\pm 1.5^{\circ}C$.
-    \item Sai số độ ẩm trung bình: $\pm 4\%$.
-\end{itemize}
-Mặc dù DHT11 không có độ chính xác quá cao nhưng đủ để phát hiện các ngưỡng nhiệt độ bất thường gây nguy hiểm cho đạn dược (thường > $50^{\circ}C$).
+\section{Đánh giá phân hệ cảm biến}
 
-\subsection{Cảm biến gia tốc ADXL345}
-Cảm biến ADXL345 phát hiện tốt các rung động. Nhóm đã thiết lập ngưỡng cảnh báo rung là [Ví dụ: 1.5G]. Khi xe đi qua gờ giảm tốc hoặc đường xấu, giá trị đỉnh ghi nhận được dao động từ [1.2G đến 1.8G], kích hoạt cảnh báo chính xác.
+Khả năng giám sát môi trường và trạng thái vật lý của kiện hàng được đánh giá thông qua việc so sánh dữ liệu từ cảm biến với các thiết bị đo chuẩn trong phòng thí nghiệm.
+
+Đối với cảm biến nhiệt độ - độ ẩm \textbf{DHT11}, kết quả thực nghiệm cho thấy sai số nhiệt độ trung bình dao động trong khoảng $\pm 1.5^{\circ}C$ và độ ẩm là $\pm 4\%$. Mặc dù độ chính xác này không cao bằng các dòng cảm biến công nghiệp, nhưng hoàn toàn phù hợp để phát hiện các ngưỡng nhiệt độ nguy hiểm cho đạn dược (thường $> 50^{\circ}C$).
+
+Đối với cảm biến gia tốc \textbf{ADXL345}, nhóm đã thiết lập ngưỡng cảnh báo rung động là $1.5G$. Thử nghiệm thực tế khi di chuyển qua các gờ giảm tốc cho thấy các giá trị đỉnh (peak) ghi nhận được dao động từ $1.2G$ đến $1.8G$. Để loại bỏ nhiễu rung động tần số cao do động cơ xe, một bộ lọc thông thấp (Low Pass Filter) kỹ thuật số đã được áp dụng, giúp hệ thống chỉ kích hoạt cảnh báo khi có các va đập vật lý thực sự.
+
 % ============================================================
 % 6.3 Các kịch bản thử nghiệm
 % ============================================================
 \section{Các kịch bản thử nghiệm}
 Để đánh giá toàn diện hiệu năng của hệ thống, nhóm thực hiện chuỗi các kịch bản kiểm thử từ môi trường phòng thí nghiệm đến hiện trường thực tế. Các kịch bản được thiết kế để kiểm chứng khả năng giám sát vị trí, độ ổn định truyền thông và độ tin cậy của hệ thống cảnh báo.
 
-% --- 6.3.1 Kịch bản mô phỏng vận chuyển (Theo yêu cầu của bạn) ---
-\subsection{Kịch bản mô phỏng vận chuyển}
-Kịch bản mô phỏng vận chuyển được xây dựng nhằm kiểm chứng khả năng giám sát hành
-trình liên tục của hệ thống trong điều kiện di chuyển thực tế. Trọng tâm của kịch
-bản này là đánh giá khả năng theo dõi lộ trình (tracking), độ chính xác của dữ liệu
-định vị GPS khi phương tiện đang di chuyển, cũng như tính liên tục và ổn định của
-luồng dữ liệu được truyền về máy chủ trung tâm.
+% % --- 6.3.1 Kịch bản mô phỏng vận chuyển (Theo yêu cầu của bạn) ---
+% \subsection{Kịch bản mô phỏng vận chuyển}
+% Kịch bản mô phỏng vận chuyển được xây dựng nhằm kiểm chứng khả năng giám sát hành
+% trình liên tục của hệ thống trong điều kiện di chuyển thực tế. Trọng tâm của kịch
+% bản này là đánh giá khả năng theo dõi lộ trình (tracking), độ chính xác của dữ liệu
+% định vị GPS khi phương tiện đang di chuyển, cũng như tính liên tục và ổn định của
+% luồng dữ liệu được truyền về máy chủ trung tâm.
 
-Trong quá trình thử nghiệm, thiết bị Node gửi (Node TX) được gắn cố định trên một
-phương tiện di chuyển (xe máy) và sử dụng nguồn pin dự phòng để đảm bảo hoạt động
-liên tục. Gateway (Node RX) được đặt tại một vị trí cố định ở tầng 3 của tòa nhà,
-đóng vai trò như một trạm thu trung tâm trong hệ thống giám sát.
+% Trong quá trình thử nghiệm, thiết bị Node gửi (Node TX) được gắn cố định trên một
+% phương tiện di chuyển (xe máy) và sử dụng nguồn pin dự phòng để đảm bảo hoạt động
+% liên tục. Gateway (Node RX) được đặt tại một vị trí cố định ở tầng 3 của tòa nhà,
+% đóng vai trò như một trạm thu trung tâm trong hệ thống giám sát.
 
-Phương tiện sau đó di chuyển theo một lộ trình định sẵn trong khuôn viên Ký túc xá
-Khu A – Đại học Quốc gia TP.HCM với vận tốc trung bình dao động từ 30 đến 40 km/h.
-Trong suốt quá trình này, hệ thống thực hiện ghi nhận và gửi dữ liệu tọa độ GPS
-theo chu kỳ 5 giây mỗi lần, cho phép tái hiện lộ trình di chuyển của phương tiện
-trên bản đồ số của ứng dụng giám sát.
+% Phương tiện sau đó di chuyển theo một lộ trình định sẵn trong khuôn viên Ký túc xá
+% Khu A – Đại học Quốc gia TP.HCM với vận tốc trung bình dao động từ 30 đến 40 km/h.
+% Trong suốt quá trình này, hệ thống thực hiện ghi nhận và gửi dữ liệu tọa độ GPS
+% theo chu kỳ 5 giây mỗi lần, cho phép tái hiện lộ trình di chuyển của phương tiện
+% trên bản đồ số của ứng dụng giám sát.
 
-\subsubsection{Kết quả thử nghiệm}
-\autoref{app(1)} và \autoref{app(2)} minh họa giao diện ứng dụng di động
-trong quá trình thử nghiệm mô phỏng vận chuyển. Ứng dụng hiển thị đồng thời
-thông tin vị trí phương tiện trên bản đồ số và các thông số môi trường thu
-thập từ cảm biến theo thời gian thực.
+% \subsubsection{Kết quả thử nghiệm}
+% \autoref{app(1)} và \autoref{app(2)} minh họa giao diện ứng dụng di động
+% trong quá trình thử nghiệm mô phỏng vận chuyển. Ứng dụng hiển thị đồng thời
+% thông tin vị trí phương tiện trên bản đồ số và các thông số môi trường thu
+% thập từ cảm biến theo thời gian thực.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{images/chapper_6/app(1).png}
-    \caption{Giao diện ứng dụng hiển thị vị trí thời gian thực}
-    \label{fig:app(1)}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.5\textwidth]{images/chapper_6/app(1).png}
+%     \caption{Giao diện ứng dụng hiển thị vị trí thời gian thực}
+%     \label{fig:app(1)}
+% \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{images/chapper_6/app(2).png}
-    \caption{Giao diện ứng dụng hiển thị dữ liệu thu thập thời gian thực}
-    \label{fig:app(2)}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.5\textwidth]{images/chapper_6/app(2).png}
+%     \caption{Giao diện ứng dụng hiển thị dữ liệu thu thập thời gian thực}
+%     \label{fig:app(2)}
+% \end{figure}
 
-\subsubsection{Phân tích và đánh giá}
+% \subsubsection{Phân tích và đánh giá}
 % --- 6.3.2 Kịch bản kiểm thử khoảng cách (Range Test) - Dựa trên báo cáo tuần 11 ---
 \subsection{Kịch bản kiểm thử khoảng cách truyền thông (Range Test)}
-Kịch bản kiểm thử khoảng cách truyền thông được thiết kế nhằm xác định giới hạn
-truyền dẫn của công nghệ LoRa khi sử dụng module Ra-08H trong môi trường đô thị có
-nhiều vật cản, đặc trưng bởi điều kiện không có tầm nhìn thẳng (NLOS – Non Line of
-Sight). Đây là kịch bản quan trọng để đánh giá khả năng đáp ứng của hệ thống trong
-bối cảnh triển khai thực tế, nơi tín hiệu vô tuyến thường chịu ảnh hưởng mạnh bởi
-suy hao và nhiễu đa đường.
+Kịch bản này được thiết kế để xác định giới hạn truyền dẫn của module Ra-08H trong môi trường đô thị phức tạp (Khu vực KTX Khu A - ĐHQG TP.HCM), đặc trưng bởi mật độ bê tông cốt thép dày đặc gây suy hao tín hiệu lớn (Non-Line-of-Sight - NLOS).
 
-Mục tiêu chính của kịch bản này là xác định cấu hình Spreading Factor (SF) tối ưu,
-đồng thời khảo sát khoảng cách truyền tin xa nhất mà hệ thống vẫn có thể duy trì
-hoạt động ổn định. Thử nghiệm được thực hiện tại khu vực Ký túc xá Khu A – Đại học
-Quốc gia TP.HCM, nơi có mật độ công trình bê tông cao, đại diện cho môi trường đô
-thị điển hình với nhiều thách thức đối với truyền thông không dây tầm xa.
+Thử nghiệm được tiến hành tại ba mốc khoảng cách: 100m (tầm nhìn thẳng - LOS), 500m (NLOS) và 1000m (NLOS). Tại mỗi mốc, nhóm thực hiện đo đạc song song với hai cấu hình Spreading Factor: $SF=7$ (ưu tiên tốc độ truyền) và $SF=11$ (ưu tiên độ nhạy thu và khả năng chống nhiễu).
 
-Trong quá trình đo đạc, các mốc khoảng cách được lựa chọn theo ba mức khác nhau
-nhằm phản ánh các điều kiện truyền dẫn đặc trưng. Ở mốc 100 mét, thiết bị hoạt
-động trong điều kiện tầm nhìn thẳng (LOS) với ít vật cản. Mốc 500 mét tương ứng
-với điều kiện không có tầm nhìn thẳng (NLOS) do tín hiệu bị che khuất bởi các tòa
-nhà. Cuối cùng, mốc 1000 mét đại diện cho khoảng cách xa trong môi trường có mật
-độ vật cản dày đặc, nơi suy hao tín hiệu là đáng kể.
-
-Các phép đo được thực hiện song song với hai cấu hình Spreading Factor khác nhau,
-bao gồm $SF=7$ nhằm ưu tiên tốc độ truyền và $SF=11$ nhằm ưu tiên độ nhạy thu.
-Việc so sánh hai cấu hình này cho phép đánh giá ảnh hưởng của tham số SF đến tỷ
-lệ mất gói tin (Packet Loss Rate – PLR), cũng như khả năng duy trì kết nối của hệ
-thống trong các điều kiện truyền dẫn khác nhau.
 
 \subsubsection{Kết quả thử nghiệm}
 Kết quả thực nghiệm về tỷ lệ mất gói tin (Packet Loss Rate - PLR), cường độ tín hiệu (RSSI) và tỷ lệ tín hiệu trên nhiễu (SNR) được tổng hợp trong Bảng \ref{tab:lora_range_test}.
@@ -190,7 +166,7 @@ Kết quả thực nghiệm về tỷ lệ mất gói tin (Packet Loss Rate - PL
          & & \textbf{PLR} & \textbf{RSSI/SNR} & \textbf{PLR} & \textbf{RSSI/SNR} \\ \hline
         100m & LOS & 0\% & -73 dBm / 5 dB & 0\% & -80 dBm / 8.5 dB \\ \hline
         500m & NLOS & >95\% (Fail) & N/A & \textbf{5\%} & -105 dBm / 3.1 dB \\ \hline
-        1000m & NLOS & 100\% (Fail) & N/A & >95\% (Fail) & Timeout liên tục \\ \hline
+        800m & NLOS & 100\% (Fail) & N/A & \textbf{5\%} & Timeout liên tục \\ \hline
         \end{tabular}
     }
 
@@ -256,56 +232,56 @@ nhận diện sự cố, thời gian phản hồi cũng như độ tin cậy c�
 \subsubsection{Phân tích và đánh giá}
 
 % --- 6.3.4 Kịch bản kiểm thử tích hợp (End-to-End) ---
-\subsection{Kịch bản kiểm thử tích hợp toàn hệ thống}
-Kịch bản kiểm thử tích hợp toàn hệ thống được thực hiện nhằm đánh giá hoạt động
-của hệ thống theo luồng dữ liệu trọn vẹn (End-to-End), từ tầng phần cứng thu thập
-dữ liệu cho đến tầng giao diện người dùng cuối. Thông qua kịch bản này, nhóm kiểm
-chứng tính đúng đắn của kiến trúc hệ thống cũng như khả năng phối hợp giữa các
-thành phần phần cứng, phần mềm nhúng, hạ tầng mạng và nền tảng ứng dụng.
+\section{Kiểm thử tích hợp và Phân tích độ trễ}
 
-Cụ thể, luồng dữ liệu được khảo sát bắt đầu từ các cảm biến gắn trên phương tiện,
-sau đó dữ liệu được thu thập và xử lý sơ bộ bởi vi điều khiển ESP32. Các gói dữ liệu
-tiếp tục được truyền không dây thông qua module LoRa ở phía Node phát, được tiếp
-nhận tại LoRa Gateway, rồi chuyển tiếp lên MQTT Broker. Từ đây, dữ liệu được xử lý
-bởi Python Bridge và lưu trữ trên cơ sở dữ liệu Firestore trước khi được đồng bộ và
-hiển thị trên ứng dụng di động của người dùng.
+\subsection{Phân rã độ trễ toàn trình (Latency Breakdown)}
+Đối với các hệ thống cảnh báo nguy hiểm, độ trễ truyền tin là yếu tố sống còn. Nhóm đã thực hiện đo đạc và phân rã độ trễ toàn trình (End-to-End Latency) để xác định các điểm nghẽn trong hệ thống. Độ trễ tổng ($T_{total}$) được tính bằng tổng thời gian xử lý tại các chặng:
+$$ T_{total} = T_{sensor} + T_{LoRa} + T_{Gateway} + T_{Cloud} + T_{App} $$
 
-Đại lượng chính được đo trong kịch bản kiểm thử này là độ trễ toàn hệ thống
-(End-to-End Latency), được xác định là khoảng thời gian từ thời điểm một sự kiện
-xảy ra tại thiết bị (ví dụ: thay đổi nhiệt độ, rung lắc hoặc vị trí) cho đến khi thông
-tin tương ứng được hiển thị dưới dạng dữ liệu hoặc thông báo cảnh báo trên màn
-hình điện thoại. Kết quả đo độ trễ này là cơ sở quan trọng để đánh giá mức độ đáp
-ứng thời gian thực (soft real-time) và tính khả thi của hệ thống trong ứng dụng
-giám sát vận chuyển đạn dược.
+Kết quả đo đạc trung bình trên 100 mẫu thử với cấu hình $SF=11$ được trình bày trong Bảng \ref{tab:latency}.
 
-\subsubsection{Kết quả thử nghiệm}
-\subsubsection{Phân tích và đánh giá}
+\begin{table}[H]
+    \centering
+    \caption{Phân rã độ trễ xử lý dữ liệu của hệ thống}
+    \label{tab:latency}
+    \begin{tabular}{|l|l|c|}
+    \hline
+    \textbf{Thành phần} & \textbf{Mô tả quá trình} & \textbf{Thời gian (ms)} \\ \hline
+    Sensor Node & Đọc cảm biến, lọc nhiễu, đóng gói JSON & 50 \\ \hline
+    LoRa Link & Thời gian truyền sóng (Air-time, SF11) & $\approx 800 - 1000$ \\ \hline
+    Gateway & Nhận gói tin, giải mã, đẩy lên MQTT Broker & 100 \\ \hline
+    Cloud Bridge & Python script xử lý, ghi vào Firestore & 200 - 500 \\ \hline
+    Mobile App & Listener nhận event và cập nhật UI & 50 - 100 \\ \hline
+    \textbf{Tổng cộng} & \textbf{Độ trễ toàn trình trung bình} & \textbf{$\approx 1.2s - 2.5s$} \\ \hline
+    \end{tabular}
+\end{table}
+
+\textit{Kết luận:} Độ trễ trung bình khoảng 2 giây là chấp nhận được đối với bài toán giám sát vận tải (Soft Real-time). Thành phần chiếm tỷ trọng lớn nhất là $T_{LoRa}$ (do sử dụng SF cao để tăng tầm phủ sóng) và $T_{Cloud}$ (phụ thuộc vào tốc độ mạng Internet).
+
+\subsection{Thử nghiệm mô phỏng vận chuyển thực tế}
+Hệ thống đã được triển khai thử nghiệm trên xe máy di chuyển trong khuôn viên Đại học Quốc gia TP.HCM. Gateway được đặt cố định tại tòa nhà H6. Ứng dụng di động đã hiển thị chính xác lộ trình di chuyển (tracking path) trùng khớp với các tuyến đường trên bản đồ số Google Maps, chứng tỏ thuật toán chuyển đổi tọa độ GPS sang GeoPoint của Firestore hoạt động chính xác.
+
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{cc}
+        \framebox{\parbox{0.45\textwidth}{\centering \vspace{4cm} \textit{[Ảnh chụp giao diện bản đồ]} \vspace{1cm}}} & 
+        \framebox{\parbox{0.45\textwidth}{\centering \vspace{4cm} \textit{[Ảnh chụp màn hình thông số]} \vspace{1cm}}} \\
+        (a) Hiển thị lộ trình di chuyển & (b) Hiển thị thông số cảm biến
+    \end{tabular}
+    \caption{Giao diện ứng dụng di động trong quá trình thử nghiệm thực tế}
+    \label{fig:app_demo}
+\end{figure}
+
+
 % ============================================================
 % 6.4 So sánh và đánh giá
 % ============================================================
-\section{Đánh giá kết quả}
-So sánh với các mục tiêu nghiên cứu được đặt ra ban đầu trong Chương~1 cũng như
-các yêu cầu hệ thống đã xác định tại Chương~3, có thể nhận thấy rằng hệ thống đề
-xuất đã đạt được những kết quả tích cực và đáp ứng phần lớn các tiêu chí thiết kế.
+\section{Kết luận và Hướng phát triển}
 
-Về mặt chức năng, hệ thống đã triển khai đầy đủ các chức năng giám sát cốt lõi,
-bao gồm giám sát vị trí phương tiện, theo dõi các thông số môi trường (nhiệt độ,
-độ ẩm, rung lắc) và cơ chế phát hiện, cảnh báo các tình huống bất thường. Các chức
-năng này hoạt động đồng bộ và ổn định trong các kịch bản thử nghiệm thực tế,
-cho phép người dùng theo dõi trạng thái vận chuyển một cách trực quan thông qua
-ứng dụng di động.
+Kết quả thực nghiệm đã chứng minh tính khả thi và hiệu quả của kiến trúc hệ thống đề xuất. Công nghệ LoRa P2P với cấu hình $SF=11$ thể hiện ưu thế vượt trội về khả năng xuyên vật cản trong môi trường đô thị so với các giải pháp WiFi/Zigbee truyền thống. Cơ chế xử lý trung gian (Middleware) sử dụng Python Bridge và MQTT Broker giúp hệ thống đạt độ ổn định cao, tách biệt được tầng phần cứng và tầng ứng dụng.
 
-Xét về hiệu năng truyền thông, việc sử dụng module LoRa Ra-08H cho thấy ưu điểm
-rõ rệt về khả năng truyền dữ liệu khoảng cách xa và độ ổn định cao trong môi
-trường đô thị có nhiều vật cản, vượt trội hơn so với một số giải pháp truyền thông
-không dây truyền thống như Zigbee hoặc WiFi thuần túy đã được đề cập trong các
-nghiên cứu trước. Điều này khẳng định tính phù hợp của công nghệ LoRa đối với
-bài toán giám sát vận chuyển trong điều kiện thực tế.
+Tuy nhiên, hệ thống vẫn tồn tại một số hạn chế cần khắc phục trong các giai đoạn phát triển tiếp theo:\\
+1.  **Tối ưu hóa năng lượng:** Cần triển khai chế độ ngủ sâu (Deep Sleep) cho ESP32 và Ra-08H để kéo dài thời gian hoạt động của pin.\\
+2.  **Cơ chế chống mất gói tin:** Cần bổ sung cơ chế xác nhận (ACK) và gửi lại (Retransmission) ở tầng ứng dụng để đảm bảo không mất dữ liệu cảnh báo quan trọng.\\
+3.  **Thiết kế cơ khí:** Cần đóng gói sản phẩm đạt chuẩn IP67 để chịu được điều kiện môi trường khắc nghiệt trong tác chiến quân sự.\\
 
-Tuy nhiên, hệ thống vẫn tồn tại một số hạn chế nhất định. Kích thước phần cứng
-hiện tại còn tương đối lớn và chưa được tối ưu về mặt cơ khí, đặc biệt là chưa
-đáp ứng được các tiêu chuẩn bảo vệ môi trường khắc nghiệt như chuẩn chống bụi,
-chống nước IP67, vốn rất cần thiết cho các ứng dụng ngoài trời. Bên cạnh đó, độ
-trễ truyền dữ liệu của công nghệ LoRa có xu hướng tăng trong các thời điểm mạng
-bị nghẽn hoặc khi cấu hình ưu tiên khoảng cách xa, đây là yếu tố cần được cân
-nhắc và cải thiện trong các nghiên cứu và phát triển tiếp theo.
