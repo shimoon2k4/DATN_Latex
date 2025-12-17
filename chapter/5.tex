@@ -43,26 +43,14 @@ vào module Ra-08H một cách nhanh chóng và ổn định.
 
 
 \subsection{Môi trường phát triển phần mềm}
-Môi trường phát triển phần mềm của hệ thống được xây dựng nhằm đáp ứng đồng thời
-các yêu cầu về lập trình vi điều khiển, triển khai backend xử lý dữ liệu và phát triển
-ứng dụng di động. Đối với vi điều khiển ESP32, nhóm sử dụng Visual Studio Code
-kết hợp với Extension PlatformIO trên nền tảng Framework Arduino. Cách tiếp cận này
-giúp đơn giản hóa quá trình quản lý thư viện, biên dịch và nạp chương trình, đồng thời
-tăng khả năng mở rộng và bảo trì mã nguồn.
+Môi trường phát triển phần mềm của hệ thống được xây dựng nhằm đáp ứng đồng thời các yêu cầu về lập trình vi điều khiển, triển khai backend xử lý dữ liệu và phát triển ứng dụng di động. 
 
-Ở phía backend, ngôn ngữ lập trình Python phiên bản 3.x được sử dụng để xây dựng
-script trung gian (Bridge) thực hiện chức năng kết nối giữa MQTT Broker và cơ sở dữ liệu
-Firebase. Việc lựa chọn Python cho phép phát triển nhanh, dễ dàng xử lý dữ liệu dạng
-JSON và tích hợp hiệu quả với các thư viện hỗ trợ như \texttt{firebase-admin}. Công tác
-quản lý và giám sát dữ liệu được thực hiện thông qua Google Firebase Console, đóng vai
-trò là nền tảng lưu trữ và đồng bộ dữ liệu thời gian thực cho hệ thống.
-
-Đối với ứng dụng di động, nhóm sử dụng Flutter SDK phiên bản mới nhất để phát triển
-ứng dụng đa nền tảng, kết hợp với Android Studio nhằm hỗ trợ giả lập, kiểm thử và
-đóng gói ứng dụng dưới dạng file APK. Ngoài ra, hệ thống sử dụng phần mềm Mosquitto
-MQTT được cài đặt trên hệ điều hành Windows để làm MQTT Broker, chịu trách nhiệm
-quản lý kết nối, phân phối và truyền tải dữ liệu giữa các thành phần trong hệ thống.
-
+\begin{itemize}
+    \item \textbf{Vi điều khiển (ESP32):} Nhóm sử dụng Visual Studio Code kết hợp với Extension PlatformIO trên nền tảng Framework Arduino. Cách tiếp cận này giúp đơn giản hóa quá trình quản lý thư viện, biên dịch và nạp chương trình, đồng thời tăng khả năng mở rộng và bảo trì mã nguồn.
+    \item \textbf{Backend \& Middleware:} Ngôn ngữ lập trình Python phiên bản 3.x được sử dụng để xây dựng script trung gian (Bridge) thực hiện chức năng kết nối giữa MQTT Broker và cơ sở dữ liệu Firebase. Việc lựa chọn Python cho phép phát triển nhanh, dễ dàng xử lý dữ liệu dạng JSON và tích hợp hiệu quả với các thư viện hỗ trợ như \texttt{firebase-admin}. Công tác quản lý và giám sát dữ liệu được thực hiện thông qua Google Firebase Console, đóng vai trò là nền tảng lưu trữ và đồng bộ dữ liệu thời gian thực cho hệ thống.
+    
+    \item \textbf{Mobile Application:} Nhóm sử dụng Flutter SDK phiên bản mới nhất để phát triển ứng dụng đa nền tảng, kết hợp với Android Studio nhằm hỗ trợ giả lập, kiểm thử và đóng gói ứng dụng dưới dạng file APK. Ngoài ra, hệ thống sử dụng phần mềm Mosquitto MQTT được cài đặt trên hệ điều hành Windows để làm MQTT Broker, chịu trách nhiệm quản lý kết nối, phân phối và truyền tải dữ liệu giữa các thành phần trong hệ thống.
+\end{itemize}
 
 % ============================================================
 % 5.2 Cài đặt firmware cho Node Lora P2P
@@ -115,6 +103,38 @@ dữ liệu hoàn chỉnh đã được nhận. Toàn bộ nội dung trong bộ
 gói thành payload LoRa và được truyền đi bằng cách gọi hàm
 \texttt{Radio.Send()}. Cơ chế này cho phép Node TX thực hiện truyền dữ liệu một cách
 tuần tự, đảm bảo mỗi gói tin LoRa chứa đầy đủ thông tin cần thiết trước khi phát sóng.
+Đoạn mã dưới đây trích xuất từ file \texttt{pingpong\_tx.c}, minh họa logic chính trong vòng lặp vô hạn của Node TX. Vi xử lý liên tục giám sát dữ liệu trên cổng UART, đọc từng byte vào bộ đệm \texttt{line}. Khi phát hiện ký tự kết thúc dòng (\texttt{\textbackslash n}) hoặc khi bộ đệm đầy, firmware sẽ gọi hàm \texttt{Radio.Send()} để phát sóng gói tin LoRa đi:
+
+\begin{lstlisting}[language=C, caption={Logic đọc UART và gửi LoRa tại Node TX}, label={lst:tx_logic}]
+    while (1) {
+        while (uart_available_wrapper() && idx < (int)sizeof(line)-1) {
+            int c = uart_readbyte_wrapper();
+            if (c < 0) break;
+
+#if UART0_ECHO
+            uart_writebyte((uint8_t)c);   
+#endif
+            line[idx++] = (uint8_t)c;
+            last_rx_tick = TimerGetCurrentTime();
+            if (c == '\n') break;
+        }
+
+        if (idx > 0) {
+            int have_nl = (line[idx-1] == '\n');
+            int idle    = (TimerGetElapsedTime(last_rx_tick) > 80);
+
+            if (have_nl || (idle && idx > 0)) {
+                Radio.Send(line, (uint8_t)idx);
+                printf("Sent %d bytes\r\n", idx);
+                
+                /* Reset buffer */
+                idx = 0;
+                memset(line, 0, sizeof(line));
+            }
+        }
+        Radio.IrqProcess();
+    }
+\end{lstlisting}
 
 \subsubsection{Node RX (Gateway nhận tin)}
 Firmware của Node RX được thiết kế để hoạt động như một Gateway trung gian, thực
@@ -138,142 +158,123 @@ tính phục vụ cho các bước xử lý tiếp theo, lưu trữ và hiển t
 Cách tiếp cận này cho phép tách biệt rõ ràng giữa tầng truyền thông không dây và
 tầng xử lý ứng dụng, đồng thời tạo điều kiện thuận lợi cho việc mở rộng và phân tích
 hiệu năng hệ thống trong các giai đoạn tiếp theo.
+Đoạn mã sau thể hiện quá trình xử lý khi nhận được gói tin (State = RX). Dữ liệu payload được mã hóa sang Hex để đảm bảo an toàn, sau đó được đóng gói cùng với RSSI, SNR, tần số và timestamp thành một chuỗi JSON hoàn chỉnh trước khi gửi qua UART:
+
+\begin{lstlisting}[language=C, caption={Logic đóng gói JSON và gửi UART tại Node RX}, label={lst:rx_logic}]
+switch (State)
+{
+    case RX: {
+        char hex[(BUFFER_SIZE*2)+1];
+        hex_encode(RxBuf, RxLen, hex);
+
+        char json[BUFFER_SIZE*3 + 128];
+        int n = snprintf(json, sizeof(json),
+            "{\"ts\":%lu,\"freq\":%lu,\"rssi\":%d,\"snr\":%d,"
+            "\"len\":%u,\"payload_hex\":\"%s\"}\n",
+            (unsigned long)TimerGetCurrentTime(),
+            (unsigned long)RF_FREQUENCY,
+            (int)RxRssi, (int)RxSnr,
+            (unsigned)RxLen, hex);
+        if (n > 0) uart0_write((const uint8_t*)json, n);
+
+        Radio.Rx(RX_TIMEOUT_VALUE);
+        State = LOWPOWER;
+        break;
+    }
+    
+    case RX_TIMEOUT:
+    case RX_ERROR:
+        Radio.Rx(RX_TIMEOUT_VALUE);
+        State = LOWPOWER;
+        break;
+    // ...
+}
+\end{lstlisting}
+Cách tiếp cận này cho phép tách biệt rõ ràng giữa tầng truyền thông không dây và tầng xử lý ứng dụng, đồng thời tạo điều kiện thuận lợi cho việc mở rộng và phân tích hiệu năng hệ thống trong các giai đoạn tiếp theo.
 
 % ============================================================
 % 5.3 Cài đặt backend
 % ============================================================
-\section{Cài đặt backend}
+\section{Cài đặt backend và xử lý dữ liệu}
 
-\subsection{Cấu hình MQTT Broker}
-Nhóm sử dụng \textbf{Mosquitto} làm MQTT Broker. Để cho phép các thiết bị trong mạng LAN kết nối và gửi dữ liệu, file cấu hình \texttt{mosquitto.conf} được thiết lập như sau:
-\begin{verbatim}
-listener 1883 0.0.0.0  # Lắng nghe trên mọi IP
-allow_anonymous true   # Cho phép kết nối không cần mật khẩu
-\end{verbatim}
+\subsection{Thiết lập hạ tầng MQTT Broker}
+Hệ thống sử dụng Mosquitto làm MQTT Broker đóng vai trò trung tâm trong việc định tuyến và phân phối dữ liệu. Để đảm bảo khả năng truy cập từ các thiết bị ngoại vi trong mạng nội bộ, cấu hình của Broker đã được tùy chỉnh để lắng nghe trên tất cả các giao diện mạng (0.0.0.0) tại cổng tiêu chuẩn 1883, thay vì chỉ giới hạn ở localhost như mặc định. Đồng thời, các quy tắc tường lửa (Inbound Rules) trên máy chủ Windows cũng được thiết lập để cho phép các kết nối TCP đến cổng này, đảm bảo luồng dữ liệu từ Gateway đến Broker được thông suốt.
 
-Đồng thời, quy tắc tường lửa (Firewall) trên máy chủ Windows đã được mở cho cổng 1883 (Inbound Rule).
+\subsection{Triển khai dịch vụ cầu nối (Bridge Service)}
+Để kết nối giữa luồng dữ liệu thời gian thực từ MQTT và cơ sở dữ liệu lưu trữ lâu dài Firebase, nhóm đã phát triển một dịch vụ trung gian (Bridge Service) bằng ngôn ngữ Python. Dịch vụ này không chỉ đơn thuần là chuyển tiếp dữ liệu mà còn thực hiện chức năng chuẩn hóa và làm giàu dữ liệu (Data Enrichment).
 
-\subsection{Triển khai Python Bridge}
-Script \texttt{mqtt\_to\_firestore.py} được phát triển nhằm đóng vai trò là một thành
-phần trung gian trong kiến trúc hệ thống, thực hiện chức năng kết nối và chuyển đổi
-dữ liệu giữa MQTT Broker và nền tảng lưu trữ Firebase. Thành phần này cho phép
-tách biệt rõ ràng giữa tầng truyền thông dữ liệu và tầng lưu trữ, góp phần nâng cao
-tính linh hoạt và khả năng mở rộng của hệ thống.
+Cụ thể, script Python thực hiện đăng ký (subscribe) các chủ đề (topic) dữ liệu từ Gateway thông qua wildcard \texttt{ammo\_transport/+/telemetry}. Khi nhận được gói tin, script tiến hành phân tích cú pháp JSON, trích xuất các trường thông tin quan trọng và thực hiện chuyển đổi định dạng. Dữ liệu thô từ cảm biến được kết hợp với các thông số kỹ thuật của mạng LoRa (RSSI, SNR) để tạo thành bản ghi hoàn chỉnh.
 
-Về mặt chức năng, script Python thực hiện đăng ký (subscribe) các topic MQTT được
-phát ra từ Gateway, sau đó tiến hành phân tích cú pháp các gói dữ liệu nhận được.
-Do dữ liệu LoRa được Gateway đóng gói dưới dạng JSON lồng nhau, trong đó trường
-\texttt{"raw"} chứa payload dữ liệu cảm biến ban đầu, script thực hiện trích xuất và
-chuyển đổi dữ liệu này về dạng có cấu trúc để phục vụ cho quá trình lưu trữ và hiển thị.
-
-Sau khi xử lý, dữ liệu cảm biến được ghi vào cơ sở dữ liệu Firestore thông qua thư
-viện \texttt{firebase-admin}. Cấu trúc lưu trữ được thiết kế theo hai lớp dữ liệu riêng
-biệt. Lớp \textit{Latest State} lưu trữ trạng thái mới nhất của từng thiết bị nhằm phục
-vụ cho việc cập nhật thời gian thực trên ứng dụng di động, trong khi lớp
-\textit{History} được sử dụng để lưu trữ dữ liệu lịch sử, phục vụ cho việc truy xuất,
-phân tích và đánh giá hoạt động của hệ thống trong dài hạn.
+Dữ liệu sau xử lý được ghi vào Cloud Firestore theo mô hình hai lớp: lớp \textit{Latest State} phục vụ cho việc hiển thị trạng thái tức thời trên Dashboard, và lớp \textit{History} lưu trữ chuỗi thời gian (time-series) phục vụ cho nhu cầu truy xuất lịch sử và phân tích xu hướng. Việc sử dụng thư viện \texttt{firebase-admin} với cơ chế xác thực qua Service Account đảm bảo tính bảo mật và quyền kiểm soát truy cập dữ liệu nghiêm ngặt.
 
 % ============================================================
-% 5.4 Cài đặt ứng dụng
+% 5.4 Cài đặt ứng dụng di động
 % ============================================================
-\section{Cài đặt ứng dụng}
+\section{Cài đặt và phát triển ứng dụng di động}
 
-\subsection{Cấu trúc dự án Flutter}
-Ứng dụng di động của hệ thống được phát triển bằng Flutter và được tổ chức theo
-cấu trúc thư mục rõ ràng nhằm đảm bảo tính dễ đọc, khả năng mở rộng và thuận tiện
-cho quá trình bảo trì mã nguồn. Toàn bộ mã nguồn chính của ứng dụng được đặt trong
-thư mục \texttt{lib/}, trong đó các thành phần được phân chia theo chức năng cụ thể.
+\subsection{Kiến trúc ứng dụng Flutter}
+Ứng dụng di động được xây dựng dựa trên Flutter SDK, áp dụng kiến trúc phân tầng rõ ràng để tách biệt giữa giao diện người dùng (UI), logic nghiệp vụ (Business Logic) và các dịch vụ nền tảng (Services). Mã nguồn được tổ chức thành các module chức năng riêng biệt:
+\begin{itemize}
+    \item \textbf{Module Giao diện (Screens \& Components):} Bao gồm các màn hình tương tác chính và các widget tái sử dụng. Các thành phần này chỉ chịu trách nhiệm hiển thị dữ liệu và tiếp nhận thao tác người dùng, không chứa logic xử lý phức tạp.
+    \item \textbf{Module Dịch vụ (Services):} Tập trung các lớp xử lý kết nối mạng, quản lý trạng thái và tương tác với API bên ngoài. Điển hình là \texttt{MqttService}, chịu trách nhiệm duy trì kết nối bền vững với Broker và xử lý các sự kiện ngắt kết nối hoặc lỗi mạng.
+    \item \textbf{Module Mô hình dữ liệu (Models):} Định nghĩa cấu trúc dữ liệu ánh xạ từ các bản tin JSON, giúp đảm bảo tính nhất quán và an toàn kiểu dữ liệu (type safety) trong toàn bộ ứng dụng.
+\end{itemize}
 
-Thư mục \texttt{screens/} chứa các màn hình giao diện chính của ứng dụng, bao gồm
-các màn hình đăng nhập, trang chủ, bản đồ và bảng điều khiển. Mỗi màn hình được
-xây dựng như một thành phần độc lập, giúp đơn giản hóa việc phát triển giao diện
-và quản lý luồng điều hướng trong ứng dụng. Thư mục \texttt{components/} được sử
-dụng để lưu trữ các widget có khả năng tái sử dụng, chẳng hạn như các thẻ hiển thị
-thông tin vận chuyển và các khối giao diện chức năng, qua đó giảm sự trùng lặp mã
-nguồn và tăng tính nhất quán trong thiết kế giao diện.
-
-Bên cạnh đó, thư mục \texttt{services/} đảm nhiệm việc triển khai các lớp xử lý logic
-nghiệp vụ và kết nối bên ngoài, trong đó nổi bật là dịch vụ \texttt{MqttService}
-thiết lập và quản lý kết nối MQTT. Việc tách biệt rõ ràng giữa giao diện người dùng,
-thành phần tái sử dụng và logic xử lý dữ liệu giúp ứng dụng đạt được kiến trúc rõ
-ràng, dễ mở rộng và phù hợp với các ứng dụng IoT quy mô lớn.
-
-\subsection{Tích hợp dịch vụ MQTT}
-Dịch vụ \texttt{MqttService} trong ứng dụng thực hiện kết nối tới Broker và đăng ký (subscribe) topic dạng wildcard: \texttt{ammo\_transport/+/telemetry}. Điều này cho phép ứng dụng tự động phát hiện và hiển thị dữ liệu từ bất kỳ thiết bị nào đang hoạt động trong hệ thống.
+\subsection{Cơ chế đồng bộ dữ liệu thời gian thực}
+Thay vì sử dụng phương pháp hỏi vòng (polling) truyền thống gây tốn băng thông và năng lượng, ứng dụng áp dụng cơ chế lắng nghe sự kiện (event-driven) thông qua giao thức MQTT. Dịch vụ \texttt{MqttService} đăng ký theo dõi các chủ đề dữ liệu liên quan, cho phép ứng dụng nhận được cập nhật ngay lập tức khi có gói tin mới từ thiết bị giám sát. Dữ liệu nhận về được phân tích và cập nhật trực tiếp vào trạng thái ứng dụng (State Management), kích hoạt việc vẽ lại giao diện (re-build UI) để hiển thị thông tin mới nhất cho người dùng với độ trễ thấp nhất.
 
 % ============================================================
-% 5.5 Kết nối thiết bị
+% 5.5 Kết nối và tích hợp phần cứng
 % ============================================================
-\section{Kết nối thiết bị}
-Để đảm bảo giao tiếp ổn định giữa vi điều khiển trung tâm và module truyền thông, sơ đồ đấu dây giữa ESP32 và Ra-08H (Node TX) được thực hiện như sau:
+% \section{Kết nối và tích hợp phần cứng}
+% Việc tích hợp phần cứng giữa vi điều khiển ESP32 và module truyền thông Ra-08H đóng vai trò then chốt trong việc đảm bảo độ tin cậy của luồng dữ liệu. Sơ đồ kết nối vật lý được thiết kế tối ưu hóa cho giao tiếp UART không đồng bộ, cụ thể như Bảng \ref{tab:wiring}.
 
-\begin{table}[h]
+% \begin{table}[H]
+%     \centering
+%     \caption{Sơ đồ kết nối phần cứng giữa ESP32 và Module Ra-08H}
+%     \label{tab:wiring}
+%     \begin{tabular}{|c|c|l|}
+%     \hline
+%     \textbf{Chân ESP32} & \textbf{Chân Ra-08H} & \multicolumn{1}{c|}{\textbf{Chức năng và Ý nghĩa kỹ thuật}} \\ \hline
+%     GPIO 17 (TX2) & RX & Kênh truyền dữ liệu chính (Data Uplink) từ vi xử lý xuống module. \\ \hline
+%     GPIO 16 (RX2) & TX & Kênh nhận phản hồi (Feedback) và thông tin debug từ module LoRa. \\ \hline
+%     GND & GND & Tham chiếu điện áp chung, bắt buộc để đảm bảo mức logic chính xác. \\ \hline
+%     3.3V / 5V & VCC & Cung cấp năng lượng hoạt động ổn định cho module RF. \\ \hline
+%     \end{tabular}
+% \end{table}
+
+Trong quá trình triển khai thực tế, nhóm đặc biệt chú trọng đến vấn đề cấp nguồn, đảm bảo dòng điện đủ lớn để đáp ứng các đỉnh tiêu thụ (peak current) khi module LoRa thực hiện phát sóng, tránh hiện tượng sụt áp gây reset vi điều khiển.
+
+% ============================================================
+% 5.6 Quy trình vận hành hệ thống
+% ============================================================
+\section{Quy trình vận hành và kiểm thử hệ thống}
+Hệ thống được vận hành theo quy trình khởi động tuần tự từ trung tâm ra ngoại vi (Center-to-Edge) để đảm bảo tính sẵn sàng của hạ tầng trước khi thiết bị đầu cuối hoạt động.
+
+\textbf{Bước 1: Khởi động hạ tầng máy chủ.}
+Quá trình bắt đầu bằng việc kích hoạt dịch vụ Mosquitto MQTT Broker và chạy script Python Bridge. Tại bước này, các kết nối đến cơ sở dữ liệu Firebase được thiết lập và xác thực, đồng thời các cổng lắng nghe mạng được mở để sẵn sàng tiếp nhận kết nối.
+
+\textbf{Bước 2: Kích hoạt Gateway (Node RX).}
+Gateway sau khi được cấp nguồn sẽ thực hiện quy trình tự kiểm tra (POST), kết nối vào mạng WiFi cục bộ và thiết lập phiên làm việc với MQTT Broker. Sau khi kết nối thành công, Gateway chuyển sang chế độ lắng nghe liên tục trên kênh tần số LoRa đã định.
+
+\textbf{Bước 3: Vận hành thiết bị giám sát (Node TX).}
+Thiết bị giám sát gắn trên phương tiện vận tải được khởi động cuối cùng. Vi điều khiển ESP32 bắt đầu chu kỳ thu thập dữ liệu từ các cảm biến GPS, nhiệt độ và gia tốc kế. Dữ liệu được xử lý, đóng gói và truyền đi định kỳ qua module LoRa.
+
+\textbf{Bước 4: Giám sát và Điều hành.}
+Người dùng cuối truy cập vào hệ thống thông qua ứng dụng di động. Tại đây, luồng dữ liệu từ hiện trường được trực quan hóa thành các thông số giám sát và vị trí trên bản đồ số. Hệ thống cho phép người điều hành theo dõi trạng thái vận chuyển theo thời gian thực và nhận các cảnh báo tức thời khi có bất thường xảy ra.
+
+\begin{table}[H]
     \centering
-    \begin{tabular}{|c|c|c|}
-    \hline
-    \textbf{Chân ESP32} & \textbf{Chân Ra-08H} & \textbf{Chức năng} \\ \hline
-    GPIO 17 (TX2) & RX & Gửi dữ liệu JSON sang LoRa \\ \hline
-    GPIO 16 (RX2) & TX & Nhận phản hồi debug \\ \hline
-    GND & GND & Đồng bộ mức tín hiệu (Bắt buộc) \\ \hline
-    3.3V / 5V & VCC & Cấp nguồn cho module \\ \hline
-    \end{tabular}
-    \caption{Sơ đồ kết nối phần cứng Node TX}
-    \label{tab:wiring}
-\end{table}
-
-% ============================================================
-% 5.6 Triển khai hệ thống
-% ============================================================
-\section{Triển khai hệ thống}
-Quy trình triển khai và vận hành toàn bộ hệ thống được thực hiện theo mô hình
-end-to-end, trong đó các thành phần từ tầng máy chủ, gateway, node giám sát cho
-đến ứng dụng người dùng được khởi động và phối hợp hoạt động theo một trình tự
-xác định. Trước hết, tại phía máy chủ, dịch vụ Mosquitto MQTT được khởi động để
-đóng vai trò là trung tâm phân phối dữ liệu, đồng thời script Python Bridge được
-chạy nhằm sẵn sàng tiếp nhận, xử lý và lưu trữ dữ liệu vào cơ sở dữ liệu Firebase.
-
-Sau khi tầng máy chủ hoạt động ổn định, Gateway (Node RX) được cấp nguồn để bắt
-đầu quá trình vận hành. Gateway thực hiện kết nối tới mạng WiFi cục bộ và chuyển
-sang trạng thái lắng nghe các gói tin được truyền từ các Node TX thông qua giao
-thức LoRa. Khi nhận được dữ liệu, Gateway đóng vai trò trung gian chuyển tiếp dữ
-liệu lên tầng mạng IP thông qua MQTT.
-
-Tiếp theo, Node giám sát (Node TX) được gắn lên phương tiện vận chuyển và được
-khởi động. Vi điều khiển ESP32 tại Node TX tiến hành thu thập dữ liệu từ các cảm
-biến, đóng gói dữ liệu dưới dạng chuỗi JSON và truyền sang module Ra-08H thông
-qua giao tiếp UART. Module LoRa sau đó phát sóng dữ liệu này tới Gateway theo
-kênh truyền không dây tầm xa.
-
-Cuối cùng, người dùng có thể khởi động ứng dụng di động, thực hiện đăng nhập và
-theo dõi các thông tin giám sát như vị trí, nhiệt độ và độ rung của phương tiện.
-Dữ liệu được cập nhật theo thời gian thực và hiển thị trực quan trên bản đồ số,
-qua đó cho phép người dùng giám sát trạng thái vận hành của phương tiện một
-cách liên tục và hiệu quả.
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{|l|p{8cm}|}
-        \hline
-        \textbf{Thành phần} & \textbf{Vai trò trong hệ thống} \\ \hline
-        Node TX (ESP32 + Ra-08H) & 
-        Thu thập dữ liệu từ các cảm biến (GPS, nhiệt độ, độ rung), đóng gói dữ liệu
-        dưới dạng JSON và truyền dữ liệu không dây qua giao thức LoRa P2P. \\ \hline
-        Node RX (Gateway LoRa) & 
-        Nhận dữ liệu từ các Node TX thông qua LoRa, trích xuất thông tin tín hiệu
-        (RSSI, SNR) và chuyển tiếp dữ liệu lên tầng mạng IP thông qua UART và MQTT. \\ \hline
-        MQTT Broker (Mosquitto) & 
-        Đóng vai trò trung gian phân phối dữ liệu, cho phép các thành phần trong hệ
-        thống trao đổi dữ liệu theo mô hình publish/subscribe. \\ \hline
-        Python Bridge & 
-        Phân tích và xử lý dữ liệu từ MQTT, chuyển đổi định dạng dữ liệu và lưu trữ
-        vào cơ sở dữ liệu Firebase phục vụ giám sát thời gian thực và lưu trữ lịch sử. \\ \hline
-        Firebase (Firestore) & 
-        Lưu trữ dữ liệu giám sát của hệ thống, bao gồm trạng thái hiện tại và dữ liệu
-        lịch sử, hỗ trợ đồng bộ dữ liệu cho ứng dụng di động. \\ \hline
-        Ứng dụng di động (Flutter) & 
-        Hiển thị thông tin giám sát như vị trí, nhiệt độ và độ rung của phương tiện
-        theo thời gian thực, hỗ trợ người dùng theo dõi trạng thái vận chuyển. \\ \hline
-    \end{tabular}
-    \caption{Tóm tắt vai trò các thành phần trong hệ thống}
+    \caption{Tổng hợp chức năng và vai trò của các thành phần trong hệ thống}
     \label{tab:system_components}
+    \begin{tabular}{|l|p{10cm}|}
+        \hline
+        \textbf{Thành phần} & \textbf{Vai trò kỹ thuật và Chức năng} \\ \hline
+        Node TX & \textbf{Thu thập biên (Edge Acquisition):} Đo đạc thông số môi trường và vận hành, xử lý tín hiệu sơ bộ và truyền tải không dây tầm xa. \\ \hline
+        Node RX & \textbf{Cổng kết nối (Gateway):} Chuyển đổi môi trường truyền tin từ sóng vô tuyến (RF) sang mạng IP, đóng vai trò điểm tập trung dữ liệu. \\ \hline
+        MQTT Broker & \textbf{Trục truyền tin (Message Bus):} Đảm bảo phân phối dữ liệu tin cậy, thời gian thực giữa các thành phần phân tán. \\ \hline
+        Python Bridge & \textbf{Xử lý trung gian (Middleware):} Chuẩn hóa dữ liệu, tích hợp logic nghiệp vụ và đồng bộ hóa với hệ thống lưu trữ đám mây. \\ \hline
+        Firestore & \textbf{Lưu trữ đám mây (Cloud Storage):} Quản lý dữ liệu bền vững, hỗ trợ truy vấn lịch sử và đồng bộ trạng thái đa thiết bị. \\ \hline
+        Mobile App & \textbf{Giao diện người dùng (HMI):} Trực quan hóa dữ liệu giám sát, cung cấp công cụ tương tác và ra quyết định cho người quản lý. \\ \hline
+    \end{tabular}
 \end{table}
