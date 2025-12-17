@@ -1,8 +1,8 @@
-\contentsline {chapter}{Danh s\'ach h\`inh v\~e}{viii}{figure.caption.1}%
-\contentsline {chapter}{Danh s\'ach b\h {a}ng}{x}{figure.caption.1}%
-\contentsline {chapter}{Lời cam kết}{xiii}{chapter*.2}%
-\contentsline {chapter}{Lời cảm ơn}{xv}{chapter*.3}%
-\contentsline {chapter}{Tóm tắt}{xvii}{chapter*.4}%
+\contentsline {chapter}{Danh s\'ach h\`inh v\~e}{vi}{figure.caption.1}%
+\contentsline {chapter}{Danh s\'ach b\h {a}ng}{viii}{figure.caption.1}%
+\contentsline {chapter}{Lời cam kết}{xi}{chapter*.2}%
+\contentsline {chapter}{Lời cảm ơn}{xiii}{chapter*.3}%
+\contentsline {chapter}{Tóm tắt}{xv}{chapter*.4}%
 \contentsline {chapter}{\numberline {1}Giới thiệu}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Bối cảnh của đề tài}{1}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Mục tiêu của đề tài}{2}{section.1.2}%
