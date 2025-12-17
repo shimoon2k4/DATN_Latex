@@ -29,7 +29,7 @@ Nhận thấy ưu và nhược điểm riêng biệt của hai mô hình trên, 
 
 Dựa trên yêu cầu đặc thù của đề tài về việc giám sát vận chuyển đạn dược – một bài toán đòi hỏi cả sự phản ứng tức thời tại hiện trường (Edge) và khả năng quản lý tập trung từ xa (Cloud), nhóm nghiên cứu quyết định lựa chọn *Kiến trúc Hybrid Cloud-Edge* làm nền tảng thiết kế hệ thống. Sự kết hợp này đảm bảo hệ thống vẫn có thể hoạt động cảnh báo cục bộ ngay cả khi mất kết nối mạng (Offline Mode), đồng thời vẫn duy trì được cái nhìn toàn cảnh cho người điều phối khi có kết nối trở lại.
 
-\section{Các giao thức truyền thông trong IoT}
+\section{Các công nghệ truyền thông không dây}
 \subsection{LoRa}
 \subsubsection{Giới thiệu}
 LoRa, viết tắt của Long Range Radio, là một loại công nghệ hỗ trợ truyền dữ liệu trong những khoảng cách lên đến hàng chục km mà không cần thêm bất kỳ các mạch khuếch đại công suất nào. LoRa giúp việc truyền và nhận dữ liệu trở nên đơn giản hơn, tiết kiệm năng lượng tiêu thụ hiệu quả.
@@ -89,6 +89,42 @@ Bước sang 5G, công nghệ này mang đến những đột phá vượt trộ
 Công nghệ 4G và 5G mang lại nhiều lợi ích quan trọng trong các hệ thống IoT hiện đại. Với tốc độ truyền dữ liệu cao, 4G cho phép truyền tải video HD, chơi game trực tuyến và vận hành các dịch vụ yêu cầu băng thông rộng mà vẫn duy trì độ trễ thấp. Khi bước sang 5G, tốc độ còn được cải thiện vượt trội cùng với độ trễ cực thấp, giúp đáp ứng tốt các ứng dụng thời gian thực như điều khiển từ xa, xe tự hành hoặc các hệ thống giám sát thông minh. Chất lượng dịch vụ ổn định giúp mạng có thể xử lý đồng thời thoại, video và dữ liệu mà không ảnh hưởng đến hiệu năng. Ngoài ra, 5G còn hỗ trợ mật độ kết nối rất lớn, phù hợp cho các mô hình IoT quy mô cao trong đô thị thông minh hoặc công nghiệp.
 
 Tuy nhiên, cả 4G và 5G đều tồn tại một số hạn chế. Chi phí triển khai hạ tầng cao khiến việc phủ sóng đồng đều gặp khó khăn, đặc biệt tại khu vực nông thôn hoặc vùng sâu vùng xa. Việc xây dựng mạng 5G càng yêu cầu đầu tư lớn hơn do sử dụng nhiều trạm thu phát và băng tần cao. Thiết bị di động sử dụng mạng 4G/5G thường tiêu tốn năng lượng lớn hơn, làm giảm thời gian sử dụng pin. Ngoài ra, dù đã có nhiều cải tiến về bảo mật, các mạng này vẫn đối mặt với rủi ro bị tấn công do kiến trúc phức tạp, đặc biệt ở 5G. Người dùng cũng cần có thiết bị tương thích mới để tận dụng đầy đủ lợi ích của 5G, gây khó khăn cho quá trình phổ cập.
+
+\subsection{Mạng vệ tinh}
+\subsubsection{Giới thiệu}
+Mạng vệ tinh là công nghệ truyền thông không dây sử dụng các vệ tinh quỹ đạo để
+truyền dữ liệu giữa các thiết bị mặt đất và trung tâm xử lý. Công nghệ này đặc biệt
+phù hợp cho các khu vực hẻo lánh, vùng núi, hải đảo hoặc khu vực quân sự nơi hạ tầng
+viễn thông mặt đất không khả dụng hoặc không ổn định.
+
+Trong các hệ thống giám sát vận chuyển quân sự, mạng vệ tinh đóng vai trò quan trọng
+như một kênh truyền dự phòng (backup communication), đảm bảo khả năng duy trì kết nối
+ngay cả khi LoRa hoặc 4G/5G không thể hoạt động.
+
+\subsubsection{Nguyên lý hoạt động}
+Mạng vệ tinh hoạt động dựa trên nguyên lý truyền thông vô tuyến giữa thiết bị đầu cuối mặt đất (User Terminal) và các vệ tinh nhân tạo quay quanh Trái Đất. Trong hệ thống này, dữ liệu từ thiết bị IoT được phát đi dưới dạng sóng vô tuyến hướng lên vệ tinh (uplink). Sau khi tiếp nhận, vệ tinh sẽ thực hiện khuếch đại, chuyển tiếp hoặc xử lý sơ bộ tín hiệu, sau đó truyền tín hiệu xuống các trạm mặt đất (downlink) để chuyển tiếp đến trung tâm xử lý dữ liệu hoặc hệ thống đám mây.
+
+Tùy theo quỹ đạo, mạng vệ tinh có thể được phân thành các loại chính như vệ tinh quỹ đạo thấp (LEO – Low Earth Orbit), vệ tinh quỹ đạo trung (MEO – Medium Earth Orbit) và vệ tinh quỹ đạo địa tĩnh (GEO – Geostationary Orbit). Vệ tinh GEO có ưu điểm phủ sóng rộng và ổn định nhưng có độ trễ lớn do khoảng cách xa. Trong khi đó, các hệ thống vệ tinh LEO có độ trễ thấp hơn nhờ quỹ đạo gần Trái Đất, tuy nhiên cần một chùm vệ tinh để đảm bảo phủ sóng liên tục.
+
+Trong các hệ thống IoT giám sát vận chuyển, thiết bị đầu cuối thường được tích hợp module truyền thông vệ tinh chuyên dụng. Khi các kênh truyền mặt đất như LoRa hoặc 4G/5G không khả dụng, thiết bị sẽ tự động chuyển sang chế độ truyền vệ tinh để gửi dữ liệu quan trọng như tọa độ GPS, trạng thái phương tiện hoặc cảnh báo khẩn cấp. Cơ chế này giúp đảm bảo tính liên tục của hệ thống giám sát, đặc biệt trong các môi trường khắc nghiệt hoặc khu vực không có hạ tầng viễn thông.
+
+\subsubsection{Đặc điểm nổi bật}
+Mạng vệ tinh có khả năng phủ sóng toàn cầu, không phụ thuộc vào hạ tầng viễn thông
+mặt đất. Tuy nhiên, do khoảng cách truyền rất xa, độ trễ của mạng vệ tinh thường cao
+(250--600ms) và tiêu thụ năng lượng lớn hơn so với các công nghệ truyền thông khác.
+Chi phí triển khai và vận hành cũng cao, bao gồm chi phí thiết bị đầu cuối và thuê
+kênh truyền vệ tinh.
+
+\subsubsection{Ưu điểm và nhược điểm}
+Ưu điểm lớn nhất của mạng vệ tinh là khả năng phủ sóng toàn cầu và tính độc lập hoàn toàn với hạ tầng viễn thông mặt đất. Nhờ đặc điểm này, mạng vệ tinh có thể duy trì kết nối ổn định tại các khu vực vùng sâu vùng xa, hải đảo, sa mạc hoặc khu vực quân sự đặc thù, nơi mà các công nghệ như LoRa hay 4G/5G không thể triển khai hiệu quả. Điều này giúp mạng vệ tinh trở thành một giải pháp truyền thông đáng tin cậy trong các hệ thống yêu cầu tính sẵn sàng cao và khả năng hoạt động liên tục.
+
+Ngoài ra, mạng vệ tinh thường được sử dụng như một kênh truyền dự phòng (redundant communication) trong các hệ thống quan trọng. Khi kết hợp với các công nghệ truyền thông khác, vệ tinh giúp tăng độ tin cậy tổng thể của hệ thống, giảm nguy cơ mất dữ liệu trong trường hợp xảy ra sự cố hạ tầng hoặc mất kết nối cục bộ. Đối với các ứng dụng giám sát vận chuyển quân sự, khả năng duy trì liên lạc trong mọi điều kiện địa lý và môi trường là một lợi thế mang tính chiến lược.
+
+Tuy nhiên, mạng vệ tinh cũng tồn tại nhiều hạn chế. Do khoảng cách truyền tín hiệu rất lớn, độ trễ của mạng vệ tinh thường cao hơn đáng kể so với các công nghệ truyền thông mặt đất, đặc biệt đối với các hệ thống vệ tinh quỹ đạo địa tĩnh. Độ trễ này có thể ảnh hưởng đến các ứng dụng yêu cầu phản hồi thời gian thực hoặc điều khiển tức thì.
+
+Bên cạnh đó, chi phí triển khai và vận hành mạng vệ tinh tương đối cao, bao gồm chi phí thiết bị đầu cuối, phí thuê băng thông và chi phí duy trì hệ thống vệ tinh. Thiết bị truyền thông vệ tinh cũng tiêu thụ năng lượng lớn hơn, không phù hợp cho các node IoT chạy pin trong thời gian dài. Do những hạn chế này, mạng vệ tinh thường không được sử dụng làm kênh truyền chính mà đóng vai trò bổ trợ, chỉ kích hoạt trong các tình huống đặc biệt khi các phương thức truyền thông khác không khả dụng.
+
+\section{Các giao thức tầng ứng dụng}
 \subsection{MQTT}
 \subsubsection{Giới thiệu}
 MQTT, viết tắt của Message Queuing Telemetry Transport, là giao thức truyền thông được sử dụng cho các thiết bị IoT với băng thông thấp, độ tin cậy cao và khả năng được sử dụng trong mạng lưới không ổn định. 
@@ -121,45 +157,354 @@ Tuy nhiên, MQTT cũng tồn tại một số hạn chế nhất định. Khi so
 
 Một nhược điểm khác là MQTT không tích hợp sẵn cơ chế mã hóa dữ liệu, buộc hệ thống phải sử dụng các giao thức bảo mật bổ sung như TLS/SSL để đảm bảo an toàn. Cuối cùng, khả năng mở rộng ở quy mô rất lớn vẫn là thách thức, do Broker trở thành điểm trung tâm cần xử lý lượng lớn kết nối đồng thời, dễ dẫn đến quá tải nếu không được tối ưu đúng cách.
 
+
+\subsection{REST (HTTP)}
+
+\subsubsection{Giới thiệu}
+REST (Representational State Transfer) là một phong cách kiến trúc phần mềm
+(architectural style) được sử dụng phổ biến trong việc xây dựng các hệ thống
+phân tán và dịch vụ web. REST thường được triển khai dựa trên giao thức HTTP,
+cho phép các hệ thống khác nhau giao tiếp với nhau thông qua các yêu cầu
+(request) và phản hồi (response) theo mô hình client–server.
+
+Trong các hệ thống IoT hiện đại, RESTful API đóng vai trò quan trọng trong việc
+kết nối giữa tầng thiết bị, tầng gateway và tầng ứng dụng hoặc đám mây. REST
+được sử dụng rộng rãi để thu thập dữ liệu cảm biến, quản lý thiết bị, cấu hình
+hệ thống và cung cấp dữ liệu cho các ứng dụng giám sát, dashboard hoặc hệ thống
+phân tích. Nhờ tính đơn giản, phổ biến và khả năng tương thích cao, REST trở
+thành một lựa chọn phù hợp cho các hệ thống IoT có yêu cầu tích hợp với nền tảng
+web hoặc hệ thống quản lý trung tâm.
+
+\subsubsection{Nguyên lý hoạt động}
+REST hoạt động dựa trên mô hình client–server, trong đó client (thiết bị IoT,
+gateway hoặc ứng dụng) gửi các yêu cầu HTTP đến server để truy cập hoặc thao tác
+với tài nguyên. Mỗi tài nguyên trong hệ thống được định danh duy nhất bằng một
+URI (Uniform Resource Identifier) và được biểu diễn dưới các định dạng dữ liệu
+chuẩn như JSON hoặc XML.
+
+Các thao tác trên tài nguyên được thực hiện thông qua các phương thức HTTP tiêu
+chuẩn. Phương thức GET được sử dụng để truy vấn dữ liệu, POST dùng để tạo mới
+tài nguyên, PUT hoặc PATCH để cập nhật dữ liệu, và DELETE để xóa tài nguyên.
+Server sẽ xử lý yêu cầu và trả về phản hồi tương ứng kèm theo mã trạng thái HTTP
+(status code) nhằm thông báo kết quả thực hiện.
+
+Trong hệ thống IoT, thiết bị hoặc gateway thường đóng vai trò client, định kỳ
+gửi dữ liệu cảm biến lên server thông qua các yêu cầu POST hoặc PUT. Server sau
+đó lưu trữ dữ liệu, xử lý và cung cấp lại thông tin cho các ứng dụng giám sát
+thông qua các yêu cầu GET. REST không duy trì trạng thái phiên làm việc
+(stateless), do đó mỗi yêu cầu đều chứa đầy đủ thông tin cần thiết để server xử
+lý, giúp hệ thống dễ mở rộng và quản lý.
+
+
+\subsubsection{Đặc điểm nổi bật}
+Một trong những đặc điểm nổi bật của REST là tính không trạng thái (stateless),
+giúp giảm tải cho server và tăng khả năng mở rộng hệ thống. Mỗi yêu cầu HTTP đều
+độc lập và không phụ thuộc vào các yêu cầu trước đó, phù hợp với các hệ thống
+phân tán quy mô lớn.
+
+REST tận dụng hạ tầng sẵn có của giao thức HTTP, bao gồm cơ chế định tuyến, mã
+trạng thái, caching và bảo mật thông qua HTTPS. Việc sử dụng định dạng dữ liệu
+nhẹ như JSON giúp giảm dung lượng truyền tải và tăng tốc độ xử lý, đặc biệt phù
+hợp với các ứng dụng web và hệ thống giám sát IoT.
+
+Ngoài ra, REST có khả năng tương thích cao với nhiều nền tảng và ngôn ngữ lập
+trình khác nhau. Các API RESTful có thể dễ dàng được tích hợp với ứng dụng web,
+mobile hoặc các hệ thống backend, giúp đơn giản hóa quá trình phát triển và bảo
+trì hệ thống IoT.
+
+
+\subsubsection{Ưu điểm và nhược điểm}
+REST mang lại nhiều ưu điểm đáng kể trong các hệ thống IoT. Nhờ tính đơn giản và
+phổ biến của HTTP, việc triển khai REST không đòi hỏi hạ tầng phức tạp và dễ dàng
+tích hợp với các nền tảng web hiện có. REST phù hợp cho các tác vụ quản lý thiết
+bị, truy vấn dữ liệu lịch sử, hiển thị dashboard và cung cấp API cho các hệ thống
+phân tích hoặc điều phối trung tâm. Khả năng mở rộng cao và hỗ trợ tốt cho kiến
+trúc cloud giúp REST trở thành lựa chọn phổ biến trong các hệ thống IoT quy mô
+vừa và lớn.
+
+Tuy nhiên, REST cũng tồn tại một số hạn chế khi áp dụng cho IoT. Do hoạt động dựa
+trên HTTP và mô hình request/response, REST không tối ưu cho các ứng dụng yêu cầu
+truyền dữ liệu liên tục hoặc thời gian thực. Phần bao gói dữ liệu của HTTP tương
+đối lớn, dẫn đến tiêu thụ băng thông và năng lượng cao hơn so với các giao thức
+nhẹ như MQTT hoặc CoAP.
+
+Ngoài ra, REST không hỗ trợ cơ chế push dữ liệu một cách tự nhiên, khiến server
+khó chủ động gửi dữ liệu xuống thiết bị mà phải thông qua các giải pháp bổ sung
+như polling hoặc WebSocket. Vì những lý do này, REST thường được sử dụng ở tầng
+ứng dụng hoặc tầng cloud, trong khi các giao thức nhẹ hơn được ưu tiên cho tầng
+thiết bị và truyền thông thời gian thực trong hệ thống IoT.
+
+
+\subsection{GraphQL}
+
+\subsubsection{Giới thiệu}
+GraphQL là một ngôn ngữ truy vấn và runtime cho API được phát triển bởi Facebook,
+nhằm khắc phục những hạn chế của các API truyền thống dựa trên REST. Thay vì
+server quyết định trước cấu trúc dữ liệu trả về, GraphQL cho phép client chủ động
+xác định chính xác dữ liệu cần truy vấn, từ đó giảm thiểu dữ liệu dư thừa và tối
+ưu hiệu quả truyền tải.
+
+Trong các hệ thống IoT hiện đại, GraphQL thường được sử dụng ở tầng ứng dụng hoặc
+tầng cloud, nơi các dashboard giám sát, hệ thống phân tích hoặc nền tảng quản lý
+cần truy xuất dữ liệu từ nhiều nguồn khác nhau. Nhờ khả năng gom nhiều truy vấn
+vào một request duy nhất và cấu trúc dữ liệu linh hoạt, GraphQL đặc biệt phù hợp
+cho các hệ thống IoT có dữ liệu phức tạp, đa dạng và yêu cầu hiển thị động theo
+nhu cầu người dùng.
+
+\subsubsection{Nguyên lý hoạt động}
+GraphQL hoạt động dựa trên mô hình client–server, trong đó client gửi một truy vấn
+(query) duy nhất đến server thông qua một endpoint cố định. Truy vấn này mô tả
+chi tiết cấu trúc dữ liệu mong muốn, bao gồm các trường dữ liệu, mối quan hệ và
+điều kiện lọc. Server sẽ phân tích truy vấn, ánh xạ đến các nguồn dữ liệu tương
+ứng và trả về kết quả đúng theo cấu trúc mà client yêu cầu.
+
+Không giống REST, nơi mỗi tài nguyên thường gắn với một endpoint riêng, GraphQL
+chỉ sử dụng một endpoint duy nhất để xử lý tất cả các truy vấn và thao tác dữ liệu.
+Các thao tác trong GraphQL được chia thành ba loại chính: Query (truy vấn dữ liệu),
+Mutation (thay đổi hoặc cập nhật dữ liệu) và Subscription (nhận dữ liệu theo thời
+gian thực). Cơ chế Subscription cho phép server chủ động gửi dữ liệu cập nhật đến
+client khi có thay đổi, thường được triển khai thông qua WebSocket.
+
+Trong hệ thống IoT, GraphQL server thường được đặt tại tầng backend hoặc cloud,
+đóng vai trò tổng hợp dữ liệu từ cơ sở dữ liệu, các dịch vụ microservices hoặc các
+API nội bộ khác. Các ứng dụng giám sát hoặc dashboard sẽ gửi truy vấn GraphQL để
+lấy dữ liệu cảm biến, trạng thái thiết bị hoặc lịch sử vận chuyển theo cấu trúc
+linh hoạt, phù hợp với từng ngữ cảnh hiển thị.
+
+\subsubsection{Đặc điểm nổi bật}
+Một trong những đặc điểm nổi bật nhất của GraphQL là khả năng truy vấn chính xác
+những dữ liệu cần thiết, giúp loại bỏ hiện tượng over-fetching (lấy dư dữ liệu)
+và under-fetching (lấy thiếu dữ liệu) thường gặp trong REST. Điều này đặc biệt
+có ý nghĩa trong các hệ thống IoT có nhiều loại dữ liệu và cấu trúc phức tạp.
+
+GraphQL sử dụng schema để định nghĩa rõ ràng các kiểu dữ liệu và mối quan hệ giữa
+chúng, giúp việc phát triển và bảo trì hệ thống trở nên dễ dàng hơn. Schema đóng
+vai trò như một hợp đồng giữa client và server, đảm bảo tính nhất quán và giảm
+thiểu lỗi trong quá trình tích hợp. Ngoài ra, GraphQL hỗ trợ mạnh mẽ cho các công
+cụ tự động sinh tài liệu và kiểm tra truy vấn.
+
+Bên cạnh đó, GraphQL cho phép gom nhiều truy vấn vào một request duy nhất, giúp
+giảm số lượng kết nối mạng và tăng hiệu quả truyền tải dữ liệu. Khả năng hỗ trợ
+real-time thông qua Subscription cũng giúp GraphQL phù hợp với các ứng dụng giám
+sát trực tuyến hoặc dashboard cần cập nhật dữ liệu liên tục.
+
+\subsubsection{Ưu điểm và nhược điểm}
+GraphQL mang lại nhiều ưu điểm trong các hệ thống IoT ở tầng ứng dụng và quản lý
+dữ liệu. Khả năng truy vấn linh hoạt giúp các ứng dụng giám sát dễ dàng tùy chỉnh
+dữ liệu hiển thị theo nhu cầu mà không cần thay đổi phía server. Việc giảm thiểu
+dữ liệu dư thừa cũng góp phần tối ưu băng thông và cải thiện hiệu suất tổng thể,
+đặc biệt khi truy xuất dữ liệu từ nhiều nguồn khác nhau.
+
+Ngoài ra, GraphQL rất phù hợp cho các hệ thống có giao diện người dùng phức tạp,
+nhiều dashboard hoặc nhiều loại client khác nhau (web, mobile). Schema rõ ràng
+giúp việc mở rộng và bảo trì hệ thống trở nên thuận tiện, đồng thời hỗ trợ tốt
+cho kiến trúc microservices và cloud-native.
+
+Tuy nhiên, GraphQL cũng tồn tại một số hạn chế khi áp dụng cho IoT. Việc triển khai
+GraphQL server phức tạp hơn so với REST, đòi hỏi tài nguyên xử lý lớn hơn và khả
+năng kiểm soát truy vấn để tránh các truy vấn quá sâu hoặc quá nặng. Điều này làm
+GraphQL không phù hợp để triển khai trực tiếp trên các thiết bị IoT hạn chế tài
+nguyên như vi điều khiển hoặc node cảm biến.
+
+Bên cạnh đó, GraphQL không được tối ưu cho các môi trường băng thông thấp hoặc
+mạng không ổn định, và thường phải kết hợp với các giao thức khác như MQTT hoặc
+REST để truyền dữ liệu từ thiết bị lên server. Vì vậy, trong các hệ thống IoT,
+GraphQL chủ yếu đóng vai trò ở tầng backend và ứng dụng, thay vì thay thế hoàn
+toàn các giao thức truyền thông nhẹ ở tầng thiết bị.
+
 \subsection{So sánh và lựa chọn giao thức}
-Việc lựa chọn giao thức truyền thông phù hợp đóng vai trò then chốt trong hệ thống IoT giám sát và điều phối vận chuyển đạn dược, nơi yêu cầu truyền dữ liệu ổn định, phạm vi xa, tiêu thụ năng lượng thấp và đảm bảo an toàn trong môi trường quân sự. Ba lựa chọn phổ biến trong các hệ thống IoT hiện nay là LoRa, 4G/5G và MQTT. Mỗi công nghệ mang những đặc trưng riêng và đáp ứng những nhóm yêu cầu khác nhau.
 
-LoRa hoạt động ở dải tần ISM, sử dụng kỹ thuật trải phổ CSS, cho phép truyền dữ liệu tầm xa, tiêu thụ năng lượng rất thấp và chịu nhiễu tốt. Tốc độ truyền không cao nhưng phù hợp cho các gói dữ liệu cảm biến như GPS, nhiệt độ và cảnh báo rung/lắc. Điều này giúp LoRa đặc biệt phù hợp cho các thiết bị IoT chạy bằng pin và hoạt động trong môi trường di chuyển liên tục như phương tiện vận chuyển đạn dược.
+Trong hệ thống IoT giám sát và điều phối vận chuyển đạn dược, việc lựa chọn giao
+thức truyền thông và kiến trúc hệ thống phù hợp đóng vai trò then chốt, ảnh hưởng
+trực tiếp đến độ ổn định, độ trễ, mức tiêu thụ năng lượng và độ an toàn của toàn
+bộ hệ thống. Hệ thống cần đảm bảo khả năng hoạt động liên tục trong môi trường di
+chuyển, phạm vi rộng, hạ tầng mạng không ổn định, đồng thời vẫn đáp ứng yêu cầu
+bảo mật và quản lý tập trung.
 
-Ngược lại, 4G/5G cung cấp tốc độ cao, độ trễ thấp và khả năng truyền dữ liệu thời gian thực. 4G thích hợp cho các hệ thống cần truyền dữ liệu liên tục như video, trong khi 5G hỗ trợ băng thông lớn, độ trễ chỉ vài mili-giây và khả năng kết nối thiết bị dày đặc. Tuy nhiên, cả 4G và 5G đều tiêu thụ năng lượng cao hơn đáng kể, phụ thuộc vào hạ tầng viễn thông và phát sinh chi phí vận hành (SIM, gói dữ liệu). Điều này làm chúng kém phù hợp hơn cho thiết bị IoT chạy pin và yêu cầu hoạt động dài ngày.
+\subsubsection{So sánh các giao thức tầng ứng dụng}
 
-Trong khi đó, MQTT không phải là công nghệ truyền sóng, mà là giao thức tầng ứng dụng chạy trên TCP/IP, thường được dùng kết hợp với 4G/5G, Wi-Fi hoặc Ethernet. MQTT phù hợp cho truyền dữ liệu nhẹ, ổn định, nhưng không thể đảm bảo phạm vi rộng nếu lớp vật lý bên dưới không đáp ứng. Do đó, MQTT không phải lựa chọn thay thế cho LoRa hay 4G/5G mà chỉ đóng vai trò giao thức truyền tải khi thiết bị sử dụng mạng IP.
+Ở tầng ứng dụng, ba giao thức phổ biến được xem xét bao gồm MQTT, REST (HTTP) và
+GraphQL. Mỗi giao thức có đặc điểm riêng và phù hợp với các kịch bản sử dụng khác
+nhau trong hệ thống IoT.
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|p{3cm}|p{3.3cm}|p{3.3cm}|p{3.3cm}|}
+\begin{tabularx}{\textwidth}{|c|X|X|X|c|c|}
 \hline
-\textbf{Tiêu chí} & \textbf{LoRa} & \textbf{4G/5G} & \textbf{MQTT} \\ 
+\textbf{Giao thức} & \textbf{Độ trễ} & \textbf{Băng thông} & \textbf{Năng lượng tiêu thụ} & \textbf{Bảo mật} & \textbf{Độ tin cậy} \\
 \hline
-
-Phạm vi & 2--15 km, không phụ thuộc hạ tầng nhà mạng & Toàn quốc, phụ thuộc trạm BTS & Phụ thuộc mạng IP (4G/5G/Wi-Fi) \\ 
+MQTT & Thấp & Vừa & Thấp & TLS/SSL & Cao \\
 \hline
-
-Năng lượng & Rất thấp & Cao & Trung bình (tuỳ mạng dưới) \\ 
+REST & Trung bình & Vừa -- Cao & Trung bình & HTTPS & Cao \\
 \hline
-
-Tốc độ & Thấp (0.3–50 kbps) & Cao đến rất cao (Mbps–Gbps) & Phụ thuộc 4G/5G/Wi-Fi \\ 
+GraphQL & Trung bình & Trung bình & Trung bình & HTTPS & Trung bình \\
 \hline
-
-Loại dữ liệu & Cảm biến, GPS, cảnh báo & Video, dữ liệu lớn, real-time & Telemetry, log nhẹ \\ 
-\hline
-
-Độ ổn định & Cao ở vùng xa & Phụ thuộc hạ tầng & Phụ thuộc lớp mạng dưới \\ 
-\hline
-
-Chi phí & Rất thấp & Cao (SIM, data) & Thấp \\ 
-\hline
-
-\end{tabular}
-\caption{So sánh giữa LoRa, 4G/5G và MQTT}
+\end{tabularx}
+\caption{So sánh các giao thức tầng ứng dụng}
 \end{table}
 
-Dựa trên yêu cầu của hệ thống giám sát và điều phối vận chuyển đạn dược, bao gồm truyền dữ liệu cảm biến (GPS, nhiệt độ, rung/lắc), hoạt động tầm xa, độ ổn định cao, chi phí vận hành thấp và thiết bị tiêu thụ năng lượng nhỏ, nhóm quyết định lựa chọn LoRa làm giao thức truyền thông chính. LoRa đáp ứng tốt nhất các tiêu chí của môi trường quân sự, đặc biệt trong các tuyến đường xa khu vực dân cư, nơi hạ tầng viễn thông 4G/5G có thể không ổn định. 4G/5G chỉ được xem xét như tùy chọn bổ sung cho các khu vực có hạ tầng mạnh hoặc khi cần truyền dữ liệu dung lượng lớn.
+
+MQTT nổi bật nhờ cơ chế Publish/Subscribe, phần bao gói dữ liệu nhỏ và khả năng
+hoạt động ổn định trong môi trường mạng không đáng tin cậy. Điều này giúp MQTT
+phù hợp cho việc truyền telemetry, dữ liệu cảm biến và cảnh báo trong các hệ
+thống IoT thời gian thực. Trong khi đó, REST (HTTP) tuy đơn giản và phổ biến
+nhưng tiêu thụ băng thông và năng lượng cao hơn, không tối ưu cho truyền dữ liệu
+liên tục. GraphQL mang lại sự linh hoạt trong truy vấn dữ liệu và phù hợp cho
+tầng ứng dụng hoặc dashboard, tuy nhiên độ phức tạp triển khai cao và không phù
+hợp cho thiết bị IoT hạn chế tài nguyên.
+
+Do đó, trong hệ thống đề xuất, MQTT được lựa chọn làm giao thức tầng ứng dụng
+chính cho việc truyền dữ liệu từ gateway và thiết bị IoT lên server.
+
+\subsubsection{So sánh các công nghệ truyền thông không dây}
+
+Ở tầng truyền thông không dây, các công nghệ được xem xét bao gồm LoRa, 4G/5G và
+mạng vệ tinh. Việc lựa chọn cần cân nhắc đến phạm vi hoạt động, độ trễ, mức tiêu
+thụ năng lượng và chi phí triển khai.
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|c|X|X|X|c|c|}
+\hline
+\textbf{Công nghệ} & \textbf{Độ trễ} & \textbf{Băng thông} & \textbf{Năng lượng tiêu thụ} & \textbf{Bảo mật} & \textbf{Độ tin cậy} \\
+\hline
+LoRa & 0.3--5s & 0.3--50 kbps & Rất thấp & AES-128 & Trung bình \\
+\hline
+4G & 30--50ms & Cao & Trung bình & Mạnh & Cao \\
+\hline
+5G & 1--10ms & Rất cao & Trung bình -- Cao & Rất mạnh & Cao \\
+\hline
+Mạng vệ tinh & 250--600ms & Trung bình & Cao & Tốt & Cao \\
+\hline
+\end{tabularx}
+\caption{So sánh các công nghệ truyền thông không dây}
+\end{table}
+
+
+LoRa có ưu thế vượt trội về phạm vi truyền xa và mức tiêu thụ năng lượng rất thấp,
+đặc biệt phù hợp cho các thiết bị IoT chạy pin và hoạt động trong thời gian dài.
+Mặc dù tốc độ truyền thấp và độ trễ cao hơn so với 4G/5G, LoRa vẫn đáp ứng tốt cho
+các gói dữ liệu nhỏ như GPS, nhiệt độ và cảnh báo rung/lắc.
+
+Ngược lại, 4G và 5G cung cấp tốc độ cao, độ trễ thấp và phù hợp cho các ứng dụng
+yêu cầu truyền dữ liệu lớn hoặc thời gian thực. Tuy nhiên, các công nghệ này phụ
+thuộc mạnh vào hạ tầng viễn thông, tiêu thụ năng lượng lớn hơn và phát sinh chi
+phí vận hành cao, không phù hợp cho thiết bị IoT chạy pin trong thời gian dài.
+Mạng vệ tinh có khả năng phủ sóng toàn cầu nhưng chi phí cao và độ trễ lớn, do đó
+chỉ phù hợp làm kênh truyền dự phòng.
+
+\subsubsection{So sánh các kiến trúc}
+
+Bên cạnh việc lựa chọn giao thức truyền thông, kiến trúc hệ thống cũng đóng vai
+trò quan trọng trong việc đảm bảo hiệu năng, khả năng mở rộng và độ tin cậy của
+hệ thống IoT. Trong phạm vi nghiên cứu, các kiến trúc phổ biến được xem xét bao
+gồm Client--Server truyền thống, P2P/Mesh, Distributed/Microservices và kiến trúc
+SoC Edge Gateway.
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|p{2.2cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Client--Server} & \textbf{P2P / Mesh} & \textbf{Distributed / Microservices} & \textbf{SoC Edge Gateway} \\
+\hline
+
+\textbf{Độ trễ} 
+& Trung bình - cao
+& Trung bình
+& Thấp - trung bình
+& Thấp \\
+\hline
+
+\textbf{Bảo mật} 
+& Trung bình 
+& Cao 
+& Cao 
+& Cao \\
+\hline
+
+\textbf{Mở rộng} 
+& Trung bình 
+& Trung bình 
+& Rất cao 
+& Trung bình \\
+\hline
+
+\textbf{Mất mạng} 
+& Thấp 
+& Cao 
+& Trung bình - cao 
+& Cao \\
+\hline
+
+\textbf{Chi phí} 
+& Trung bình 
+& Trung bình - cao 
+& Cao 
+& Cao \\
+\hline
+
+\textbf{Độ phức tạp} 
+& Thấp 
+& Cao 
+& Cao 
+& Trung bình - cao \\
+\hline
+\end{tabularx}
+\caption{So sánh các kiến trúc hệ thống IoT}
+\label{tab:arch_compare}
+\end{table}
+
+
+Từ \autoref{tab:arch_compare} có thể nhận thấy kiến trúc Client--Server tuy đơn
+giản và dễ triển khai nhưng phụ thuộc mạnh vào máy chủ trung tâm, dẫn đến độ trễ
+cao và khả năng hoạt động kém khi mất kết nối mạng. Kiến trúc P2P/Mesh có ưu điểm
+về khả năng tự tổ chức và duy trì hoạt động khi mạng không ổn định, tuy nhiên việc
+định tuyến phức tạp và khó kiểm soát bảo mật khiến kiến trúc này không phù hợp cho
+các hệ thống yêu cầu quản lý tập trung và mức độ an toàn cao.
+
+Kiến trúc Distributed/Microservices thể hiện ưu thế rõ rệt về khả năng mở rộng,
+tính linh hoạt và phù hợp với các hệ thống cloud-native. Tuy nhiên, chi phí triển
+khai và vận hành cao cùng với độ phức tạp trong quản lý DevOps khiến kiến trúc này
+chưa tối ưu khi áp dụng trực tiếp cho các thiết bị IoT hạn chế tài nguyên.
+
+Trong khi đó, kiến trúc SoC Edge Gateway cho phép xử lý dữ liệu cục bộ với độ trễ
+thấp, khả năng hoạt động độc lập khi mất mạng và mức độ bảo mật cao nhờ tích hợp
+các cơ chế mã hóa phần cứng. Tuy nhiên, kiến trúc này bị giới hạn bởi tài nguyên
+phần cứng và khả năng mở rộng hệ thống.
+
+Do đó, để tận dụng ưu điểm và khắc phục hạn chế của từng mô hình, hệ thống được
+đề xuất triển khai theo kiến trúc Hybrid Cloud - Edge. Trong kiến trúc
+này, tầng Edge (gateway) đảm nhiệm xử lý thời gian thực, lưu trữ tạm thời và phát
+hiện bất thường cục bộ, đảm bảo hệ thống vẫn hoạt động ổn định ngay cả khi mất
+kết nối mạng. Tầng Cloud đóng vai trò quản lý tập trung, lưu trữ dữ liệu dài hạn,
+phân tích dữ liệu lịch sử và hỗ trợ điều phối từ xa.
+
+Sự kết hợp giữa kiến trúc Hybrid Cloud - Edge cùng với công nghệ truyền thông LoRa
+và giao thức MQTT giúp hệ thống đáp ứng đồng thời các yêu cầu về độ trễ thấp, tiêu
+thụ năng lượng thấp, khả năng mở rộng và độ tin cậy cao, phù hợp với bài toán giám
+sát và điều phối vận chuyển đạn dược trong môi trường quân sự.
+
+
+\subsection{Lựa chọn kiến trúc, giao thức và giải pháp tổng thể}
+
+Dựa trên các phân tích và so sánh ở trên, hệ thống giám sát và điều phối vận
+chuyển đạn dược được thiết kế theo kiến trúc Hybrid Cloud - Edge. Trong
+đó, tầng Edge đảm nhiệm các tác vụ xử lý thời gian thực như thu thập dữ liệu
+cảm biến, phát hiện bất thường và cảnh báo cục bộ ngay cả khi mất kết nối mạng.
+Tầng Cloud đóng vai trò lưu trữ tập trung, hiển thị dashboard, phân tích dữ liệu
+lịch sử và hỗ trợ điều phối từ xa.
+
+Về truyền thông, LoRa được lựa chọn làm công nghệ truyền dẫn chính giữa
+thiết bị và gateway nhờ khả năng truyền xa, tiêu thụ năng lượng thấp và hoạt động
+ổn định trong môi trường hạ tầng hạn chế. MQTT được sử dụng làm giao thức
+tầng ứng dụng để truyền dữ liệu telemetry từ gateway lên server, đảm bảo độ tin
+cậy và hiệu quả băng thông. Các công nghệ 4G/5G và mạng vệ tinh chỉ được xem xét
+như các kênh bổ trợ hoặc dự phòng trong những tình huống đặc biệt.
+
+Sự kết hợp giữa LoRa, MQTT và kiến trúc Hybrid Cloud - Edge giúp hệ thống đáp ứng
+đồng thời các yêu cầu về phạm vi hoạt động rộng, tiêu thụ năng lượng thấp, độ
+ổn định cao và khả năng quản lý tập trung, phù hợp với đặc thù của bài toán giám
+sát và điều phối vận chuyển đạn dược trong môi trường quân sự.
 
 \section{Các loại cảm biến, thiết bị sử dụng}
 \subsection{ESP32 NodeMCU-32S CH340 Ai-Thinker}

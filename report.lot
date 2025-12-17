@@ -1,23 +1,25 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.3.1}{\ignorespaces So sánh giữa LoRa, 4G/5G và MQTT}}{15}{table.caption.7}%
-\contentsline {table}{\numberline {2.4.1}{\ignorespaces Thông số kỹ thuật của ESP32 NodeMCU-32S CH340 Ai-Thinker}}{16}{table.caption.8}%
-\contentsline {table}{\numberline {2.4.2}{\ignorespaces Thông số kỹ thuật của cảm biến nhiệt độ, độ ẩm DHT11}}{17}{table.caption.10}%
-\contentsline {table}{\numberline {2.4.3}{\ignorespaces Thông số kỹ thuật của cảm biến gia tốc 3 trục ADXL345}}{17}{table.caption.12}%
-\contentsline {table}{\numberline {2.4.4}{\ignorespaces Thông số kỹ thuật của module GPS NEO-6MV2}}{18}{table.caption.14}%
+\contentsline {table}{\numberline {2.4.1}{\ignorespaces So sánh các giao thức tầng ứng dụng}}{20}{table.caption.7}%
+\contentsline {table}{\numberline {2.4.2}{\ignorespaces So sánh các công nghệ truyền thông không dây}}{21}{table.caption.8}%
+\contentsline {table}{\numberline {2.4.3}{\ignorespaces So sánh các kiến trúc hệ thống IoT}}{22}{table.caption.9}%
+\contentsline {table}{\numberline {2.5.1}{\ignorespaces Thông số kỹ thuật của ESP32 NodeMCU-32S CH340 Ai-Thinker}}{24}{table.caption.10}%
+\contentsline {table}{\numberline {2.5.2}{\ignorespaces Thông số kỹ thuật của cảm biến nhiệt độ, độ ẩm DHT11}}{25}{table.caption.12}%
+\contentsline {table}{\numberline {2.5.3}{\ignorespaces Thông số kỹ thuật của cảm biến gia tốc 3 trục ADXL345}}{25}{table.caption.14}%
+\contentsline {table}{\numberline {2.5.4}{\ignorespaces Thông số kỹ thuật của module GPS NEO-6MV2}}{26}{table.caption.16}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.5.1}{\ignorespaces Đặc tả Use-case UC01: Quản lý hàng hóa}}{26}{table.caption.18}%
-\contentsline {table}{\numberline {3.5.2}{\ignorespaces Đặc tả Use-case UC02: Điều phối lộ trình}}{27}{table.caption.19}%
-\contentsline {table}{\numberline {3.5.3}{\ignorespaces Đặc tả Use-case UC03: Nhận lệnh vận chuyển}}{27}{table.caption.20}%
-\contentsline {table}{\numberline {3.5.4}{\ignorespaces Đặc tả Use-case UC04: Cập nhật trạng thái vận chuyển}}{28}{table.caption.21}%
-\contentsline {table}{\numberline {3.5.5}{\ignorespaces Đặc tả Use-case UC05: Giám sát vận chuyển}}{28}{table.caption.22}%
-\contentsline {table}{\numberline {3.5.6}{\ignorespaces Đặc tả Use-case UC06: Phát hiện bất thường và gửi cảnh báo}}{29}{table.caption.23}%
+\contentsline {table}{\numberline {3.5.1}{\ignorespaces Đặc tả Use-case UC01: Quản lý hàng hóa}}{34}{table.caption.20}%
+\contentsline {table}{\numberline {3.5.2}{\ignorespaces Đặc tả Use-case UC02: Điều phối lộ trình}}{35}{table.caption.21}%
+\contentsline {table}{\numberline {3.5.3}{\ignorespaces Đặc tả Use-case UC03: Nhận lệnh vận chuyển}}{35}{table.caption.22}%
+\contentsline {table}{\numberline {3.5.4}{\ignorespaces Đặc tả Use-case UC04: Cập nhật trạng thái vận chuyển}}{36}{table.caption.23}%
+\contentsline {table}{\numberline {3.5.5}{\ignorespaces Đặc tả Use-case UC05: Giám sát vận chuyển}}{36}{table.caption.24}%
+\contentsline {table}{\numberline {3.5.6}{\ignorespaces Đặc tả Use-case UC06: Phát hiện bất thường và gửi cảnh báo}}{37}{table.caption.25}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.5.1}{\ignorespaces Sơ đồ chân kết nối phần cứng Node TX}}{57}{table.caption.38}%
-\contentsline {table}{\numberline {5.5.2}{\ignorespaces Sơ đồ chân kết nối phần cứng Node RX}}{58}{table.caption.39}%
-\contentsline {table}{\numberline {5.6.1}{\ignorespaces Tổng hợp chức năng và vai trò của các thành phần trong hệ thống}}{60}{table.caption.40}%
+\contentsline {table}{\numberline {5.5.1}{\ignorespaces Sơ đồ chân kết nối phần cứng Node TX}}{65}{table.caption.40}%
+\contentsline {table}{\numberline {5.5.2}{\ignorespaces Sơ đồ chân kết nối phần cứng Node RX}}{66}{table.caption.41}%
+\contentsline {table}{\numberline {5.6.1}{\ignorespaces Tổng hợp chức năng và vai trò của các thành phần trong hệ thống}}{68}{table.caption.42}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {6.3.1}{\ignorespaces Kết quả đo đạc Range Test tại KTX Khu A}}{63}{table.caption.42}%
-\contentsline {table}{\numberline {6.4.1}{\ignorespaces Phân rã độ trễ xử lý dữ liệu của hệ thống}}{65}{table.caption.43}%
+\contentsline {table}{\numberline {6.3.1}{\ignorespaces Kết quả đo đạc Range Test tại KTX Khu A}}{71}{table.caption.44}%
+\contentsline {table}{\numberline {6.4.1}{\ignorespaces Phân rã độ trễ xử lý dữ liệu của hệ thống}}{73}{table.caption.45}%
 \addvspace {10\p@ }
