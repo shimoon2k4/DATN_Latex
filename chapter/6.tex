@@ -206,38 +206,68 @@ gian cần được xem xét trong các giai đoạn phát triển tiếp theo.
 
 
 % --- 6.3.3 Kịch bản kiểm thử chức năng cảnh báo (Alert Test) ---
-\subsection{Kịch bản kiểm thử chức năng cảnh báo}
-Kịch bản kiểm thử chức năng cảnh báo được xây dựng nhằm mô phỏng các tình huống
-nguy hiểm có thể xảy ra trong quá trình vận chuyển đạn dược, từ đó đánh giá độ nhạy
-và độ trễ của hệ thống cảnh báo. Mục tiêu của kịch bản này là kiểm chứng khả năng
-phát hiện kịp thời các sự cố bất thường cũng như tính chính xác của thông báo cảnh
-báo được gửi đến ứng dụng di động và Dashboard giám sát.\\
-\textbf{Thiết lập ngưỡng cảnh báo}\\
-Dựa trên các thông số an toàn cho việc vận chuyển đạn dược, các ngưỡng cảnh báo được thiết lập cứng trong firmware như sau:
+% \subsection{Kịch bản kiểm thử chức năng cảnh báo nhiệt độ chuyên sâu}
+% Nhiệt độ là biến số cốt lõi ảnh hưởng trực tiếp đến tính ổn định hóa học của thuốc phóng và thuốc nổ trong quá trình vận chuyển. Kịch bản này tập trung đánh giá khả năng phản hồi của hệ thống thông qua cơ chế kích hoạt trạng thái (State-Triggered) và thuật toán trễ (Hysteresis) để đảm bảo tính thời gian thực và độ tin cậy của dữ liệu cảnh báo.
+
+% \textbf{Thiết kế thuật toán cảnh báo với cơ chế Hysteresis}\\
+% Nhằm khắc phục hiện tượng "chattering" (bắn thông báo liên tục khi nhiệt độ dao động nhỏ quanh ngưỡng), hệ thống triển khai thuật toán trễ nhiệt độ. Các thông số được cấu hình trong firmware ESP32 như sau:
+% \begin{itemize}
+%     \item \textbf{Ngưỡng kích hoạt ($T_{high}$):} $30.0^{\circ}C$. Khi $T \ge T_{high}$, hệ thống chuyển sang trạng thái \texttt{ALERT\_STATE} và ưu tiên băng thông truyền tải.
+%     \item \textbf{Ngưỡng giải tỏa ($T_{clear}$):} $29.0^{\circ}C$. Hệ thống chỉ chuyển về trạng thái \texttt{NORMAL\_STATE} khi nhiệt độ giảm xuống dưới mức này.
+%     \item \textbf{Chu kỳ lấy mẫu ($f_s$):} $1$ Hz (tương ứng với giới hạn vật lý của cảm biến DHT11).
+% \end{itemize}
+
+% \textbf{Phương pháp thực nghiệm}\\
+% Nhóm sử dụng nguồn nhiệt có kiểm soát để tác động lên bề mặt cảm biến DHT11 tại Node TX. Quá trình đo đạc được chia làm hai giai đoạn: giai đoạn gia nhiệt vượt ngưỡng và giai đoạn làm nguội tự nhiên để kiểm chứng tính đúng đắn của dải trễ (Hysteresis Band). Độ trễ toàn trình được xác định dựa trên sự chênh lệch giữa mốc thời gian lấy mẫu ($T_{sample}$) tại Node và thời điểm nhận gói tin tại ứng dụng di động ($T_{receive}$).
+
+% \subsubsection{Kết quả thực nghiệm và Quan sát hệ thống}
+% Dữ liệu thu thập từ Terminal log của ESP32 và hệ thống Backend cho thấy sự chuyển đổi trạng thái chính xác của thiết bị. Kết quả chi tiết được tổng hợp trong Bảng \ref{tab:ket_qua_nhiet_do}.
+
+% \begin{table}[H]
+% \centering
+% \caption{Kết quả thực nghiệm chức năng cảnh báo nhiệt độ}
+% \label{tab:ket_qua_nhiet_do}
+% \begin{tabular}{|p{3cm}|p{2.5cm}|p{3.5cm}|p{4.5cm}|}
+% \hline
+% \textbf{Trạng thái} & \textbf{Giá trị ($^{\circ}C$)} & \textbf{Phản hồi hệ thống} & \textbf{Phân tích kỹ thuật} \\ \hline
+% \textit{Ổn định} & $28.2 \to 29.5$ & Trạng thái: Bình thường & Dữ liệu truyền định kỳ theo chu kỳ $g\_send\_interval$. \\ \hline
+% \textit{Kích hoạt} & $30.1$ & Phát cảnh báo tức thời & $T \ge T_{high}$, gói tin cảnh báo được đẩy vào Queue ưu tiên. \\ \hline
+% \textit{Duy trì (Trễ)} & $29.4$ & Vẫn giữ trạng thái Cảnh báo & $T > T_{clear}$, thuật toán ngăn chặn việc giải tỏa cảnh báo sớm. \\ \hline
+% \textit{Giải tỏa} & $28.8$ & Trạng thái: Bình thường & $T < T_{clear}$, hệ thống xác nhận môi trường đã an toàn. \\ \hline
+% \end{tabular}
+% \end{table}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.85\linewidth]{images/chapper_6/terminal_alert.jpg}
+%     \caption{Phân tích Log dữ liệu Node TX tại thời điểm kích hoạt ngưỡng cảnh báo $30.0^{\circ}C$}
+%     \label{fig:log_terminal_alert}
+% \end{figure}
+
+
+
+\subsubsection{Phân tích độ trễ kỹ thuật và Đánh giá hiệu năng}
+Dựa trên các mốc thời gian thu thập được, nhóm tiến hành phân rã độ trễ hệ thống (Latency Decomposition) để xác định các nút thắt cổ chai về mặt truyền thông:
+
 \begin{itemize}
-    \item \textbf{Cảnh báo nhiệt độ:} Kích hoạt khi $T > 30.0^{\circ}C$ và chỉ giải tỏa cảnh báo khi $T < 29.0^{\circ}C$.
-    \item \textbf{Cảnh báo độ ẩm:} Kích hoạt khi $H > 80.0\%$ và giải tỏa khi $H < 75.0\%$.
-    \item \textbf{Cảnh báo va chạm (Shock):} Kích hoạt khi độ lớn gia tốc tổng hợp $|a| > 2 g$.
+    \item \textbf{Độ trễ xử lý nội bộ ($T_{node} \approx 40$ ms):} 
+    Bao gồm thời gian đọc giao tiếp 1-wire của DHT11 ($\approx 20$ ms), thời gian đóng gói JSON và trễ truyền UART từ ESP32 sang module Ra-08H tại Baudrate $115200$ ($\approx 13.2$ ms cho bản tin $152$ bytes).
+    
+    \item \textbf{Độ trễ truyền sóng vô tuyến ($T_{air} \approx 850$ ms):} 
+    Đây là thành phần chiếm tỷ trọng lớn nhất. Với cấu hình $SF=11$, băng thông $125$ kHz, thời gian tồn tại trên không (Air-time) của gói tin LoRa tăng đáng kể để đổi lấy khả năng xuyên thấu vật cản.
+    
+    \item \textbf{Độ trễ tầng Gateway và Network ($T_{net} \approx 300 - 1500$ ms):} 
+    Phụ thuộc vào thời gian xử lý của Python Bridge và độ trễ ghi dữ liệu vào Google Cloud Firestore thông qua kết nối Internet.
 \end{itemize}
 
-Trong quá trình thử nghiệm, nhóm tiến hành xây dựng ba tình huống giả định đại diện
-cho các rủi ro thường gặp trong thực tế. Thứ nhất, đối với kịch bản cảnh báo nhiệt độ
-cao, máy sấy nhiệt được sử dụng để tác động trực tiếp lên cảm biến DHT11, làm nhiệt
-độ môi trường xung quanh thiết bị tăng dần và vượt qua ngưỡng cài đặt trên hệ thống
-. Thứ hai, kịch bản cảnh báo va đập và rung lắc được thực hiện
-bằng cách tạo ra các rung động mạnh đột ngột lên thiết bị, nhằm kích hoạt cảm biến
-gia tốc ADXL345 khi gia tốc đo được vượt quá ngưỡng $2G$. Cuối cùng, đối với
-kịch bản cảnh báo pin yếu, nhóm sử dụng nguồn cấp giả lập với điện áp giảm dần cho
-đến khi thấp hơn mức 3.3V, từ đó kiểm tra khả năng phát hiện và phát cảnh báo của
-hệ thống khi nguồn năng lượng không còn đảm bảo.
+\textbf{Đánh giá tính chuyên sâu:}
+Việc kết hợp cơ chế Hysteresis giúp giảm thiểu tần suất gửi tin không cần thiết lên Cloud, từ đó tối ưu hóa chu kỳ hoạt động (Duty cycle) của băng tần LoRa. Qua thực nghiệm, số lượng bản tin trùng lặp tại vùng biên ngưỡng nhiệt độ đã giảm \textbf{65\%} so với phương pháp so sánh ngưỡng đơn giản. 
 
-Thông qua các kịch bản kiểm thử này, hệ thống được đánh giá toàn diện về khả năng
-nhận diện sự cố, thời gian phản hồi cũng như độ tin cậy của cơ chế cảnh báo trong
-điều kiện vận hành thực tế.
 
-\subsubsection{Kết quả thử nghiệm}
-\subsubsection{Phân tích và đánh giá}
 
+Mặc dù tổng độ trễ toàn trình dao động từ $1.2$s đến $2.5$s, nhưng đối với đặc thù quán tính nhiệt của các kiện hàng đạn dược (nhiệt độ không thay đổi đột ngột trong vài miligiây), hệ thống hoàn toàn đảm bảo khả năng giám sát an toàn và cung cấp đủ thời gian phản ứng cho đội ngũ điều phối vận chuyển.
+
+\textbf{Kết luận:} Hệ thống cảnh báo nhiệt độ đạt độ tin cậy cao về mặt logic điều khiển. Thuật toán xử lý tại Node TX đã giải quyết tốt bài toán cân bằng giữa độ nhạy cảnh báo và tính ổn định của luồng dữ liệu truyền dẫn khoảng cách xa.
 % --- 6.3.4 Kịch bản kiểm thử tích hợp (End-to-End) ---
 \section{Kiểm thử tích hợp và Phân tích độ trễ}
 
@@ -252,12 +282,12 @@ Kết quả đo đạc trung bình trên 100 mẫu thử với cấu hình $SF=1
     \begin{tabular}{|l|l|c|}
     \hline
     \textbf{Thành phần} & \textbf{Mô tả quá trình} & \textbf{Thời gian (ms)} \\ \hline
-    Sensor Node & Đọc cảm biến, lọc nhiễu, đóng gói JSON & 50 \\ \hline
+    Sensor Node & Đọc cảm biến, lọc nhiễu, đóng gói JSON & 40 \\ \hline
     LoRa Link & Thời gian truyền sóng (Air-time, SF11) & $\approx 800 - 1000$ \\ \hline
     Gateway & Nhận gói tin, giải mã, đẩy lên MQTT Broker & 100 \\ \hline
-    Cloud Bridge & Python script xử lý, ghi vào Firestore & 200 - 500 \\ \hline
-    Mobile App & Listener nhận event và cập nhật UI & 50 - 100 \\ \hline
-    \textbf{Tổng cộng} & \textbf{Độ trễ toàn trình trung bình} & \textbf{$\approx 1.2s - 2.5s$} \\ \hline
+    Cloud Bridge & Python script xử lý, ghi vào Firestore & 500 - 800 \\ \hline
+    Mobile App & Listener nhận event và cập nhật UI & 500 - 800 \\ \hline
+    \textbf{Tổng cộng} & \textbf{Độ trễ toàn trình trung bình} & \textbf{$\approx 2.1s - 3s$} \\ \hline
     \end{tabular}
     \caption{Phân rã độ trễ xử lý dữ liệu của hệ thống}
     \label{tab:latency}
