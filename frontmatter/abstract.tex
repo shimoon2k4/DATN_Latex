@@ -1,2 +1,11 @@
 \chapter*{Tóm tắt}
 \addcontentsline{toc}{chapter}{Tóm tắt}
+Trong bối cảnh hiện đại hóa công tác hậu cần quân sự, việc đảm bảo an toàn tuyệt đối trong quá trình vận chuyển đạn dược là một yêu cầu cấp thiết. Các phương pháp giám sát truyền thống thường phụ thuộc vào con người, thiếu tính liên tục và chậm trễ trong việc phát hiện sự cố. Đồ án \textbf{"Ứng dụng IoT trong giám sát và điều phối vận chuyển đạn dược"} được thực hiện nhằm giải quyết các thách thức trên thông qua việc xây dựng một hệ thống giám sát tự động theo thời gian thực, tích hợp công nghệ Internet of Things (IoT).
+
+Mục tiêu chính của đề tài là thiết kế một hệ thống toàn diện từ phần cứng đến phần mềm, có khả năng thu thập liên tục các thông số môi trường quan trọng (nhiệt độ, độ ẩm) và trạng thái vật lý (rung lắc, vị trí GPS) của phương tiện vận chuyển. Về mặt kiến trúc, hệ thống áp dụng mô hình lai Hybrid Cloud-Edge, kết hợp khả năng xử lý tại biên của Gateway và khả năng lưu trữ, phân tích tập trung của Cloud Server.
+
+Tại tầng thiết bị, nhóm sử dụng vi điều khiển ESP32 kết hợp với module truyền thông LoRa Ra-08H chạy firmware tùy chỉnh giao thức P2P. Giải pháp này cho phép truyền tải dữ liệu tin cậy trong phạm vi rộng và tiết kiệm năng lượng, khắc phục hạn chế của các kết nối tầm ngắn như WiFi hay Bluetooth. Các cảm biến được tích hợp bao gồm DHT11, ADXL345 và NEO-6MV2. Tại tầng ứng dụng, hệ thống sử dụng giao thức MQTT để truyền tải dữ liệu telemetry về Backend, lưu trữ trên Firebase và hiển thị trực quan trên ứng dụng di động được phát triển bằng Flutter.
+
+Kết quả thực nghiệm cho thấy hệ thống hoạt động ổn định với độ trễ xử lý toàn trình trung bình từ 1.2 đến 2.5 giây. Trong kịch bản thử nghiệm truyền thông LoRa tại môi trường đô thị nhiều vật cản (NLOS), hệ thống duy trì kết nối tốt ở khoảng cách 500m với tỷ lệ mất gói tin thấp (khoảng 5\% ở cấu hình SF=11). Ứng dụng di động đáp ứng tốt các yêu cầu chức năng về giám sát lộ trình, hiển thị thông số và gửi cảnh báo tức thời khi phát hiện bất thường.
+
+Kết quả của đồ án đã chứng minh tính khả thi của việc ứng dụng công nghệ LoRa và IoT trong lĩnh vực vận tải quân sự, tạo tiền đề vững chắc cho việc phát triển hệ thống giám sát quy mô lớn, an toàn và thông minh hơn trong tương lai.
