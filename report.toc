@@ -54,7 +54,7 @@
 \contentsline {subsubsection}{\numberline {2.4.4.1}So sánh các giao thức tầng ứng dụng}{19}{subsubsection.2.4.4.1}%
 \contentsline {subsubsection}{\numberline {2.4.4.2}So sánh các công nghệ truyền thông không dây}{20}{subsubsection.2.4.4.2}%
 \contentsline {subsubsection}{\numberline {2.4.4.3}So sánh các kiến trúc}{21}{subsubsection.2.4.4.3}%
-\contentsline {subsection}{\numberline {2.4.5}Lựa chọn kiến trúc, giao thức và giải pháp tổng thể}{22}{subsection.2.4.5}%
+\contentsline {subsubsection}{\numberline {2.4.4.4}Lựa chọn kiến trúc, giao thức và giải pháp tổng thể}{22}{subsubsection.2.4.4.4}%
 \contentsline {section}{\numberline {2.5}Các loại cảm biến, thiết bị sử dụng}{22}{section.2.5}%
 \contentsline {subsection}{\numberline {2.5.1}ESP32 NodeMCU-32S CH340 Ai-Thinker}{22}{subsection.2.5.1}%
 \contentsline {subsection}{\numberline {2.5.2}Cảm biến nhiệt độ, độ ẩm DHT11}{23}{subsection.2.5.2}%
