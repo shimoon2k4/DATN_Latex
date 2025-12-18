@@ -256,8 +256,6 @@ Node TX chịu trách nhiệm thu thập dữ liệu từ đa cảm biến và g
 
 \begin{table}[h]
     \centering
-    \caption{Sơ đồ chân kết nối phần cứng Node TX}
-    \label{tab:wiring_tx}
     \begin{tabular}{|p{3cm}|p{2.5cm}|p{3cm}|p{4cm}|}
     \hline
     \textbf{Module} & \textbf{Giao tiếp} & \textbf{Chân ESP32} & \textbf{Chân Module} \\ \hline
@@ -270,6 +268,8 @@ Node TX chịu trách nhiệm thu thập dữ liệu từ đa cảm biến và g
      & & GPIO 22 (SCL) & SCL \\ \hline
     Nguồn & Power & 3.3V / GND & VCC / GND \\ \hline
     \end{tabular}
+    \caption{Sơ đồ chân kết nối phần cứng Node TX}
+    \label{tab:wiring_tx}
 \end{table}
 
 
@@ -286,8 +286,6 @@ Node RX đóng vai trò nhận dữ liệu LoRa và chuyển tiếp. Cấu hình
 
 \begin{table}[h]
     \centering
-    \caption{Sơ đồ chân kết nối phần cứng Node RX}
-    \label{tab:wiring_rx}
     \begin{tabular}{|p{3cm}|p{2.5cm}|p{3cm}|p{4cm}|}
     \hline
     \textbf{Module} & \textbf{Giao tiếp} & \textbf{Chân ESP32} & \textbf{Chân Module} \\ \hline
@@ -295,6 +293,8 @@ Node RX đóng vai trò nhận dữ liệu LoRa và chuyển tiếp. Cấu hình
      & & GPIO 25 (RX) & TX \\ \hline
     Máy tính (Server) & UART0 (USB) & USB Port & USB Port \\ \hline
     \end{tabular}
+    \caption{Sơ đồ chân kết nối phần cứng Node RX}
+    \label{tab:wiring_rx}
 \end{table}
 
 
@@ -334,8 +334,6 @@ Người dùng cuối truy cập vào hệ thống thông qua ứng dụng di đ
 
 \begin{table}[H]
     \centering
-    \caption{Tổng hợp chức năng và vai trò của các thành phần trong hệ thống}
-    \label{tab:system_components}
     \begin{tabular}{|l|p{10cm}|}
         \hline
         \textbf{Thành phần} & \textbf{Vai trò kỹ thuật và Chức năng} \\ \hline
@@ -346,4 +344,6 @@ Người dùng cuối truy cập vào hệ thống thông qua ứng dụng di đ
         Firestore & \textbf{Lưu trữ đám mây (Cloud Storage):} Quản lý dữ liệu bền vững, hỗ trợ truy vấn lịch sử và đồng bộ trạng thái đa thiết bị. \\ \hline
         Mobile App & \textbf{Giao diện người dùng (HMI):} Trực quan hóa dữ liệu giám sát, cung cấp công cụ tương tác và ra quyết định cho người quản lý. \\ \hline
     \end{tabular}
+    \caption{Tổng hợp chức năng và vai trò của các thành phần trong hệ thống}
+    \label{tab:system_components}
 \end{table}

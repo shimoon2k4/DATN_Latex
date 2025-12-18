@@ -249,8 +249,6 @@ Kết quả đo đạc trung bình trên 100 mẫu thử với cấu hình $SF=1
 
 \begin{table}[H]
     \centering
-    \caption{Phân rã độ trễ xử lý dữ liệu của hệ thống}
-    \label{tab:latency}
     \begin{tabular}{|l|l|c|}
     \hline
     \textbf{Thành phần} & \textbf{Mô tả quá trình} & \textbf{Thời gian (ms)} \\ \hline
@@ -261,6 +259,8 @@ Kết quả đo đạc trung bình trên 100 mẫu thử với cấu hình $SF=1
     Mobile App & Listener nhận event và cập nhật UI & 50 - 100 \\ \hline
     \textbf{Tổng cộng} & \textbf{Độ trễ toàn trình trung bình} & \textbf{$\approx 1.2s - 2.5s$} \\ \hline
     \end{tabular}
+    \caption{Phân rã độ trễ xử lý dữ liệu của hệ thống}
+    \label{tab:latency}
 \end{table}
 
 \textit{Kết luận:} Độ trễ trung bình khoảng 2 giây là chấp nhận được đối với bài toán giám sát vận tải (Soft Real-time). Thành phần chiếm tỷ trọng lớn nhất là $T_{LoRa}$ (do sử dụng SF cao để tăng tầm phủ sóng) và $T_{Cloud}$ (phụ thuộc vào tốc độ mạng Internet).
@@ -271,8 +271,8 @@ Hệ thống đã được triển khai thử nghiệm trên xe máy di chuyển
 \begin{figure}[H]
     \centering
     \begin{tabular}{cc}
-        \framebox{\parbox{0.45\textwidth}{\centering \vspace{4cm} \textit{[Ảnh chụp giao diện bản đồ]} \vspace{1cm}}} & 
-        \framebox{\parbox{0.45\textwidth}{\centering \vspace{4cm} \textit{[Ảnh chụp màn hình thông số]} \vspace{1cm}}} \\
+        \includegraphics[width=0.45\textwidth]{images/chapper_6/app(1).png} &
+        \includegraphics[width=0.45\textwidth]{images/chapper_6/app(2).png} \\
         (a) Hiển thị lộ trình di chuyển & (b) Hiển thị thông số cảm biến
     \end{tabular}
     \caption{Giao diện ứng dụng di động trong quá trình thử nghiệm thực tế}
@@ -280,14 +280,15 @@ Hệ thống đã được triển khai thử nghiệm trên xe máy di chuyển
 \end{figure}
 
 
+
 % ============================================================
 % 6.4 So sánh và đánh giá
 % ============================================================
 \section{Đánh giá kết quả đạt được}
-Trải qua quá trình nghiên cứu, thiết kế và thực nghiệm, đề tài đã hoàn thành các mục tiêu ban đầu đề ra, xây dựng được hệ thống giám sát vận chuyển đạn dược dựa trên công nghệ IoT. Nhìn chung, các kết quả đạt được có thể tóm tắt như sau:
+Trải qua quá trình nghiên cứu, thiết kế và thực nghiệm, đề tài đã hoàn thành các mục tiêu ban đầu đề ra, xây dựng được hệ thống giám sát vận chuyển đạn dược IoT. Nhìn chung, các kết quả đạt được có thể tóm tắt như sau:
 
 \begin{itemize}
-    \item \textbf{Về phần cứng:} Đã thiết kế và tích hợp thành công các node cảm biến thu thập đa thông số (vị trí, nhiệt độ, độ ẩm, va chạm) sử dụng vi điều khiển trung tâm ESP32 và module truyền thông LoRa Ra-08H. Hệ thống hoạt động ổn định trong các kịch bản thực tế tại khu vực KTX Khu A ĐHQG-HCM.
+    \item \textbf{Về phần cứng:} Đã thiết kế và tích hợp thành công các node cảm biến thu thập đa thông số (vị trí, nhiệt độ, độ ẩm, va chạm) sử dụng vi điều khiển trung tâm ESP32 và module truyền thông LoRa Ra-08H. Hệ thống hoạt động ổn định trong các kịch bản thực tế tại khu vực KTX Khu A.
     \item \textbf{Về truyền thông:} Công nghệ LoRa P2P với cấu hình $SF=11$ đã chứng minh được tính hiệu quả trong môi trường đô thị nhiều vật cản. Thử nghiệm thực tế cho thấy hệ thống duy trì kết nối tốt ở khoảng cách 500m NLOS với tỷ lệ mất gói thấp (khoảng 5\%), vượt trội hơn hẳn so với các giải pháp WiFi/Zigbee truyền thống trong cùng điều kiện.
     \item \textbf{Về phần mềm và hệ thống:} Xây dựng thành công lớp trung gian (Middleware) bằng Python Bridge kết hợp MQTT Broker, giúp chuẩn hóa và làm giàu dữ liệu (RSSI/SNR) trước khi lưu trữ vào Cloud Firestore. Ứng dụng di động phản hồi dữ liệu thời gian thực với độ trễ từ 1.2 giây đến 2.5 giây, đáp ứng yêu cầu giám sát hành trình.
 \end{itemize}

@@ -794,6 +794,10 @@ INPUT .\images\chapter_2\Module LoRa.png
 INPUT .\images\chapter_2\Module LoRa.png
 INPUT .\images\chapter_2\Module LoRa.png
 INPUT .\images\chapter_2\Module LoRa.png
+INPUT C:\Users\HP\AppData\Local\Programs\MiKTeX\tex\latex\vntex\t5cmtt.fd
+INPUT C:\Users\HP\AppData\Local\Programs\MiKTeX\tex\latex\vntex\t5cmtt.fd
+INPUT C:\Users\HP\AppData\Local\Programs\MiKTeX\tex\latex\vntex\t5cmtt.fd
+INPUT C:\Users\HP\AppData\Local\Programs\MiKTeX\fonts\tfm\vntex\vnr\vntt12.tfm
 INPUT .\chapter\3.tex
 INPUT .\chapter\3.tex
 OUTPUT chapter\3.aux
@@ -814,10 +818,6 @@ INPUT .\images\week\week_3\activity_điều phối.png
 INPUT .\images\week\week_3\activity_điều phối.png
 INPUT .\images\week\week_3\activity_điều phối.png
 INPUT .\images\week\week_3\activity_điều phối.png
-INPUT C:\Users\HP\AppData\Local\Programs\MiKTeX\tex\latex\vntex\t5cmtt.fd
-INPUT C:\Users\HP\AppData\Local\Programs\MiKTeX\tex\latex\vntex\t5cmtt.fd
-INPUT C:\Users\HP\AppData\Local\Programs\MiKTeX\tex\latex\vntex\t5cmtt.fd
-INPUT C:\Users\HP\AppData\Local\Programs\MiKTeX\fonts\tfm\vntex\vnr\vntt12.tfm
 INPUT .\images\week\week_3\activity_giám sát.png
 INPUT .\images\week\week_3\activity_giám sát.png
 INPUT .\images\week\week_3\activity_giám sát.png
@@ -923,6 +923,20 @@ OUTPUT chapter\6.aux
 INPUT .\chapter\6.tex
 INPUT .\chapter\6.tex
 INPUT chapter\6.tex
+INPUT .\images\chapper_6\app(1).png
+INPUT .\images\chapper_6\app(1).png
+INPUT .\images\chapper_6\app(1).png
+INPUT .\images\chapper_6\app(1).png
+INPUT .\images\chapper_6\app(1).png
+INPUT .\images\chapper_6\app(1).png
+INPUT .\images\chapper_6\app(1).png
+INPUT .\images\chapper_6\app(2).png
+INPUT .\images\chapper_6\app(2).png
+INPUT .\images\chapper_6\app(2).png
+INPUT .\images\chapper_6\app(2).png
+INPUT .\images\chapper_6\app(2).png
+INPUT .\images\chapper_6\app(2).png
+INPUT .\images\chapper_6\app(2).png
 INPUT .\chapter\7.tex
 INPUT .\chapter\7.tex
 OUTPUT chapter\7.aux
