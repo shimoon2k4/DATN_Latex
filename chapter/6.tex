@@ -283,12 +283,28 @@ Hệ thống đã được triển khai thử nghiệm trên xe máy di chuyển
 % ============================================================
 % 6.4 So sánh và đánh giá
 % ============================================================
-\section{Kết luận và Hướng phát triển}
+\section{Đánh giá kết quả đạt được}
+Trải qua quá trình nghiên cứu, thiết kế và thực nghiệm, đề tài đã hoàn thành các mục tiêu ban đầu đề ra, xây dựng được hệ thống giám sát vận chuyển đạn dược dựa trên công nghệ IoT. Nhìn chung, các kết quả đạt được có thể tóm tắt như sau:
 
-Kết quả thực nghiệm đã chứng minh tính khả thi và hiệu quả của kiến trúc hệ thống đề xuất. Công nghệ LoRa P2P với cấu hình $SF=11$ thể hiện ưu thế vượt trội về khả năng xuyên vật cản trong môi trường đô thị so với các giải pháp WiFi/Zigbee truyền thống. Cơ chế xử lý trung gian (Middleware) sử dụng Python Bridge và MQTT Broker giúp hệ thống đạt độ ổn định cao, tách biệt được tầng phần cứng và tầng ứng dụng.
+\begin{itemize}
+    \item \textbf{Về phần cứng:} Đã thiết kế và tích hợp thành công các node cảm biến thu thập đa thông số (vị trí, nhiệt độ, độ ẩm, va chạm) sử dụng vi điều khiển trung tâm ESP32 và module truyền thông LoRa Ra-08H. Hệ thống hoạt động ổn định trong các kịch bản thực tế tại khu vực KTX Khu A ĐHQG-HCM.
+    \item \textbf{Về truyền thông:} Công nghệ LoRa P2P với cấu hình $SF=11$ đã chứng minh được tính hiệu quả trong môi trường đô thị nhiều vật cản. Thử nghiệm thực tế cho thấy hệ thống duy trì kết nối tốt ở khoảng cách 500m NLOS với tỷ lệ mất gói thấp (khoảng 5\%), vượt trội hơn hẳn so với các giải pháp WiFi/Zigbee truyền thống trong cùng điều kiện.
+    \item \textbf{Về phần mềm và hệ thống:} Xây dựng thành công lớp trung gian (Middleware) bằng Python Bridge kết hợp MQTT Broker, giúp chuẩn hóa và làm giàu dữ liệu (RSSI/SNR) trước khi lưu trữ vào Cloud Firestore. Ứng dụng di động phản hồi dữ liệu thời gian thực với độ trễ từ 1.2 giây đến 2.5 giây, đáp ứng yêu cầu giám sát hành trình.
+\end{itemize}
 
-Tuy nhiên, hệ thống vẫn tồn tại một số hạn chế cần khắc phục trong các giai đoạn phát triển tiếp theo:\\
-1.  **Tối ưu hóa năng lượng:** Cần triển khai chế độ ngủ sâu (Deep Sleep) cho ESP32 và Ra-08H để kéo dài thời gian hoạt động của pin.\\
-2.  **Cơ chế chống mất gói tin:** Cần bổ sung cơ chế xác nhận (ACK) và gửi lại (Retransmission) ở tầng ứng dụng để đảm bảo không mất dữ liệu cảnh báo quan trọng.\\
-3.  **Thiết kế cơ khí:** Cần đóng gói sản phẩm đạt chuẩn IP67 để chịu được điều kiện môi trường khắc nghiệt trong tác chiến quân sự.\\
+% \section{Hạn chế của hệ thống}
+% Mặc dù đạt được những kết quả khả quan, nhóm cũng nhận thấy hệ thống vẫn còn một số điểm hạn chế cần được cải thiện:
+% \begin{itemize}
+%     \item \textbf{Tối ưu hóa năng lượng:} Firmware hiện tại chưa được tích hợp triệt để các chế độ tiết kiệm năng lượng (Deep Sleep). Điều này khiến thời gian vận hành liên tục của Node TX bị hạn chế nếu chỉ sử dụng pin dung lượng thấp.
+%     \item \textbf{Độ tin cậy của giao thức:} Giao thức truyền tin P2P hiện tại chưa có cơ chế xác nhận gói tin (ACK) và gửi lại (Retransmission) ở tầng ứng dụng, dẫn đến rủi ro mất mát các gói tin cảnh báo quan trọng khi môi trường nhiễu nặng hoặc vượt quá phạm vi phủ sóng hiệu dụng.
+%     \item \textbf{Thiết kế cơ khí:} Thiết bị mẫu (Prototype) hiện tại có kích thước còn khá cồng kềnh, chưa được đóng gói theo các tiêu chuẩn bảo vệ môi trường khắc nghiệt như chống nước, chống bụi IP67 để phục vụ môi trường quân sự thực tế.
+% \end{itemize}
 
+% \section{Hướng phát triển và mở rộng}
+% Để hoàn thiện hệ thống và hướng tới việc ứng dụng thực tiễn rộng rãi hơn, nhóm đề xuất các hướng phát triển tiếp theo:
+% \begin{itemize}
+%     \item \textbf{Cải thiện hiệu suất nguồn:} Nghiên cứu và áp dụng cơ chế đánh thức theo chu kỳ (Periodic Wakeup) kết hợp với các thuật toán tối ưu hóa năng lượng cho SoC ASR6601 và ESP32.
+%     \item \textbf{Nâng cấp giao thức truyền thông:} Bổ sung lớp ACK/Retransmission và triển khai cơ chế nhảy tần (Frequency Hopping) để tăng khả năng chống nhiễu. Đồng thời, tích hợp mã hóa dữ liệu (như AES-128) để đảm bảo tính bảo mật cho thông tin vận chuyển quân sự.
+%     \item \textbf{Hoàn thiện sản phẩm vật lý:} Thiết kế mạch in PCB chuyên dụng để thu gọn kích thước và đóng vỏ bảo vệ theo chuẩn công nghiệp IP67.
+%     \item \textbf{Phân tích dữ liệu thông minh:} Sử dụng dữ liệu lịch sử trên Firestore để xây dựng các mô hình cảnh báo sớm về rủi ro hư hỏng đạn dược dựa trên biến động của nhiệt độ và độ rung theo thời gian.
+% \end{itemize}

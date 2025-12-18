@@ -128,7 +128,7 @@
 \contentsline {section}{\numberline {6.2}Kiểm thử tích hợp và Phân tích độ trễ}{68}{section.6.2}%
 \contentsline {subsection}{\numberline {6.2.1}Phân rã độ trễ toàn trình (Latency Breakdown)}{68}{subsection.6.2.1}%
 \contentsline {subsection}{\numberline {6.2.2}Thử nghiệm mô phỏng vận chuyển thực tế}{68}{subsection.6.2.2}%
-\contentsline {section}{\numberline {6.3}Kết luận và Hướng phát triển}{69}{section.6.3}%
+\contentsline {section}{\numberline {6.3}Đánh giá kết quả đạt được}{69}{section.6.3}%
 \contentsline {chapter}{\numberline {7}Kết luận và hướng phát triển}{71}{chapter.7}%
 \contentsline {section}{\numberline {7.1}Đánh giá chung}{71}{section.7.1}%
 \contentsline {section}{\numberline {7.2}Hạn chế}{72}{section.7.2}%
