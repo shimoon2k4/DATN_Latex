@@ -817,4 +817,46 @@ Antenna & Hỗ trợ đầu nối IPEX \\
 % \subsection{Toàn vẹn dữ liệu (Integrity)}
 % Để đảm bảo dữ liệu không bị thay đổi hoặc làm sai lệch trên đường truyền, hệ thống sử dụng kỹ thuật Checksum hoặc HMAC (Hash-based Message Authentication Code). Phía nhận sẽ tính toán lại mã kiểm tra và so sánh với mã nhận được; nếu không khớp, gói tin sẽ bị loại bỏ để tránh xử lý sai thông tin.
 
+\section{Các kỹ thuật bảo mật trong hệ thống IoT}
+
+Do đặc thù của bài toán giám sát và điều phối vận chuyển đạn dược, yếu tố bảo mật
+được xem xét ngay từ giai đoạn thiết kế hệ thống. Trong phạm vi triển khai của đề
+tài, các cơ chế bảo mật được áp dụng tập trung vào xác thực dịch vụ, bảo mật đường
+truyền mạng và kiểm soát tính hợp lệ của dữ liệu, nhằm đảm bảo hệ thống hoạt động
+ổn định và tránh các truy cập trái phép ở mức ứng dụng.
+
+\subsection{Xác thực dịch vụ (Service Authentication)}
+
+Hệ thống sử dụng cơ chế xác thực dịch vụ thông qua Google Firebase để đảm bảo chỉ
+các thành phần hợp lệ mới có quyền truy cập và ghi dữ liệu lên hệ thống backend.
+Cụ thể, phía server sử dụng tệp \texttt{serviceAccountKey.json} do Firebase cấp để
+xác thực danh tính ứng dụng khi khởi tạo kết nối.
+
+Cơ chế này giúp ngăn chặn các truy cập trái phép từ các ứng dụng hoặc dịch vụ không
+được ủy quyền, đồng thời đảm bảo các thao tác đọc/ghi dữ liệu đều được thực hiện
+trong phạm vi quyền hạn đã được cấp phát.
+
+\subsection{Bảo mật đường truyền mạng (Network Security)}
+
+Ở tầng mạng, thiết bị ESP32 kết nối Internet thông qua WiFi sử dụng chuẩn bảo mật
+WPA2-PSK. Chuẩn này cung cấp cơ chế mã hóa và xác thực ở tầng liên kết, giúp bảo vệ
+dữ liệu khỏi các hình thức nghe lén và truy cập trái phép trong phạm vi mạng cục
+bộ.
+
+Việc sử dụng WPA2-PSK đảm bảo mức độ an toàn phù hợp với môi trường triển khai thử
+nghiệm và mô hình nghiên cứu của đề tài.
+
+\subsection{Kiểm tra tính hợp lệ dữ liệu (Data Validation)}
+
+Để hạn chế việc xử lý các gói dữ liệu lỗi hoặc không hợp lệ, hệ thống thực hiện
+kiểm tra định dạng dữ liệu ở tầng ứng dụng. Cụ thể, phía server sử dụng thư viện
+xử lý JSON để kiểm tra và phân tích cú pháp dữ liệu nhận được thông qua hàm
+\texttt{json.loads}.
+
+Các gói tin không đúng định dạng hoặc không đáp ứng cấu trúc dữ liệu quy định sẽ
+bị loại bỏ, giúp tăng độ ổn định của hệ thống và giảm nguy cơ lỗi trong quá trình
+xử lý dữ liệu.
+
+
+
 
