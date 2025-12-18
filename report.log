@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.5)  18 DEC 2025 20:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.5)  18 DEC 2025 20:10
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2993,7 +2993,7 @@ Package glossaries Warning: No \printglossary or \printglossaries found.
 (Remove \makeglossaries if you don't want any glossaries.) 
 This document will not have a glossary.
 
-runsystem(latexminted cleantemp  --timestamp 20251218200034 E98D2F001DA5678B39482EFBDF5770DC)...executed safely (allowed).
+runsystem(latexminted cleantemp  --timestamp 20251218201027 E98D2F001DA5678B39482EFBDF5770DC)...executed safely (allowed).
 
 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
@@ -3018,7 +3018,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  123i,13n,145p,2548b,1326s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/symbol/usyr.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/urwvn/utmb8v.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/urwvn/utmbi8v.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/urwvn/utmr8v.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/urwvn/utmri8v.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/vnr/vntt12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/vnr/vntt8.pfb>
-Output written on report.pdf (97 pages, 4361616 bytes).
+Output written on report.pdf (97 pages, 4361581 bytes).
 PDF statistics:
  1493 PDF objects out of 1728 (max. 8388607)
  1318 compressed objects within 14 object streams
