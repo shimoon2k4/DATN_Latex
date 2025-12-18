@@ -27,7 +27,7 @@ Nhận thấy ưu và nhược điểm riêng biệt của hai mô hình trên, 
     \item \textbf{Tầng đám mây (Cloud Layer):} Đóng vai trò là kho lưu trữ trung tâm (Centralized Storage) và trung tâm điều phối. Dữ liệu đã qua xử lý từ tầng biên được đồng bộ lên Cloud để lưu trữ dài hạn, phục vụ cho việc hiển thị Dashboard, phân tích xu hướng và trích xuất báo cáo hậu cần.
 \end{itemize}
 
-Dựa trên yêu cầu đặc thù của đề tài về việc giám sát vận chuyển đạn dược – một bài toán đòi hỏi cả sự phản ứng tức thời tại hiện trường (Edge) và khả năng quản lý tập trung từ xa (Cloud), nhóm nghiên cứu quyết định lựa chọn *Kiến trúc Hybrid Cloud-Edge* làm nền tảng thiết kế hệ thống. Sự kết hợp này đảm bảo hệ thống vẫn có thể hoạt động cảnh báo cục bộ ngay cả khi mất kết nối mạng (Offline Mode), đồng thời vẫn duy trì được cái nhìn toàn cảnh cho người điều phối khi có kết nối trở lại.
+Dựa trên yêu cầu đặc thù của đề tài về việc giám sát vận chuyển đạn dược – một bài toán đòi hỏi cả sự phản ứng tức thời tại hiện trường (Edge) và khả năng quản lý tập trung từ xa (Cloud), nhóm nghiên cứu quyết định lựa chọn Kiến trúc Hybrid Cloud-Edge làm nền tảng thiết kế hệ thống. Sự kết hợp này đảm bảo hệ thống vẫn có thể hoạt động cảnh báo cục bộ ngay cả khi mất kết nối mạng (Offline Mode), đồng thời vẫn duy trì được cái nhìn toàn cảnh cho người điều phối khi có kết nối trở lại.
 
 \section{Các công nghệ truyền thông không dây}
 \subsection{LoRa}
@@ -652,27 +652,53 @@ Baud rate mặc định & 9600\\
     \label{fig:placeholder}
 \end{figure}
 
-\subsection{Module truyền thông LoRa}
-Kit phát triển LoraWan SoC ASR6601 868/915MHz Ra-08H Development Board Ai-Thinker được sản xuất bởi Ai-Thinker sử dụng chip SoC ASR6601 là sự kết hợp giữa MCU kiến trúc 32-bit RISC và chuẩn truyền sóng Lora, rất thích hợp cho các ứng dụng xây dựng mạng truyền sóng LoraWan, chuẩn Lora mang đến hai yếu tố quan trọng là tiết kiệm năng lượng và khoảng cách phát siêu xa, ngoài ra nó còn có khả năng cấu hình để tạo thành mạng truyền nhận nên hiện tại được phát triển và sử dụng rất nhiều trong các nghiên cứu về IoT.
+\subsection{Module truyền thông LoRa Ra-08H Kit}
+Kit phát triển Ra-08H được sản xuất bởi Ai-Thinker, sử dụng SoC ASR6601 tích hợp lõi vi xử lý 32-bit RISC và bộ thu phát LoRa trong cùng một gói phần cứng. Module hoạt động ở dải tần số cao (868/915 MHz), hỗ trợ chuẩn LoRaWAN cũng như các giao thức truyền thông riêng biệt (P2P). Với ưu điểm về khoảng cách truyền xa và khả năng tiết kiệm năng lượng vượt trội, Ra-08H là lựa chọn tối ưu cho các hệ thống IoT yêu cầu phạm vi phủ sóng rộng. Kit được thiết kế tiện lợi với cổng Micro USB, tích hợp sẵn mạch chuyển đổi USB-UART và ra chân đầy đủ, giúp việc kết nối và lập trình trở nên dễ dàng.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{5cm}|p{6cm}|}
+\hline
+\textbf{Thông số} & \textbf{Giá trị} \\
+\hline
+SoC trung tâm & ASR6601 (32-bit RISC) \\
+\hline
+Dải tần số hỗ trợ & 803MHz $\sim$ 930MHz (868/915 MHz) \\
+\hline
+Điện áp hoạt động & 5V (Micro USB) hoặc 3.3V (Chân pin) \\
+\hline
+Giao tiếp ngoại vi & UART, SPI, I2C, GPIO \\
+\hline
+Công suất phát (Tx) & Tối đa +22dBm \\
+\hline
+Độ nhạy thu (Rx) & -140 dBm \\
+\hline
+Bộ nhớ & 128 KB Flash, 16 KB SRAM \\
+\hline
+Antenna & Hỗ trợ đầu nối IPEX \\
+\hline
+\end{tabular}
+\caption{Thông số kỹ thuật của Kit LoRa Ra-08H Ai-Thinker}
+\label{tab:lora_specs}
+\end{table}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.35\linewidth]{images/chapter_2/Module LoRa.png}
     \caption{Module LoRa Ra-08H Development Board Ai-Thinker}
-    \label{fig:placeholder}
+    \label{fig:lora_module}
 \end{figure}
+% \section{Các kỹ thuật bảo mật trong IoT}
 
-\section{Các kỹ thuật bảo mật trong IoT}
+% \subsection{Mã hóa dữ liệu (Confidentiality)}
+% Để đảm bảo dữ liệu (tọa độ, trạng thái đạn dược) không bị nghe lén trong quá trình truyền tải qua không gian, hệ thống sử dụng thuật toán mã hóa AES-128 (Advanced Encryption Standard). Trước khi gửi gói tin từ ESP32 qua LoRa hoặc 4G, dữ liệu payload sẽ được mã hóa bằng một khóa bí mật (Secret Key) chỉ được biết bởi thiết bị gửi và máy chủ nhận.
 
-\subsection{Mã hóa dữ liệu (Confidentiality)}
-Để đảm bảo dữ liệu (tọa độ, trạng thái đạn dược) không bị nghe lén trong quá trình truyền tải qua không gian, hệ thống sử dụng thuật toán mã hóa AES-128 (Advanced Encryption Standard). Trước khi gửi gói tin từ ESP32 qua LoRa hoặc 4G, dữ liệu payload sẽ được mã hóa bằng một khóa bí mật (Secret Key) chỉ được biết bởi thiết bị gửi và máy chủ nhận.
+% \subsection{Xác thực thiết bị (Authentication)}
+% Hệ thống ngăn chặn các thiết bị lạ giả mạo thành xe vận chuyển bằng cơ chế xác thực.
+% \begin{itemize}
+%     \item \textbf{Với MQTT:} Sử dụng Username/Password và Client ID định danh cho từng thiết bị khi kết nối vào Broker.
+%     \item \textbf{Với LoRa:} Sử dụng cơ chế xác thực ABP (Activation By Personalization) hoặc OTAA (Over-The-Air Activation) để đảm bảo chỉ các node đã đăng ký mới được tham gia mạng.
+% \end{itemize}
 
-\subsection{Xác thực thiết bị (Authentication)}
-Hệ thống ngăn chặn các thiết bị lạ giả mạo thành xe vận chuyển bằng cơ chế xác thực.
-\begin{itemize}
-    \item \textbf{Với MQTT:} Sử dụng Username/Password và Client ID định danh cho từng thiết bị khi kết nối vào Broker.
-    \item \textbf{Với LoRa:} Sử dụng cơ chế xác thực ABP (Activation By Personalization) hoặc OTAA (Over-The-Air Activation) để đảm bảo chỉ các node đã đăng ký mới được tham gia mạng.
-\end{itemize}
-
-\subsection{Toàn vẹn dữ liệu (Integrity)}
-Để đảm bảo dữ liệu không bị thay đổi hoặc làm sai lệch trên đường truyền, hệ thống sử dụng kỹ thuật Checksum hoặc HMAC (Hash-based Message Authentication Code). Phía nhận sẽ tính toán lại mã kiểm tra và so sánh với mã nhận được; nếu không khớp, gói tin sẽ bị loại bỏ để tránh xử lý sai thông tin.
+% \subsection{Toàn vẹn dữ liệu (Integrity)}
+% Để đảm bảo dữ liệu không bị thay đổi hoặc làm sai lệch trên đường truyền, hệ thống sử dụng kỹ thuật Checksum hoặc HMAC (Hash-based Message Authentication Code). Phía nhận sẽ tính toán lại mã kiểm tra và so sánh với mã nhận được; nếu không khớp, gói tin sẽ bị loại bỏ để tránh xử lý sai thông tin.

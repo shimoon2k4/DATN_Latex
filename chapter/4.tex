@@ -4,7 +4,7 @@ Sơ đồ khối chức năng của hệ thống được thể hiện trong \au
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.65\linewidth]{images/SoDoKhoi.png}
+    \includegraphics[width=\linewidth]{images/SoDoKhoi.png}
     \caption{Sơ đồ khối của toàn bộ hệ thống}
     \label{SDK}
 \end{figure}
@@ -13,9 +13,7 @@ Toàn bộ hệ thống được cấp điện bởi khối nguồn, đảm bả
 
 Khối cảm biến đóng vai trò thu thập dữ liệu môi trường và trạng thái chuyển động của phương tiện. Cảm biến rung giám sát các dao động bất thường trong quá trình vận chuyển, cảm biến DHT20 theo dõi nhiệt độ và độ ẩm nhằm đảm bảo điều kiện bảo quản đạn dược luôn nằm trong ngưỡng an toàn, module GPS cung cấp thông tin vị trí địa lý theo thời gian thực, giúp hệ thống giám sát chính xác lộ trình và phát hiện các sai lệch hướng di chuyển.
 
-Bên cạnh đó, khối hiển thị sử dụng màn hình LCD cho phép hiển thị trực tiếp các thông số môi trường ngay tại phương tiện vận chuyển. Điều này giúp người vận hành có thể theo dõi nhanh mà không cần phụ thuộc hoàn toàn vào kết nối mạng. Khi xuất hiện tình huống như nhiệt độ tăng cao, độ rung vượt ngưỡng hoặc phương tiện rời khỏi tuyến đường cho phép, khối cảnh báo ngay lập tức kích hoạt tín hiệu cảnh báo và gửi thông báo đến ứng dụng quản lý trên thiết bị di động.
-
-Dữ liệu sau khi được xử lý tại thiết bị sẽ được truyền đi thông qua khối truyền dữ liệu LoRa/LoRaWAN. Công nghệ LoRa cho phép truyền dữ liệu tầm xa với mức tiêu thụ năng lượng thấp, phù hợp với yêu cầu của môi trường vận chuyển quân sự, nơi địa hình thường phức tạp và liên lạc phải duy trì ổn định. Tín hiệu từ các node cảm biến được chuyển đến LoRaWAN Gateway, đóng vai trò cầu nối giữa thiết bị tại hiện trường và không gian lưu trữ trên Cloud. Gateway hỗ trợ quản lý nhiều thiết bị cùng lúc, mã hóa dữ liệu nhận được và chuyển tiếp lên nền tảng server qua giao thức bảo mật MQTT.
+Dữ liệu sau khi được xử lý tại thiết bị sẽ được truyền đi thông qua khối truyền dữ liệu LoRa/LoRaWAN. Tín hiệu từ các node cảm biến được chuyển đến LoRaWAN Gateway, đóng vai trò cầu nối giữa thiết bị tại hiện trường và không gian lưu trữ trên Cloud. Gateway hỗ trợ quản lý nhiều thiết bị cùng lúc, mã hóa dữ liệu nhận được và chuyển tiếp lên nền tảng server qua giao thức bảo mật MQTT.
 
 Tại tầng xử lý dữ liệu trung tâm, Cloud/Server đảm nhiệm vai trò tiếp nhận dữ liệu từ Gateway, xử lý, phân loại và lưu trữ trong cơ sở dữ liệu. MQTT Broker được sử dụng để đảm bảo việc truyền nhận dữ liệu giữa các thiết bị và ứng dụng giám sát diễn ra đồng bộ, ổn định theo thời gian thực. Tại đây, người quản lý có thể xem lại lịch sử hành trình, phân tích dữ liệu hoặc đánh giá các chỉ số an toàn trong suốt quá trình vận chuyển.
 
@@ -33,11 +31,11 @@ Cuối cùng, ứng dụng di động đóng vai trò giao diện tương tác v
 
 Sơ đồ kết nối phần cứng minh họa trong \autoref{hardware-interface} thể hiện kiến trúc tổng thể của các thành phần điện tử trong hệ thống giám sát vận chuyển đạn dược. Trung tâm của toàn bộ cấu trúc là ESP32, đóng vai trò vi điều khiển chính, chịu trách nhiệm thu thập dữ liệu từ các cảm biến, truyền thông với các module ngoại vi và gửi dữ liệu đến backend thông qua LoRa. ESP32 đồng thời được cấp nguồn trực tiếp từ khối Power, đảm bảo toàn bộ hệ thống hoạt động ổn định và liên tục.
 
-Các cảm biến môi trường và trạng thái được kết nối trực tiếp đến ESP32 thông qua các giao thức phù hợp. Cảm biến DHT11 sử dụng giao tiếp I2C, cho phép truyền dữ liệu nhiệt độ và độ ẩm theo chu kỳ về vi điều khiển. Tương tự, cảm biến gia tốc ADXL345 được kết nối qua giao tiếp I2C hoặc SPI, hỗ trợ ESP32 thu thập thông tin về rung/lắc và chuyển động của phương tiện trong quá trình vận chuyển. Các kết nối này giúp hệ thống ghi nhận đầy đủ các yếu tố ảnh hưởng đến an toàn của lô đạn dược.
+Các cảm biến môi trường và trạng thái được kết nối trực tiếp đến ESP32 thông qua các giao thức phù hợp. Cảm biến DHT11 sử dụng giao tiếp GPIO, cho phép truyền dữ liệu nhiệt độ và độ ẩm theo chu kỳ về vi điều khiển. Tương tự, cảm biến gia tốc ADXL345 được kết nối qua giao tiếp I2C, hỗ trợ ESP32 thu thập thông tin về rung/lắc và chuyển động của phương tiện trong quá trình vận chuyển. Các kết nối này giúp hệ thống ghi nhận đầy đủ các yếu tố ảnh hưởng đến an toàn của lô đạn dược.
 
 Đối với việc xác định vị trí, hệ thống sử dụng module GPS NEO-6MV2, kết nối với ESP32 thông qua giao tiếp UART. Module GPS đảm nhiệm việc thu thập toạ độ thời gian thực và truyền về vi điều khiển. Dữ liệu định vị sau đó được ESP32 xử lý và gửi đi, đảm bảo phương tiện luôn được giám sát chặt chẽ trên bản đồ. Module GPS cũng được kết nối với antenna ngoài để cải thiện khả năng thu tín hiệu trong điều kiện môi trường phức tạp.
 
-Để truyền dữ liệu về trung tâm, ESP32 sử dụng module LoRa, kết nối thông qua chuẩn SPI. Module LoRa đảm nhiệm việc gửi dữ liệu tầm xa, năng lượng thấp, phù hợp với đặc thù vận chuyển quân sự. Toàn bộ thông tin bao gồm nhiệt độ, độ ẩm, rung/lắc và vị trí GPS được ESP32 tổng hợp và gửi sang LoRa Module, sau đó truyền về Gateway của hệ thống.
+Để truyền dữ liệu về trung tâm, ESP32 sử dụng module LoRa, kết nối thông qua chuẩn UART. Module LoRa đảm nhiệm việc gửi dữ liệu tầm xa, năng lượng thấp, phù hợp với đặc thù vận chuyển quân sự. Toàn bộ thông tin bao gồm nhiệt độ, độ ẩm, rung/lắc và vị trí GPS được ESP32 tổng hợp và gửi sang LoRa Module, sau đó truyền về Gateway của hệ thống.
 
 \section{Thiết kế truyền thông dữ liệu}
 \begin{figure}[H]
@@ -150,4 +148,4 @@ Cuối cùng, \autoref{UI5} mô tả trang Profile, nơi người dùng có th�
 \end{figure}
 
 
-\section{Thiết kế cơ chế bảo mật}
+% \section{Thiết kế cơ chế bảo mật}

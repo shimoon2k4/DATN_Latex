@@ -91,37 +91,37 @@ Bên cạnh các yếu tố kỹ thuật, hệ thống còn phải tính đến 
 \subsection{Use-case diagram}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{images/chapter_3/usecase.png}
+    \includegraphics[width=0.9\linewidth]{images/chapter_3/DATN.drawio.png}
     \caption{Usecase diagram}
     \label{fig:placeholder}
 \end{figure}
 
 \subsection{Đặc tả use-case}
-\subsubsection{Use-case 1: Quản lý hàng hoá}
-\begin{table}[H]
-\centering
-\begin{tabularx}{\textwidth}{|l|X|}
-\hline
-\textbf{Mục} & \textbf{Mô tả} \\ \hline
-Use-case ID & UC01 \\ \hline
-Use-case Name & Quản lý hàng hóa \\ \hline
-Actor & Bộ phận kho \\ \hline
-Description & Bộ phận kho quản lý thông tin hàng hóa trước khi vận chuyển, bao gồm tạo mới, cập nhật và theo dõi trạng thái hàng hóa. \\ \hline
-Pre-condition & Người dùng thuộc bộ phận kho đã đăng nhập hệ thống. \\ \hline
-Post-condition & Thông tin hàng hóa được lưu và sẵn sàng cho quá trình điều phối vận chuyển. \\ \hline
-Normal flow &
-1. Bộ phận kho chọn chức năng \textbf{Quản lý hàng hóa}. \newline
-2. Hệ thống hiển thị danh sách hàng hóa. \newline
-3. Người dùng thêm mới hoặc chỉnh sửa thông tin hàng hóa. \newline
-4. Người dùng xác nhận lưu. \newline
-5. Hệ thống kiểm tra dữ liệu và cập nhật vào cơ sở dữ liệu. \\ \hline
-Alternative flow &
-(3a) Dữ liệu không hợp lệ: Hệ thống thông báo lỗi, yêu cầu nhập lại. \\ \hline
-\end{tabularx}
-\caption{Đặc tả Use-case UC01: Quản lý hàng hóa}
-\end{table}
+% \subsubsection{Use-case 1: Quản lý hàng hoá}
+% \begin{table}[H]
+% \centering
+% \begin{tabularx}{\textwidth}{|l|X|}
+% \hline
+% \textbf{Mục} & \textbf{Mô tả} \\ \hline
+% Use-case ID & UC01 \\ \hline
+% Use-case Name & Quản lý hàng hóa \\ \hline
+% Actor & Bộ phận kho \\ \hline
+% Description & Bộ phận kho quản lý thông tin hàng hóa trước khi vận chuyển, bao gồm tạo mới, cập nhật và theo dõi trạng thái hàng hóa. \\ \hline
+% Pre-condition & Người dùng thuộc bộ phận kho đã đăng nhập hệ thống. \\ \hline
+% Post-condition & Thông tin hàng hóa được lưu và sẵn sàng cho quá trình điều phối vận chuyển. \\ \hline
+% Normal flow &
+% 1. Bộ phận kho chọn chức năng \textbf{Quản lý hàng hóa}. \newline
+% 2. Hệ thống hiển thị danh sách hàng hóa. \newline
+% 3. Người dùng thêm mới hoặc chỉnh sửa thông tin hàng hóa. \newline
+% 4. Người dùng xác nhận lưu. \newline
+% 5. Hệ thống kiểm tra dữ liệu và cập nhật vào cơ sở dữ liệu. \\ \hline
+% Alternative flow &
+% (3a) Dữ liệu không hợp lệ: Hệ thống thông báo lỗi, yêu cầu nhập lại. \\ \hline
+% \end{tabularx}
+% \caption{Đặc tả Use-case UC01: Quản lý hàng hóa}
+% \end{table}
 
-\subsubsection{Use-case 2: Điều phối lộ trình}
+\subsubsection{Use-case 1: Điều phối lộ trình}
 \begin{table}[H]
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
@@ -143,7 +143,7 @@ Alternative flow &
 \caption{Đặc tả Use-case UC02: Điều phối lộ trình}
 \end{table}
 
-\subsubsection{Use-case 3: Nhận lệnh vận chuyển}
+\subsubsection{Use-case 2: Nhận lệnh vận chuyển}
 \begin{table}[H]
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
@@ -165,7 +165,7 @@ Alternative flow &
 \caption{Đặc tả Use-case UC03: Nhận lệnh vận chuyển}
 \end{table}
 
-\subsubsection{Use-case 4: Cập nhật trạng thái vận chuyển}
+\subsubsection{Use-case 3: Cập nhật trạng thái vận chuyển}
 \begin{table}[H]
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
@@ -186,7 +186,7 @@ Alternative flow &
 \caption{Đặc tả Use-case UC04: Cập nhật trạng thái vận chuyển}
 \end{table}
 
-\subsubsection{Use-case 5: Giám sát vận chuyển}
+\subsubsection{Use-case 4: Giám sát vận chuyển}
 \begin{table}[H]
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
@@ -207,7 +207,7 @@ Alternative flow &
 \caption{Đặc tả Use-case UC05: Giám sát vận chuyển}
 \end{table}
 
-\subsubsection{Use-case 6: Phát hiện bất thường và gửi cảnh báo}
+\subsubsection{Use-case 5: Phát hiện bất thường và gửi cảnh báo}
 \begin{table}[H]
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
@@ -265,37 +265,37 @@ Sơ đồ hoạt động này minh hoạ các khối chức năng của hệ th�
 
 % -------------------------------------------------------------
 
-\subsection{Quản lý hàng hoá}
-Sơ đồ hoạt động này minh hoạ vòng đời bản ghi hàng hoá/đơn vận chuyển: đăng ký, cập nhật, bàn giao và theo dõi trạng thái. Quá trình gồm Người dùng (Kho/Điều phối), Hệ thống quản lý và Điểm giao nhận/Thiết bị quét.
+% \subsection{Quản lý hàng hoá}
+% Sơ đồ hoạt động này minh hoạ vòng đời bản ghi hàng hoá/đơn vận chuyển: đăng ký, cập nhật, bàn giao và theo dõi trạng thái. Quá trình gồm Người dùng (Kho/Điều phối), Hệ thống quản lý và Điểm giao nhận/Thiết bị quét.
 
-\textbf{Người dùng}
-\begin{itemize}
-  \item \textbf{Đăng ký (Add):} nhập thông tin lô/đơn (loại, khối lượng, bao gói, đơn vị nhận, ưu tiên).
-  \item \textbf{Cập nhật (Update):} quét/nhập \texttt{ID} để chỉnh thuộc tính.
-  \item \textbf{Tra cứu \& đổi trạng thái (Track):} theo tiến trình \texttt{READY} $\rightarrow$ \texttt{LOADED} $\rightarrow$ \texttt{IN\_TRANSIT} $\rightarrow$ \texttt{DELIVERED/RETURNED}.
-  \item Tại các điểm Load/Unload/Deliver: quét ID để ghi nhận bàn giao.
-\end{itemize}
+% \textbf{Người dùng}
+% \begin{itemize}
+%   \item \textbf{Đăng ký (Add):} nhập thông tin lô/đơn (loại, khối lượng, bao gói, đơn vị nhận, ưu tiên).
+%   \item \textbf{Cập nhật (Update):} quét/nhập \texttt{ID} để chỉnh thuộc tính.
+%   \item \textbf{Tra cứu \& đổi trạng thái (Track):} theo tiến trình \texttt{READY} $\rightarrow$ \texttt{LOADED} $\rightarrow$ \texttt{IN\_TRANSIT} $\rightarrow$ \texttt{DELIVERED/RETURNED}.
+%   \item Tại các điểm Load/Unload/Deliver: quét ID để ghi nhận bàn giao.
+% \end{itemize}
 
-\textbf{Hệ thống quản lý}
-\begin{itemize}
-  \item Xác thực dữ liệu khi tạo mới; nếu trùng ID trả lỗi và yêu cầu nhập lại; nếu hợp lệ thì cấp/ghi ID (QR/RFID) và lưu CSDL.
-  \item Với Update/Track: kiểm tra tồn tại; nếu có, cho phép chỉnh sửa/đổi trạng thái và ghi audit log.
-  \item Với sự kiện bàn giao: đối chiếu đơn--phương tiện, ghi sự kiện (thời gian, vị trí, người phụ trách) và đồng bộ trạng thái lên dashboard/app.
-\end{itemize}
+% \textbf{Hệ thống quản lý}
+% \begin{itemize}
+%   \item Xác thực dữ liệu khi tạo mới; nếu trùng ID trả lỗi và yêu cầu nhập lại; nếu hợp lệ thì cấp/ghi ID (QR/RFID) và lưu CSDL.
+%   \item Với Update/Track: kiểm tra tồn tại; nếu có, cho phép chỉnh sửa/đổi trạng thái và ghi audit log.
+%   \item Với sự kiện bàn giao: đối chiếu đơn--phương tiện, ghi sự kiện (thời gian, vị trí, người phụ trách) và đồng bộ trạng thái lên dashboard/app.
+% \end{itemize}
 
-\textbf{Điểm giao nhận/Thiết bị quét}
-\begin{itemize}
-  \item Quét \& gửi đối soát (OK/Rejected). Trường hợp không khớp, hệ thống từ chối và yêu cầu kiểm tra lại trước khi cập nhật.
-\end{itemize}
+% \textbf{Điểm giao nhận/Thiết bị quét}
+% \begin{itemize}
+%   \item Quét \& gửi đối soát (OK/Rejected). Trường hợp không khớp, hệ thống từ chối và yêu cầu kiểm tra lại trước khi cập nhật.
+% \end{itemize}
 
-\textbf{Kết quả:} Hàng hoá được đăng ký -- truy vết -- bàn giao đúng quy trình; audit log đầy đủ; trạng thái đồng bộ giữa kho, phương tiện và dashboard.
+% \textbf{Kết quả:} Hàng hoá được đăng ký -- truy vết -- bàn giao đúng quy trình; audit log đầy đủ; trạng thái đồng bộ giữa kho, phương tiện và dashboard.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\textwidth]{images/week/week_3/activity_quản lý.png}
-  \caption{Activity diagram: Quản lý hàng hoá}
-  \label{fig:act-hang-hoa}
-\end{figure}
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=\textwidth]{images/week/week_3/activity_quản lý.png}
+%   \caption{Activity diagram: Quản lý hàng hoá}
+%   \label{fig:act-hang-hoa}
+% \end{figure}
 
 % -------------------------------------------------------------
 
@@ -329,7 +329,7 @@ Sơ đồ hoạt động này minh hoạ pipeline thu thập -- xác thực -- l
 \end{figure}
 
 \section{Sequence diagram}
-Phần này trình bày ba sơ đồ trình tự tương ứng với ba khối chức năng cốt lõi của hệ thống: \textbf{Điều phối lộ trình}, \textbf{Quản lý hàng hoá} và \textbf{Giám sát \& cập nhật trạng thái vận chuyển}. Mỗi sơ đồ mô tả chi tiết chuỗi tương tác theo thời gian giữa ba thành phần chính: \emph{Dashboard} (giao diện người dùng), \emph{Hệ thống} (xử lý nghiệp vụ) và \emph{Thiết bị} (thiết bị/ứng dụng triển khai tại hiện trường). Thông qua các sơ đồ này, quá trình xử lý tác vụ, phản hồi và đồng bộ dữ liệu giữa các thành phần được biểu diễn một cách rõ ràng, hỗ trợ cho việc thiết kế, hiện thực và đánh giá hệ thống.
+Phần này trình bày hai sơ đồ trình tự tương ứng với ba khối chức năng cốt lõi của hệ thống: \textbf{Điều phối lộ trình} và \textbf{Giám sát \& cập nhật trạng thái vận chuyển}. Mỗi sơ đồ mô tả chi tiết chuỗi tương tác theo thời gian giữa ba thành phần chính: \emph{Dashboard} (giao diện người dùng), \emph{Hệ thống} (xử lý nghiệp vụ) và \emph{Thiết bị} (thiết bị/ứng dụng triển khai tại hiện trường). Thông qua các sơ đồ này, quá trình xử lý tác vụ, phản hồi và đồng bộ dữ liệu giữa các thành phần được biểu diễn một cách rõ ràng, hỗ trợ cho việc thiết kế, hiện thực và đánh giá hệ thống.
 
 \subsection{Điều phối lộ trình}
 
@@ -346,20 +346,20 @@ Khi vận hành thực tế diễn ra, Hệ thống và Thiết bị hoạt đ�
   \label{fig:sd-dieu-phoi}
 \end{figure}
 
-\subsection{Quản lý hàng hoá}
+% \subsection{Quản lý hàng hoá}
 
-Trong chức năng quản lý hàng hoá, Dashboard khởi tạo lô/kiện với các thông tin mô tả như danh sách vật phẩm, trọng lượng, hoặc điều kiện bảo quản yêu cầu. Hệ thống tiếp nhận yêu cầu, sinh mã định danh (QR/Tag) cho từng lô/kiện và lưu lại các ràng buộc như mức nhiệt độ cho phép hay ngưỡng rung, sau đó trả mã về để gắn hoặc in nhãn. Khi phân bổ hàng hóa, Dashboard gán các lô/kiện cho phương tiện hoặc thiết bị, và hệ thống cập nhật ánh xạ giữa lô hàng, phương tiện và thiết bị giám sát tương ứng.
+% Trong chức năng quản lý hàng hoá, Dashboard khởi tạo lô/kiện với các thông tin mô tả như danh sách vật phẩm, trọng lượng, hoặc điều kiện bảo quản yêu cầu. Hệ thống tiếp nhận yêu cầu, sinh mã định danh (QR/Tag) cho từng lô/kiện và lưu lại các ràng buộc như mức nhiệt độ cho phép hay ngưỡng rung, sau đó trả mã về để gắn hoặc in nhãn. Khi phân bổ hàng hóa, Dashboard gán các lô/kiện cho phương tiện hoặc thiết bị, và hệ thống cập nhật ánh xạ giữa lô hàng, phương tiện và thiết bị giám sát tương ứng.
 
-Trong quá trình đối soát, thiết bị gửi sự kiện liên quan đến niêm phong hoặc phát hiện can thiệp trái phép. Hệ thống ghi nhận trạng thái, đánh dấu cảnh báo và cập nhật về Dashboard. Khi cần kiểm đếm, Dashboard gửi danh sách QR đã quét, hệ thống kiểm tra và đối chiếu với dữ liệu gốc để xác định chênh lệch, cảnh báo thiếu hoặc thừa, hoặc xác nhận tình trạng \emph{sẵn sàng xuất kho} nếu kết quả trùng khớp.
+% Trong quá trình đối soát, thiết bị gửi sự kiện liên quan đến niêm phong hoặc phát hiện can thiệp trái phép. Hệ thống ghi nhận trạng thái, đánh dấu cảnh báo và cập nhật về Dashboard. Khi cần kiểm đếm, Dashboard gửi danh sách QR đã quét, hệ thống kiểm tra và đối chiếu với dữ liệu gốc để xác định chênh lệch, cảnh báo thiếu hoặc thừa, hoặc xác nhận tình trạng \emph{sẵn sàng xuất kho} nếu kết quả trùng khớp.
 
-Trong suốt hành trình vận chuyển, hệ thống duy trì vòng giám sát điều kiện bảo quản. Thiết bị định kỳ gửi dữ liệu nhiệt độ, rung và mức pin. Hệ thống so sánh giá trị gửi lên với ngưỡng đặt trước; nếu có vi phạm, cảnh báo được tạo và gửi tới Dashboard đồng thời phát lệnh xử lý về Thiết bị. Nếu các giá trị vẫn trong ngưỡng an toàn, trạng thái ổn định được cập nhật liên tục để người vận hành theo dõi.
+% Trong suốt hành trình vận chuyển, hệ thống duy trì vòng giám sát điều kiện bảo quản. Thiết bị định kỳ gửi dữ liệu nhiệt độ, rung và mức pin. Hệ thống so sánh giá trị gửi lên với ngưỡng đặt trước; nếu có vi phạm, cảnh báo được tạo và gửi tới Dashboard đồng thời phát lệnh xử lý về Thiết bị. Nếu các giá trị vẫn trong ngưỡng an toàn, trạng thái ổn định được cập nhật liên tục để người vận hành theo dõi.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\textwidth]{images/week/week_3/sequence_quản lý hàng hóa.png}
-  \caption{Sequence diagram: Quản lý hàng hoá}
-  \label{fig:sd-hang-hoa}
-\end{figure}
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=\textwidth]{images/week/week_3/sequence_quản lý hàng hóa.png}
+%   \caption{Sequence diagram: Quản lý hàng hoá}
+%   \label{fig:sd-hang-hoa}
+% \end{figure}
 
 \subsection{Giám sát \& cập nhật trạng thái vận chuyển}
 
