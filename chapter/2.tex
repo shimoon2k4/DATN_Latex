@@ -8,24 +8,101 @@ Internet of Things (IoT) là thuật ngữ dùng để chỉ các đối tượn
 % ============================================================
 % 2.2 Các mô hình kiến trúc hệ thống IoT% ============================================================
 \section{Các mô hình kiến trúc hệ thống IoT}
-Việc lựa chọn kiến trúc hệ thống đóng vai trò then chốt trong việc định hình hiệu năng, độ trễ và khả năng mở rộng của một giải pháp IoT. Hiện nay, có ba mô hình xử lý dữ liệu chính đang được áp dụng rộng rãi: Điện toán đám mây (Cloud Computing), Điện toán biên (Edge Computing) và Kiến trúc lai (Hybrid Cloud-Edge).
+Việc lựa chọn kiến trúc hệ thống đóng vai trò then chốt trong việc định hình hiệu
+năng, độ trễ, khả năng mở rộng và độ tin cậy của một hệ thống IoT. Tùy theo cách tổ
+chức xử lý dữ liệu và phân bố tài nguyên tính toán, các hệ thống IoT có thể được
+xây dựng dựa trên nhiều mô hình kiến trúc khác nhau, từ kiến trúc xử lý tập trung
+đến kiến trúc phân tán và các mô hình lai.
+
+Trong phạm vi nghiên cứu này, các kiến trúc IoT được phân tích chủ yếu theo góc
+độ vị trí xử lý dữ liệu, bao gồm ba mô hình tiêu biểu: Điện toán đám mây (Cloud
+Computing), Điện toán biên (Edge Computing) và Kiến trúc lai Hybrid Cloud--Edge.
+
+\subsection{Kiến trúc Client--Server}
+
+Kiến trúc Client--Server là một trong những mô hình kiến trúc nền tảng và được áp
+dụng rộng rãi trong các hệ thống mạng và hệ thống IoT thế hệ đầu. Trong mô hình
+này, các thiết bị đầu cuối (Client), bao gồm các nút cảm biến hoặc thiết bị nhúng,
+đóng vai trò thu thập dữ liệu và gửi yêu cầu đến máy chủ trung tâm (Server) để xử
+lý, lưu trữ và phản hồi kết quả.
+
+Ưu điểm chính của kiến trúc Client--Server là tính đơn giản trong thiết kế, dễ
+triển khai và thuận tiện cho việc quản lý tập trung. Toàn bộ dữ liệu và logic xử
+lý được đặt tại Server, giúp việc kiểm soát bảo mật, phân quyền và cập nhật hệ
+thống trở nên dễ dàng hơn.
+
+Tuy nhiên, sự phụ thuộc vào máy chủ trung tâm tạo ra điểm lỗi đơn (single point of
+failure) và làm gia tăng độ trễ trong các hệ thống IoT quy mô lớn hoặc phân tán
+địa lý. Những hạn chế này là động lực dẫn đến sự ra đời của các mô hình kiến trúc
+mở rộng như Cloud Computing và Edge Computing.
 
 \subsection{Điện toán đám mây (Cloud Computing)}
-Điện toán đám mây là mô hình tập trung hóa, trong đó toàn bộ dữ liệu từ các thiết bị cảm biến (Device Layer) được truyền trực tiếp về các máy chủ trung tâm (Cloud Server) để lưu trữ và xử lý. Ưu điểm lớn nhất của mô hình này là khả năng lưu trữ không giới hạn và sức mạnh tính toán khổng lồ, cho phép thực hiện các thuật toán phức tạp như Big Data hay Machine Learning trên tập dữ liệu lịch sử.
 
-Tuy nhiên, đối với các ứng dụng yêu cầu phản hồi thời gian thực như giám sát vận chuyển hàng hóa nguy hiểm, mô hình Cloud thuần túy bộc lộ nhiều hạn chế. Độ trễ mạng (Latency) cao do khoảng cách truyền tải xa và sự phụ thuộc hoàn toàn vào kết nối Internet là những rào cản lớn. Trong trường hợp phương tiện di chuyển vào vùng mất sóng, dữ liệu sẽ bị gián đoạn, dẫn đến việc mất khả năng giám sát và cảnh báo tức thời.
+Điện toán đám mây là mô hình xử lý tập trung, trong đó toàn bộ dữ liệu từ các thiết
+bị cảm biến (Device Layer) được truyền trực tiếp về các máy chủ trung tâm (Cloud
+Server) để lưu trữ và xử lý. Mô hình này thường được triển khai dựa trên kiến trúc
+Client--Server, nơi các thiết bị IoT đóng vai trò client và Cloud đảm nhiệm vai
+trò server xử lý và điều phối.
+
+Ưu điểm nổi bật của Cloud Computing là khả năng mở rộng linh hoạt, dung lượng lưu
+trữ lớn và năng lực tính toán mạnh, cho phép thực hiện các tác vụ phân tích dữ
+liệu quy mô lớn, học máy và khai thác dữ liệu lịch sử. Tuy nhiên, việc phụ thuộc
+hoàn toàn vào kết nối mạng diện rộng dẫn đến độ trễ cao và làm giảm khả năng đáp
+ứng trong các ứng dụng yêu cầu phản hồi thời gian thực.
+
+Đối với các hệ thống giám sát vận chuyển hàng hóa nguy hiểm, mô hình Cloud thuần
+túy bộc lộ nhiều hạn chế. Khi phương tiện di chuyển vào khu vực mất sóng hoặc kết
+nối không ổn định, hệ thống có thể mất hoàn toàn khả năng giám sát và cảnh báo,
+làm giảm độ an toàn và độ tin cậy vận hành.
 
 \subsection{Điện toán biên (Edge Computing)}
-Trái ngược với Cloud, điện toán biên di dời khả năng xử lý tính toán từ trung tâm mạng xuống các thiết bị ở rìa mạng (Edge Devices), gần với nguồn sinh dữ liệu. Trong mô hình này, các Gateway hoặc các nút cảm biến thông minh sẽ trực tiếp thu thập, lọc nhiễu và xử lý dữ liệu sơ bộ trước khi quyết định có gửi đi hay không.
 
-Điện toán biên giải quyết triệt để bài toán về độ trễ và băng thông. Các cảnh báo nguy cấp (như nhiệt độ vượt ngưỡng, va đập mạnh) được xử lý và phát ra ngay tại chỗ (Local Alert) mà không cần chờ phản hồi từ máy chủ. Điều này đặc biệt quan trọng trong vận chuyển đạn dược, nơi mili-giây phản hồi có thể quyết định sự an toàn. Mặc dù vậy, thiết bị biên thường bị giới hạn về năng lượng và khả năng lưu trữ, không phù hợp để quản lý dữ liệu dài hạn.
+Điện toán biên là mô hình phân tán, trong đó năng lực xử lý được di chuyển từ trung
+tâm mạng xuống các thiết bị gần nguồn sinh dữ liệu, gọi là các nút biên (Edge
+Devices). Trong các hệ thống IoT hiện đại, mô hình này thường được triển khai
+thông qua các SoC Edge Gateway, tích hợp bộ vi xử lý, bộ nhớ và các giao tiếp truyền
+thông trên cùng một nền tảng phần cứng.
 
-\subsection{Kiến trúc lai (Hybrid Cloud-Edge)}
-Nhận thấy ưu và nhược điểm riêng biệt của hai mô hình trên, kiến trúc lai Hybrid Cloud-Edge ra đời như một giải pháp dung hòa tối ưu. Trong kiến trúc này, quy trình xử lý dữ liệu được phân chia thành hai tầng rõ rệt:
-\begin{itemize}
-    \item \textbf{Tầng biên (Edge Layer):} Đảm nhận các tác vụ yêu cầu thời gian thực (Real-time processing). Thiết bị tại biên (ESP32 Gateway) sẽ thu thập dữ liệu cảm biến, thực hiện lọc nhiễu (ví dụ: thuật toán Kalman hoặc trung bình trượt) và đưa ra các quyết định cảnh báo tức thời nếu phát hiện bất thường. Đồng thời, nó đóng gói và nén dữ liệu để tối ưu hóa băng thông truyền tải.
-    \item \textbf{Tầng đám mây (Cloud Layer):} Đóng vai trò là kho lưu trữ trung tâm (Centralized Storage) và trung tâm điều phối. Dữ liệu đã qua xử lý từ tầng biên được đồng bộ lên Cloud để lưu trữ dài hạn, phục vụ cho việc hiển thị Dashboard, phân tích xu hướng và trích xuất báo cáo hậu cần.
-\end{itemize}
+Trong mô hình Edge Computing, dữ liệu được thu thập, lọc nhiễu và xử lý sơ bộ ngay
+tại biên trước khi được truyền đi. Các sự kiện bất thường như vượt ngưỡng nhiệt
+độ, va đập mạnh hoặc rung lắc có thể được phát hiện và xử lý tức thời thông qua
+các cơ chế cảnh báo cục bộ (Local Alert), giúp giảm độ trễ và phụ thuộc vào kết
+nối mạng.
+
+Mặc dù giải quyết hiệu quả bài toán độ trễ và băng thông, các thiết bị biên thường
+bị giới hạn về tài nguyên tính toán, dung lượng lưu trữ và năng lượng. Do đó, mô
+hình Edge Computing thuần túy không phù hợp để lưu trữ và phân tích dữ liệu dài
+hạn hoặc quản lý tập trung trên quy mô lớn.
+
+\subsection{Các kiến trúc phân tán khác trong hệ thống IoT}
+
+Kiến trúc P2P/Mesh cho phép các nút IoT giao tiếp trực tiếp với nhau mà không cần
+máy chủ trung tâm. Mô hình này có ưu điểm về khả năng tự tổ chức và duy trì hoạt
+động khi mạng không ổn định, tuy nhiên việc định tuyến phức tạp, khó kiểm soát bảo
+mật và thiếu cơ chế quản lý tập trung khiến nó không phù hợp cho các hệ thống yêu
+cầu độ an toàn và kiểm soát cao.
+
+Kiến trúc Distributed/Microservices thường được triển khai ở tầng Cloud, nơi các
+chức năng hệ thống được chia nhỏ thành các dịch vụ độc lập. Mô hình này mang lại
+khả năng mở rộng và linh hoạt cao, nhưng đi kèm với chi phí triển khai và vận hành
+lớn, không phù hợp để áp dụng trực tiếp cho các thiết bị IoT hạn chế tài nguyên.
+
+\subsection{Kiến trúc lai Hybrid Cloud--Edge}
+
+Nhằm kết hợp ưu điểm của cả Cloud Computing và Edge Computing, kiến trúc lai
+Hybrid Cloud--Edge được đề xuất như một giải pháp cân bằng giữa xử lý thời gian
+thực và quản lý tập trung. Trong kiến trúc này, quy trình xử lý dữ liệu được phân
+chia rõ ràng theo hai tầng chức năng.
+
+Tầng biên (Edge Layer) đảm nhiệm các tác vụ yêu cầu phản hồi nhanh, bao gồm thu
+thập dữ liệu cảm biến, lọc nhiễu, phát hiện bất thường và kích hoạt cảnh báo cục
+bộ. Các thiết bị SoC Edge Gateway đóng vai trò như các nút xử lý thông minh, giúp
+giảm độ trễ và duy trì khả năng vận hành ngay cả khi mất kết nối mạng.
+
+Tầng đám mây (Cloud Layer) đóng vai trò lưu trữ tập trung và điều phối hệ thống.
+Dữ liệu từ tầng biên được đồng bộ lên Cloud để phục vụ phân tích dài hạn, hiển thị
+dashboard và hỗ trợ ra quyết định ở cấp quản lý. Cách tiếp cận này giúp hệ thống
+đạt được sự cân bằng giữa hiệu năng, độ tin cậy và khả năng mở rộng.
 
 % Dựa trên yêu cầu đặc thù của đề tài về việc giám sát vận chuyển đạn dược – một bài toán đòi hỏi cả sự phản ứng tức thời tại hiện trường (Edge) và khả năng quản lý tập trung từ xa (Cloud), nhóm nghiên cứu quyết định lựa chọn Kiến trúc Hybrid Cloud-Edge làm nền tảng thiết kế hệ thống. Sự kết hợp này đảm bảo hệ thống vẫn có thể hoạt động cảnh báo cục bộ ngay cả khi mất kết nối mạng (Offline Mode), đồng thời vẫn duy trì được cái nhìn toàn cảnh cho người điều phối khi có kết nối trở lại.
 
@@ -343,18 +420,25 @@ GraphQL & Trung bình & Trung bình & Trung bình & HTTPS & Trung bình \\
 \caption{So sánh các giao thức tầng ứng dụng}
 \end{table}
 
+Từ bảng so sánh có thể thấy mỗi giao thức tầng ứng dụng đều có những ưu điểm và
+giới hạn riêng, phù hợp với các vai trò khác nhau trong hệ thống IoT. Trong đó,
+MQTT nổi bật nhờ mô hình truyền thông publish/subscribe, phần bao gói dữ liệu nhẹ
+và khả năng duy trì kết nối ổn định trong môi trường mạng không đáng tin cậy. Các
+đặc tính này giúp MQTT đặc biệt phù hợp cho việc truyền dữ liệu telemetry, dữ
+liệu cảm biến và các thông điệp cảnh báo, vốn yêu cầu độ trễ thấp, tiêu thụ năng
+lượng nhỏ và khả năng hoạt động liên tục.
 
-MQTT nổi bật nhờ cơ chế Publish/Subscribe, phần bao gói dữ liệu nhỏ và khả năng
-hoạt động ổn định trong môi trường mạng không đáng tin cậy. Điều này giúp MQTT
-phù hợp cho việc truyền telemetry, dữ liệu cảm biến và cảnh báo trong các hệ
-thống IoT thời gian thực. Trong khi đó, REST (HTTP) tuy đơn giản và phổ biến
-nhưng tiêu thụ băng thông và năng lượng cao hơn, không tối ưu cho truyền dữ liệu
-liên tục. GraphQL mang lại sự linh hoạt trong truy vấn dữ liệu và phù hợp cho
-tầng ứng dụng hoặc dashboard, tuy nhiên độ phức tạp triển khai cao và không phù
-hợp cho thiết bị IoT hạn chế tài nguyên.
+Ngược lại, REST (HTTP) với mô hình request/response đơn giản và mức độ phổ biến
+cao phù hợp cho các tác vụ truy vấn hoặc cấu hình không diễn ra liên tục. Tuy
+nhiên, việc sử dụng header lớn và cơ chế kết nối đồng bộ khiến REST tiêu thụ băng
+thông và năng lượng cao hơn, không tối ưu cho các thiết bị IoT hạn chế tài nguyên
+hoặc các kịch bản truyền dữ liệu theo chu kỳ ngắn.
 
-Do đó, trong hệ thống đề xuất, MQTT được lựa chọn làm giao thức tầng ứng dụng
-chính cho việc truyền dữ liệu từ gateway và thiết bị IoT lên server.
+GraphQL cung cấp khả năng truy vấn dữ liệu linh hoạt và giảm thiểu việc truyền dư
+liệu không cần thiết ở tầng ứng dụng, đặc biệt phù hợp cho các hệ thống front-end
+hoặc dashboard. Tuy nhiên, độ phức tạp trong triển khai, yêu cầu xử lý truy vấn
+cao và sự phụ thuộc vào cơ chế request/response khiến GraphQL không phù hợp để áp
+dụng trực tiếp cho các nút IoT hoặc gateway yêu cầu xử lý nhẹ và độ trễ thấp.
 
 \subsubsection{So sánh các công nghệ truyền thông không dây}
 
@@ -381,17 +465,28 @@ Mạng vệ tinh & 250--600ms & Trung bình & Cao & Tốt & Cao \\
 \end{table}
 
 
-LoRa có ưu thế vượt trội về phạm vi truyền xa và mức tiêu thụ năng lượng rất thấp,
-đặc biệt phù hợp cho các thiết bị IoT chạy pin và hoạt động trong thời gian dài.
-Mặc dù tốc độ truyền thấp và độ trễ cao hơn so với 4G/5G, LoRa vẫn đáp ứng tốt cho
-các gói dữ liệu nhỏ như GPS, nhiệt độ và cảnh báo rung/lắc.
+Từ bảng so sánh có thể nhận thấy mỗi công nghệ truyền thông không dây đều phù hợp
+với những kịch bản ứng dụng khác nhau. Trong đó, LoRa thể hiện ưu thế rõ rệt về
+phạm vi truyền dẫn và mức tiêu thụ năng lượng rất thấp, đặc biệt phù hợp cho các
+thiết bị IoT chạy pin, yêu cầu thời gian hoạt động dài và chỉ truyền các gói dữ
+liệu nhỏ. Mặc dù có độ trễ cao hơn và băng thông hạn chế so với các công nghệ băng
+rộng, LoRa vẫn đáp ứng hiệu quả các yêu cầu truyền dữ liệu telemetry như vị trí
+GPS, thông số môi trường và tín hiệu cảnh báo, vốn không đòi hỏi thông lượng cao
+hay phản hồi tức thời ở mức mili giây.
 
-Ngược lại, 4G và 5G cung cấp tốc độ cao, độ trễ thấp và phù hợp cho các ứng dụng
-yêu cầu truyền dữ liệu lớn hoặc thời gian thực. Tuy nhiên, các công nghệ này phụ
-thuộc mạnh vào hạ tầng viễn thông, tiêu thụ năng lượng lớn hơn và phát sinh chi
-phí vận hành cao, không phù hợp cho thiết bị IoT chạy pin trong thời gian dài.
-Mạng vệ tinh có khả năng phủ sóng toàn cầu nhưng chi phí cao và độ trễ lớn, do đó
-chỉ phù hợp làm kênh truyền dự phòng.
+Ngược lại, các công nghệ 4G và 5G cung cấp băng thông lớn và độ trễ thấp, phù hợp
+cho các ứng dụng yêu cầu truyền dữ liệu lớn hoặc thời gian thực. Tuy nhiên, việc
+phụ thuộc vào hạ tầng viễn thông diện rộng, mức tiêu thụ năng lượng cao hơn và chi
+phí vận hành đáng kể khiến các công nghệ này không phù hợp để sử dụng làm kênh
+truyền chính cho các nút IoT chạy pin và triển khai phân tán trên diện rộng. Do
+đó, 4G/5G chỉ được xem xét như các kênh truyền bổ trợ tại tầng gateway, nơi các
+hạn chế về năng lượng không còn là yếu tố quyết định.
+
+Mạng vệ tinh có lợi thế về khả năng phủ sóng toàn cầu và tính độc lập với hạ tầng
+mặt đất, tuy nhiên độ trễ lớn và chi phí triển khai cao hạn chế khả năng ứng dụng
+rộng rãi trong hệ thống. Trong phạm vi nghiên cứu này, mạng vệ tinh được xem xét
+như một kênh truyền dự phòng nhằm đảm bảo khả năng liên lạc trong các kịch bản đặc
+biệt, khi các hạ tầng truyền thông khác không khả dụng.
 
 \subsubsection{So sánh các kiến trúc}
 
@@ -455,56 +550,75 @@ SoC Edge Gateway.
 \end{table}
 
 
-Từ \autoref{tab:arch_compare} có thể nhận thấy kiến trúc Client--Server tuy đơn
-giản và dễ triển khai nhưng phụ thuộc mạnh vào máy chủ trung tâm, dẫn đến độ trễ
-cao và khả năng hoạt động kém khi mất kết nối mạng. Kiến trúc P2P/Mesh có ưu điểm
-về khả năng tự tổ chức và duy trì hoạt động khi mạng không ổn định, tuy nhiên việc
-định tuyến phức tạp và khó kiểm soát bảo mật khiến kiến trúc này không phù hợp cho
-các hệ thống yêu cầu quản lý tập trung và mức độ an toàn cao.
+Từ \autoref{tab:arch_compare} có thể thấy mỗi kiến trúc đều tồn tại các ưu và nhược
+điểm riêng, phù hợp với những bối cảnh triển khai khác nhau. Kiến trúc
+Client--Server truyền thống có ưu thế về tính đơn giản và dễ triển khai, tuy nhiên
+sự phụ thuộc lớn vào máy chủ trung tâm làm gia tăng độ trễ và tạo ra điểm lỗi đơn
+(point of failure), khiến hệ thống suy giảm nghiêm trọng khả năng hoạt động trong
+các tình huống gián đoạn kết nối mạng.
 
-Kiến trúc Distributed/Microservices thể hiện ưu thế rõ rệt về khả năng mở rộng,
-tính linh hoạt và phù hợp với các hệ thống cloud-native. Tuy nhiên, chi phí triển
-khai và vận hành cao cùng với độ phức tạp trong quản lý DevOps khiến kiến trúc này
-chưa tối ưu khi áp dụng trực tiếp cho các thiết bị IoT hạn chế tài nguyên.
+Kiến trúc P2P/Mesh cải thiện đáng kể khả năng duy trì hoạt động trong môi trường
+mạng không ổn định nhờ đặc tính phân tán và tự tổ chức. Tuy nhiên, cơ chế định
+tuyến phức tạp, khó kiểm soát luồng dữ liệu và thách thức trong quản lý bảo mật
+tập trung khiến kiến trúc này không đáp ứng tốt các yêu cầu về kiểm soát, an toàn
+và khả năng giám sát tập trung, đặc biệt trong các hệ thống có tính chất nhạy cảm.
+
+Kiến trúc Distributed/Microservices thể hiện ưu thế vượt trội về khả năng mở rộng
+và tính linh hoạt, phù hợp với các nền tảng cloud-native và hệ thống quy mô lớn.
+Tuy nhiên, việc triển khai kiến trúc này đòi hỏi hạ tầng mạnh, chi phí vận hành cao
+và quy trình quản lý phức tạp (DevOps, orchestration), do đó không phù hợp để áp
+dụng trực tiếp cho các nút IoT hoặc gateway có tài nguyên hạn chế và yêu cầu độ
+ổn định cao.
 
 Trong khi đó, kiến trúc SoC Edge Gateway cho phép xử lý dữ liệu cục bộ với độ trễ
-thấp, khả năng hoạt động độc lập khi mất mạng và mức độ bảo mật cao nhờ tích hợp
-các cơ chế mã hóa phần cứng. Tuy nhiên, kiến trúc này bị giới hạn bởi tài nguyên
-phần cứng và khả năng mở rộng hệ thống.
+thấp, duy trì hoạt động độc lập khi mất kết nối mạng và tăng cường bảo mật thông
+qua các cơ chế tích hợp ở mức phần cứng. Mặc dù bị giới hạn về tài nguyên xử lý và
+khả năng mở rộng, kiến trúc này đặc biệt phù hợp cho các bài toán yêu cầu phản hồi
+thời gian thực, tính liên tục vận hành và mức độ an toàn cao.
 
-Do đó, để tận dụng ưu điểm và khắc phục hạn chế của từng mô hình, hệ thống được
-đề xuất triển khai theo kiến trúc Hybrid Cloud - Edge. Trong kiến trúc
-này, tầng Edge (gateway) đảm nhiệm xử lý thời gian thực, lưu trữ tạm thời và phát
-hiện bất thường cục bộ, đảm bảo hệ thống vẫn hoạt động ổn định ngay cả khi mất
-kết nối mạng. Tầng Cloud đóng vai trò quản lý tập trung, lưu trữ dữ liệu dài hạn,
-phân tích dữ liệu lịch sử và hỗ trợ điều phối từ xa.
-
-Sự kết hợp giữa kiến trúc Hybrid Cloud - Edge cùng với công nghệ truyền thông LoRa
-và giao thức MQTT giúp hệ thống đáp ứng đồng thời các yêu cầu về độ trễ thấp, tiêu
-thụ năng lượng thấp, khả năng mở rộng và độ tin cậy cao, phù hợp với bài toán giám
-sát và điều phối vận chuyển đạn dược trong môi trường quân sự.
-
-
+Từ các phân tích trên có thể nhận thấy rằng không tồn tại một kiến trúc đơn lẻ nào
+có thể đáp ứng đầy đủ mọi yêu cầu của hệ thống. Do đó, việc kết hợp ưu điểm của
+kiến trúc Edge Gateway với khả năng mở rộng và quản lý tập trung của nền tảng Cloud
+là cơ sở để đề xuất kiến trúc Hybrid Cloud – Edge, được trình bày chi tiết trong
+phần tiếp theo.
 \subsubsection{Lựa chọn kiến trúc, giao thức và giải pháp tổng thể}
 
-Dựa trên các phân tích và so sánh ở trên, hệ thống giám sát và điều phối vận
-chuyển đạn dược được thiết kế theo kiến trúc Hybrid Cloud - Edge. Trong
-đó, tầng Edge đảm nhiệm các tác vụ xử lý thời gian thực như thu thập dữ liệu
-cảm biến, phát hiện bất thường và cảnh báo cục bộ ngay cả khi mất kết nối mạng.
-Tầng Cloud đóng vai trò lưu trữ tập trung, hiển thị dashboard, phân tích dữ liệu
-lịch sử và hỗ trợ điều phối từ xa.
+Xuất phát từ các ràng buộc đặc thù của bài toán giám sát và điều phối vận chuyển
+đạn dược, bao gồm yêu cầu về độ trễ thấp, tính liên tục vận hành, độ tin cậy cao
+và khả năng mở rộng trong điều kiện hạ tầng mạng không ổn định, kiến trúc
+Hybrid Cloud – Edge được xác định là phương án tối ưu. Kiến trúc này cho phép
+phân tách rõ ràng các tác vụ theo mức độ nhạy cảm về thời gian và mức độ phụ
+thuộc vào kết nối mạng, từ đó nâng cao khả năng chịu lỗi và tính linh hoạt của
+toàn hệ thống.
 
-Về truyền thông, LoRa được lựa chọn làm công nghệ truyền dẫn chính giữa
-thiết bị và gateway nhờ khả năng truyền xa, tiêu thụ năng lượng thấp và hoạt động
-ổn định trong môi trường hạ tầng hạn chế. MQTT được sử dụng làm giao thức
-tầng ứng dụng để truyền dữ liệu telemetry từ gateway lên server, đảm bảo độ tin
-cậy và hiệu quả băng thông. Các công nghệ 4G/5G và mạng vệ tinh chỉ được xem xét
-như các kênh bổ trợ hoặc dự phòng trong những tình huống đặc biệt.
+Trong kiến trúc đề xuất, tầng Edge (gateway) đóng vai trò như một thực thể xử lý
+cục bộ, đảm nhiệm các chức năng yêu cầu phản hồi thời gian thực, bao gồm thu thập
+và tiền xử lý dữ liệu cảm biến, phát hiện bất thường tại chỗ và kích hoạt cơ chế
+cảnh báo cục bộ. Cách tiếp cận này giúp giảm sự phụ thuộc vào kết nối mạng diện
+rộng, đồng thời đảm bảo hệ thống vẫn duy trì khả năng giám sát và phản ứng kịp
+thời ngay cả trong các tình huống gián đoạn truyền thông, qua đó nâng cao độ an
+toàn và độ tin cậy vận hành.
 
-Sự kết hợp giữa LoRa, MQTT và kiến trúc Hybrid Cloud - Edge giúp hệ thống đáp ứng
-đồng thời các yêu cầu về phạm vi hoạt động rộng, tiêu thụ năng lượng thấp, độ
-ổn định cao và khả năng quản lý tập trung, phù hợp với đặc thù của bài toán giám
-sát và điều phối vận chuyển đạn dược trong môi trường quân sự.
+Ngược lại, tầng Cloud được thiết kế để xử lý các tác vụ không yêu cầu phản hồi tức
+thời, bao gồm lưu trữ dữ liệu dài hạn, phân tích dữ liệu lịch sử, trực quan hóa
+thông tin thông qua dashboard và hỗ trợ điều phối từ xa. Việc tập trung các chức
+năng này tại Cloud giúp giảm tải cho tầng Edge, tối ưu tài nguyên hệ thống và
+tăng cường khả năng quản lý tập trung cũng như mở rộng quy mô trong dài hạn.
+
+Về mặt truyền thông, công nghệ LoRa được lựa chọn làm kênh truyền chính giữa các
+thiết bị cảm biến và gateway nhờ khả năng truyền dẫn tầm xa, mức tiêu thụ năng
+lượng thấp và tính ổn định cao trong môi trường hạ tầng hạn chế. Giao thức MQTT
+được sử dụng ở tầng ứng dụng để truyền dữ liệu telemetry từ gateway lên server,
+nhờ cơ chế publish/subscribe nhẹ, giảm overhead truyền thông và tăng khả năng mở
+rộng hệ thống. Các công nghệ truyền thông băng rộng như 4G/5G hoặc mạng vệ tinh
+chỉ được xem xét như các kênh bổ trợ hoặc dự phòng trong các tình huống đặc biệt,
+nhằm tăng cường tính sẵn sàng của hệ thống.
+
+Tổng thể, sự kết hợp giữa kiến trúc Hybrid Cloud – Edge, công nghệ LoRa và giao
+thức MQTT hình thành một giải pháp đồng bộ, đáp ứng hiệu quả các yêu cầu về phạm
+vi hoạt động, hiệu năng năng lượng, độ ổn định và khả năng quản lý tập trung,
+phù hợp với đặc thù của bài toán giám sát và điều phối vận chuyển đạn dược trong
+môi trường quân sự.
 
 \section{Các loại cảm biến, thiết bị sử dụng}
 \subsection{ESP32 NodeMCU-32S CH340 Ai-Thinker}
@@ -704,6 +818,3 @@ Antenna & Hỗ trợ đầu nối IPEX \\
 % Để đảm bảo dữ liệu không bị thay đổi hoặc làm sai lệch trên đường truyền, hệ thống sử dụng kỹ thuật Checksum hoặc HMAC (Hash-based Message Authentication Code). Phía nhận sẽ tính toán lại mã kiểm tra và so sánh với mã nhận được; nếu không khớp, gói tin sẽ bị loại bỏ để tránh xử lý sai thông tin.
 
 
-\subsection{Xác thực thiết bị (Authentication)}
-\subsection{Xác thực thiết bị (Authentication)}
-\subsection{Xác thực thiết bị (Authentication)}
