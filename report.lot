@@ -4,10 +4,10 @@
 \contentsline {table}{\numberline {2.4.2}{\ignorespaces So sánh các công nghệ truyền thông không dây}}{21}{table.caption.10}%
 \contentsline {table}{\numberline {2.4.3}{\ignorespaces So sánh các kiến trúc hệ thống IoT}}{22}{table.caption.11}%
 \contentsline {table}{\numberline {2.5.1}{\ignorespaces Thông số kỹ thuật của ESP32 NodeMCU-32S CH340 Ai-Thinker}}{25}{table.caption.12}%
-\contentsline {table}{\numberline {2.5.2}{\ignorespaces Thông số kỹ thuật của cảm biến nhiệt độ, độ ẩm DHT11}}{26}{table.caption.14}%
-\contentsline {table}{\numberline {2.5.3}{\ignorespaces Thông số kỹ thuật của cảm biến gia tốc 3 trục ADXL345}}{26}{table.caption.16}%
-\contentsline {table}{\numberline {2.5.4}{\ignorespaces Thông số kỹ thuật của module GPS NEO-6MV2}}{27}{table.caption.18}%
-\contentsline {table}{\numberline {2.5.5}{\ignorespaces Thông số kỹ thuật của Kit LoRa Ra-08H Ai-Thinker}}{28}{table.caption.20}%
+\contentsline {table}{\numberline {2.5.2}{\ignorespaces Thông số kỹ thuật của cảm biến nhiệt độ, độ ẩm DHT22}}{26}{table.caption.14}%
+\contentsline {table}{\numberline {2.5.3}{\ignorespaces Thông số kỹ thuật của cảm biến gia tốc 3 trục ADXL345}}{27}{table.caption.16}%
+\contentsline {table}{\numberline {2.5.4}{\ignorespaces Thông số kỹ thuật của module GPS NEO-6MV2}}{28}{table.caption.18}%
+\contentsline {table}{\numberline {2.5.5}{\ignorespaces Thông số kỹ thuật của Kit LoRa Ra-08H Ai-Thinker}}{29}{table.caption.20}%
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {3.5.1}{\ignorespaces Đặc tả Use-case UC02: Điều phối lộ trình}}{36}{table.caption.23}%
 \contentsline {table}{\numberline {3.5.2}{\ignorespaces Đặc tả Use-case UC03: Nhận lệnh vận chuyển}}{37}{table.caption.24}%

@@ -28,7 +28,7 @@ Hoàn thiện module GPS, tập trung vào khắc phục lỗi sai baud và ki�
 & Trương Nguyễn Hoàng Anh, Hoàng Sỹ Xuân Sơn
 & 17/10/2025 \\ 
 \hline
-Lọc nhiễu và chuẩn hoá dữ liệu cảm biến ADXL345 và DHT11 
+Lọc nhiễu và chuẩn hoá dữ liệu cảm biến ADXL345 và DHT22 
 & Hoàng Sỹ Xuân Sơn
 & 17/10/2025 \\ 
 \hline
@@ -109,10 +109,10 @@ Serial Monitor không in ra tín hiệu hoặc chỉ hiển thị các ký tự 
     không bị kích hoạt bởi rung động nhỏ.
 \end{itemize}
 
-\subsubsection{DHT11 (Nhiệt độ/Độ ẩm)}
+\subsubsection{DHT22 (Nhiệt độ/Độ ẩm)}
 \begin{itemize}
     \item \textbf{Phương pháp}: 
-    Dữ liệu từ DHT11 vốn có tần số thấp và ít nhiễu, 
+    Dữ liệu từ DHT22 vốn có tần số thấp và ít nhiễu, 
     do đó nhóm tập trung vào \textbf{loại bỏ giá trị ngoại lai (outlier removal)}.
 
     \item \textbf{Logic}: 
@@ -149,11 +149,11 @@ Serial Monitor không in ra tín hiệu hoặc chỉ hiển thị các ký tự 
 
 \section{Tổng kết}
 
-\subsection*{Đánh giá chung} Tuần này, nhóm đã hoàn thành tốt mục tiêu lọc nhiễu cho cảm biến ADXL345 và DHT11. Tuy nhiên, sự cố lớn nhất là module GPS không hoạt động vẫn chưa được giải quyết.
+\subsection*{Đánh giá chung} Tuần này, nhóm đã hoàn thành tốt mục tiêu lọc nhiễu cho cảm biến ADXL345 và DHT22. Tuy nhiên, sự cố lớn nhất là module GPS không hoạt động vẫn chưa được giải quyết.
 
 \subsection*{Kết quả đạt được (đã xác nhận)} 
 \begin{itemize} 
-\item \textbf{ADXL345/DHT11}: Dữ liệu được làm mượt và tăng độ tin cậy thông qua các bộ lọc phần mềm.
+\item \textbf{ADXL345/DHT22}: Dữ liệu được làm mượt và tăng độ tin cậy thông qua các bộ lọc phần mềm.
 \item \textbf{GPS}: Đã tiến hành chẩn đoán, xác nhận kết nối vật lý và cấu hình baud nhưng chưa thành công. Sự cố vẫn còn tồn đọng. 
 \end{itemize}
 

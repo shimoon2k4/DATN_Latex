@@ -15,7 +15,7 @@ Nghiên cứu và xây dựng hệ thống giám sát vận tải quân sự d�
 
 Thứ nhất, \textbf{nghiên cứu và tối ưu hóa kiến trúc phần mềm nhúng} cho giao thức truyền tin LoRa. Trọng tâm là đảm bảo tính thời gian thực (real-time) và tối ưu hóa năng lượng tiêu thụ cho thiết bị đầu cuối hoạt động bằng pin.
 
-Thứ hai, \textbf{thiết kế khối thu thập dữ liệu} tích hợp đa cảm biến. Hệ thống sẽ sử dụng cảm biến DHT11 để giám sát nhiệt độ, độ ẩm; module Neo-6M cho định vị toạ độ GPS; và gia tốc kế ADXL345 nhằm phát hiện các va đập bất thường có thể ảnh hưởng đến an toàn của khí tài.
+Thứ hai, \textbf{thiết kế khối thu thập dữ liệu} tích hợp đa cảm biến. Hệ thống sẽ sử dụng cảm biến DHT22 để giám sát nhiệt độ, độ ẩm; module Neo-6M cho định vị toạ độ GPS; và gia tốc kế ADXL345 nhằm phát hiện các va đập bất thường có thể ảnh hưởng đến an toàn của khí tài.
 
 Thứ ba, \textbf{xây dựng cơ sở hạ tầng Back-end và giao diện Frontend}. Hệ thống cần có khả năng thu thập dữ liệu tập trung thông qua giao thức MQTT và hiển thị trực quan các thông số giám sát trên Dashboard (sử dụng nền tảng Firebase và Web App) để phục vụ công tác chỉ huy, điều hành.
 
@@ -24,7 +24,7 @@ Thứ ba, \textbf{xây dựng cơ sở hạ tầng Back-end và giao diện Fron
 \subsection{Đối tượng nghiên cứu}
 Đề tài tập trung nghiên cứu sâu vào hai nhóm đối tượng chính:
 \begin{itemize}
-    \item \textbf{Về phần cứng:} Vi điều khiển ESP32 đóng vai trò bộ xử lý trung tâm, Module LoRa RA-08H cho truyền thông tầm xa, và các module cảm biến ngoại vi (GPS, DHT11, ADXL345).
+    \item \textbf{Về phần cứng:} Vi điều khiển ESP32 đóng vai trò bộ xử lý trung tâm, Module LoRa RA-08H cho truyền thông tầm xa, và các module cảm biến ngoại vi (GPS, DHT22, ADXL345).
     \item \textbf{Về giải pháp phần mềm:} Các giao thức truyền thông điệp tin cậy (LoRa P2P, MQTT), kỹ thuật lập trình nhúng trên Arduino IDE, ngôn ngữ Python cho các tác vụ cầu nối (bridge), và cơ sở dữ liệu thời gian thực Firebase.
 \end{itemize}
 

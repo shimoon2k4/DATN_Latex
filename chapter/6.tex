@@ -96,7 +96,7 @@
 
 % Khả năng giám sát môi trường và trạng thái vật lý của kiện hàng được đánh giá thông qua việc so sánh dữ liệu từ cảm biến với các thiết bị đo chuẩn trong phòng thí nghiệm.
 
-% Đối với cảm biến nhiệt độ - độ ẩm \textbf{DHT11}, kết quả thực nghiệm cho thấy sai số nhiệt độ trung bình dao động trong khoảng $\pm 1.5^{\circ}C$ và độ ẩm là $\pm 4\%$. Mặc dù độ chính xác này không cao bằng các dòng cảm biến công nghiệp, nhưng hoàn toàn phù hợp để phát hiện các ngưỡng nhiệt độ nguy hiểm cho đạn dược (thường $> 50^{\circ}C$).
+% Đối với cảm biến nhiệt độ - độ ẩm \textbf{DHT22}, kết quả thực nghiệm cho thấy sai số nhiệt độ trung bình dao động trong khoảng $\pm 1.5^{\circ}C$ và độ ẩm là $\pm 4\%$. Mặc dù độ chính xác này không cao bằng các dòng cảm biến công nghiệp, nhưng hoàn toàn phù hợp để phát hiện các ngưỡng nhiệt độ nguy hiểm cho đạn dược (thường $> 50^{\circ}C$).
 
 % Đối với cảm biến gia tốc \textbf{ADXL345}, nhóm đã thiết lập ngưỡng cảnh báo rung động là $1.5G$. Thử nghiệm thực tế khi di chuyển qua các gờ giảm tốc cho thấy các giá trị đỉnh (peak) ghi nhận được dao động từ $1.2G$ đến $1.8G$. Để loại bỏ nhiễu rung động tần số cao do động cơ xe, một bộ lọc thông thấp (Low Pass Filter) kỹ thuật số đã được áp dụng, giúp hệ thống chỉ kích hoạt cảnh báo khi có các va đập vật lý thực sự.
 
@@ -214,11 +214,11 @@ gian cần được xem xét trong các giai đoạn phát triển tiếp theo.
 % \begin{itemize}
 %     \item \textbf{Ngưỡng kích hoạt ($T_{high}$):} $30.0^{\circ}C$. Khi $T \ge T_{high}$, hệ thống chuyển sang trạng thái \texttt{ALERT\_STATE} và ưu tiên băng thông truyền tải.
 %     \item \textbf{Ngưỡng giải tỏa ($T_{clear}$):} $29.0^{\circ}C$. Hệ thống chỉ chuyển về trạng thái \texttt{NORMAL\_STATE} khi nhiệt độ giảm xuống dưới mức này.
-%     \item \textbf{Chu kỳ lấy mẫu ($f_s$):} $1$ Hz (tương ứng với giới hạn vật lý của cảm biến DHT11).
+%     \item \textbf{Chu kỳ lấy mẫu ($f_s$):} $1$ Hz (tương ứng với giới hạn vật lý của cảm biến DHT22).
 % \end{itemize}
 
 % \textbf{Phương pháp thực nghiệm}\\
-% Nhóm sử dụng nguồn nhiệt có kiểm soát để tác động lên bề mặt cảm biến DHT11 tại Node TX. Quá trình đo đạc được chia làm hai giai đoạn: giai đoạn gia nhiệt vượt ngưỡng và giai đoạn làm nguội tự nhiên để kiểm chứng tính đúng đắn của dải trễ (Hysteresis Band). Độ trễ toàn trình được xác định dựa trên sự chênh lệch giữa mốc thời gian lấy mẫu ($T_{sample}$) tại Node và thời điểm nhận gói tin tại ứng dụng di động ($T_{receive}$).
+% Nhóm sử dụng nguồn nhiệt có kiểm soát để tác động lên bề mặt cảm biến DHT22 tại Node TX. Quá trình đo đạc được chia làm hai giai đoạn: giai đoạn gia nhiệt vượt ngưỡng và giai đoạn làm nguội tự nhiên để kiểm chứng tính đúng đắn của dải trễ (Hysteresis Band). Độ trễ toàn trình được xác định dựa trên sự chênh lệch giữa mốc thời gian lấy mẫu ($T_{sample}$) tại Node và thời điểm nhận gói tin tại ứng dụng di động ($T_{receive}$).
 
 % \subsubsection{Kết quả thực nghiệm và Quan sát hệ thống}
 % Dữ liệu thu thập từ Terminal log của ESP32 và hệ thống Backend cho thấy sự chuyển đổi trạng thái chính xác của thiết bị. Kết quả chi tiết được tổng hợp trong Bảng \ref{tab:ket_qua_nhiet_do}.
@@ -251,7 +251,7 @@ Dựa trên các mốc thời gian thu thập được, nhóm tiến hành phân
 
 \begin{itemize}
     \item \textbf{Độ trễ xử lý nội bộ ($T_{node} \approx 40$ ms):} 
-    Bao gồm thời gian đọc giao tiếp 1-wire của DHT11 ($\approx 20$ ms), thời gian đóng gói JSON và trễ truyền UART từ ESP32 sang module Ra-08H tại Baudrate $115200$ ($\approx 13.2$ ms cho bản tin $152$ bytes).
+    Bao gồm thời gian đọc giao tiếp 1-wire của DHT22 ($\approx 20$ ms), thời gian đóng gói JSON và trễ truyền UART từ ESP32 sang module Ra-08H tại Baudrate $115200$ ($\approx 13.2$ ms cho bản tin $152$ bytes).
     
     \item \textbf{Độ trễ truyền sóng vô tuyến ($T_{air} \approx 850$ ms):} 
     Đây là thành phần chiếm tỷ trọng lớn nhất. Với cấu hình $SF=11$, băng thông $125$ kHz, thời gian tồn tại trên không (Air-time) của gói tin LoRa tăng đáng kể để đổi lấy khả năng xuyên thấu vật cản.

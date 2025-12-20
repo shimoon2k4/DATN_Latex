@@ -57,7 +57,7 @@ Hiện thực code cảm biến rung  & Hoàng Sỹ Xuân Sơn & 10/10/2025 \\ \
 \end{itemize}
 
 
-\subsection{Module DHT11 — cảm biến nhiệt độ/độ ẩm }
+\subsection{Module DHT22 — cảm biến nhiệt độ/độ ẩm }
 
 \paragraph{Kết nối phần cứng}
 \begin{itemize}
@@ -76,7 +76,7 @@ Humidity: 73.00 %       Temperature: 31.00 °C
 Humidity: 73.00 %       Temperature: 31.00 °C
 Humidity: 73.00 %       Temperature: 31.80 °C
 \end{verbatim}
-  \item \textbf{Chu kỳ đọc}: 5\,s/lần (FreeRTOS \texttt{vTaskDelay(5000\,ms)}), phù hợp khuyến nghị $\leq$1–2\,Hz của DHT11 để tránh tự sưởi và sai số do lấy mẫu dày.
+  \item \textbf{Chu kỳ đọc}: 5\,s/lần (FreeRTOS \texttt{vTaskDelay(5000\,ms)}), phù hợp khuyến nghị $\leq$1–2\,Hz của DHT22 để tránh tự sưởi và sai số do lấy mẫu dày.
   \item \textbf{Gợi ý hậu xử lý}: loại bỏ outlier (\(h\notin[0,100]\%\), \(t\notin[0,60]^\circ\)C), dùng trung bình trượt 3–5 mẫu để mượt dữ liệu hiển thị.
 \end{itemize}
 
@@ -89,7 +89,7 @@ Humidity: 73.00 %       Temperature: 31.80 °C
 
 \paragraph{Kết quả thử nghiệm}
 \begin{itemize}
-  \item \textbf{Giá trị quan sát}: độ ẩm ổn định quanh \textbf{73.00\,\%RH}; nhiệt độ dao động \textbf{31.00–31.80$^\circ$C} (phù hợp dao động môi trường và độ phân giải DHT11).
+  \item \textbf{Giá trị quan sát}: độ ẩm ổn định quanh \textbf{73.00\,\%RH}; nhiệt độ dao động \textbf{31.00–31.80$^\circ$C} (phù hợp dao động môi trường và độ phân giải DHT22).
   \item \textbf{Độ ổn định}: không phát sinh \texttt{NAN} trong chuỗi log mẫu; chu kỳ 5\,s giúp dữ liệu mượt và hạn chế tự sưởi.
   \item \textbf{Khuyến nghị}: nếu cần sai số thấp/dải rộng hơn, cân nhắc DHT22/SHT3x; bọc che gió nhẹ để giảm nhiễu gió cục bộ.
 \end{itemize}
@@ -141,13 +141,13 @@ TELEM,2650,793,191,-262,1
 \section{Tổng kết}
 
 \subsection*{Đánh giá chung}
-Nhóm đã \textbf{hoàn thành} tích hợp \& thử nghiệm \textbf{DHT11} (ổn định, không NAN trong log mẫu) và \textbf{ADXL345} (telem 20\,Hz, phát hiện \emph{shock} tại $|a|\ge 2.5\,g$). 
+Nhóm đã \textbf{hoàn thành} tích hợp \& thử nghiệm \textbf{DHT22} (ổn định, không NAN trong log mẫu) và \textbf{ADXL345} (telem 20\,Hz, phát hiện \emph{shock} tại $|a|\ge 2.5\,g$). 
 \textbf{GPS NEO-M6N} hiện \emph{chưa} hoạt động đúng: log hiển thị \emph{toàn dấu `*`} ở các cột dữ liệu (\texttt{lat/lon/hdop/sats/...}), chỉ tăng bộ đếm \texttt{charsProcessed}, còn \texttt{sentencesWithFix=0}, \texttt{failedChecksum\,$\approx 0$}. 
 Điều này cho thấy \textbf{parser chưa nhận/giải mã được câu NMEA hợp lệ}, nhiều khả năng do \emph{sai baud}/\emph{đấu dây}/\emph{anten/EMI}.
 
 \subsection*{Kết quả đạt được (đã xác nhận)}
 \begin{itemize}
-  \item \textbf{DHT11}: đọc \texttt{humidity/temperature} chu kỳ 5\,s; giá trị tham chiếu 73\%RH, 31.0--31.8$^\circ$C; phù hợp mục tiêu giám sát cơ bản.
+  \item \textbf{DHT22}: đọc \texttt{humidity/temperature} chu kỳ 5\,s; giá trị tham chiếu 73\%RH, 31.0--31.8$^\circ$C; phù hợp mục tiêu giám sát cơ bản.
   \item \textbf{ADXL345}: đọc \texttt{x,y,z} (FULL\_RES, 4\,mg/LSB), telem 20\,Hz; cờ \texttt{shock} bật đúng tại các khung vượt ngưỡng (khớp log mẫu).
 \end{itemize}
 
@@ -181,7 +181,7 @@ Hoàn thiện code module GPS
 
 \subsection*{Phạm vi công việc (Tasks)}
 \begin{itemize}
-\item \textbf{Task 1: Lọc nhiễu & chuẩn hoá dữ liệu cảm biến} — áp dụng bộ lọc (LPF bậc 1/trung bình trượt), loại outlier, chuẩn hoá schema (đơn vị, tên trường) cho \texttt{ADXL345}/\texttt{DHT11}.
+\item \textbf{Task 1: Lọc nhiễu & chuẩn hoá dữ liệu cảm biến} — áp dụng bộ lọc (LPF bậc 1/trung bình trượt), loại outlier, chuẩn hoá schema (đơn vị, tên trường) cho \texttt{ADXL345}/\texttt{DHT22}.
 
 \item \textbf{Task 2: Đồng bộ thời gian bằng GPS timestamp}
 

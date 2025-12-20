@@ -59,14 +59,14 @@
 \contentsline {subsubsection}{\numberline {2.4.4.4}Lựa chọn kiến trúc, giao thức và giải pháp tổng thể}{23}{subsubsection.2.4.4.4}%
 \contentsline {section}{\numberline {2.5}Các loại cảm biến, thiết bị sử dụng}{24}{section.2.5}%
 \contentsline {subsection}{\numberline {2.5.1}ESP32 NodeMCU-32S CH340 Ai-Thinker}{24}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Cảm biến nhiệt độ, độ ẩm DHT11}{25}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.2}Cảm biến nhiệt độ, độ ẩm DHT22}{25}{subsection.2.5.2}%
 \contentsline {subsection}{\numberline {2.5.3}Cảm biến gia tốc 3 trục ADXL345}{26}{subsection.2.5.3}%
 \contentsline {subsection}{\numberline {2.5.4}Module GPS NEO-6MV2}{27}{subsection.2.5.4}%
 \contentsline {subsection}{\numberline {2.5.5}Module truyền thông LoRa Ra-08H Kit}{28}{subsection.2.5.5}%
 \contentsline {section}{\numberline {2.6}Các kỹ thuật bảo mật trong hệ thống IoT}{29}{section.2.6}%
 \contentsline {subsection}{\numberline {2.6.1}Xác thực dịch vụ (Service Authentication)}{29}{subsection.2.6.1}%
-\contentsline {subsection}{\numberline {2.6.2}Bảo mật đường truyền mạng (Network Security)}{29}{subsection.2.6.2}%
-\contentsline {subsection}{\numberline {2.6.3}Kiểm tra tính hợp lệ dữ liệu (Data Validation)}{29}{subsection.2.6.3}%
+\contentsline {subsection}{\numberline {2.6.2}Bảo mật đường truyền mạng (Network Security)}{30}{subsection.2.6.2}%
+\contentsline {subsection}{\numberline {2.6.3}Kiểm tra tính hợp lệ dữ liệu (Data Validation)}{30}{subsection.2.6.3}%
 \contentsline {chapter}{\numberline {3}Phân tích yêu cầu hệ thống}{31}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Yêu cầu chức năng}{31}{section.3.1}%
 \contentsline {subsection}{\numberline {3.1.1}Người dùng}{31}{subsection.3.1.1}%

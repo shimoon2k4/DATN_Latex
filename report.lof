@@ -3,7 +3,7 @@
 \contentsline {figure}{\numberline {2.3.1}{\ignorespaces Minh hoạ về công nghệ LoRa}}{8}{figure.caption.7}%
 \contentsline {figure}{\numberline {2.4.1}{\ignorespaces Minh hoạ về nguyên lý hoạt động của MQTT}}{15}{figure.caption.8}%
 \contentsline {figure}{\numberline {2.5.1}{\ignorespaces ESP32 NodeMCU-32S CH340 Ai-Thinker}}{25}{figure.caption.13}%
-\contentsline {figure}{\numberline {2.5.2}{\ignorespaces Cảm biến nhiệt độ, độ ẩm DHT11}}{26}{figure.caption.15}%
+\contentsline {figure}{\numberline {2.5.2}{\ignorespaces Cảm biến nhiệt độ, độ ẩm DHT22}}{26}{figure.caption.15}%
 \contentsline {figure}{\numberline {2.5.3}{\ignorespaces Cảm biến gia tốc 3 trục ADXL345}}{27}{figure.caption.17}%
 \contentsline {figure}{\numberline {2.5.4}{\ignorespaces Module GPS NEO-6MV2}}{28}{figure.caption.19}%
 \contentsline {figure}{\numberline {2.5.5}{\ignorespaces Module LoRa Ra-08H Development Board Ai-Thinker}}{29}{figure.caption.21}%
