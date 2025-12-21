@@ -7,25 +7,30 @@ Sự phát triển của IoT đã mở ra khả năng tự động hóa giám s�
 
 \section{Mục tiêu nghiên cứu}
 
+\section{Mục tiêu nghiên cứu}
+
 \subsection{Mục tiêu tổng quát}
-Nghiên cứu và xây dựng hệ thống giám sát vận tải quân sự dựa trên công nghệ LoRa P2P (Point-to-Point) và vi điều khiển ESP32, đảm bảo khả năng truyền tin tin cậy trong điều kiện thiếu hạ tầng mạng.
+Mục tiêu tổng quát của đề tài là nghiên cứu và phát triển một hệ thống giám sát vận tải quân sự hoàn chỉnh dựa trên công nghệ IoT, phục vụ theo dõi liên tục quá trình vận chuyển đạn dược trong điều kiện thực tế. Hệ thống được xây dựng nhằm thu thập dữ liệu tại hiện trường, truyền tải thông tin không dây tầm xa và tổng hợp hiển thị tập trung tại trung tâm chỉ huy, hỗ trợ công tác giám sát và điều hành.
+Hệ thống hướng đến việc giám sát toàn diện các yếu tố ảnh hưởng đến an toàn vận chuyển, bao gồm vị trí phương tiện, điều kiện môi trường và trạng thái rung chấn – va đập của khí tài trong suốt hành trình. Trên cơ sở đó, hệ thống cung cấp thông tin trực quan và kịp thời cho người quản lý, góp phần nâng cao mức độ an toàn, tính minh bạch và khả năng kiểm soát trong toàn bộ quá trình vận chuyển đạn dược.
 
 \subsection{Mục tiêu cụ thể}
-Để hiện thực hóa mục tiêu tổng quát nêu trên, đề tài tập trung giải quyết ba nhiệm vụ cốt lõi sau:
 
-Thứ nhất, \textbf{nghiên cứu và tối ưu hóa kiến trúc phần mềm nhúng} cho giao thức truyền tin LoRa. Trọng tâm là đảm bảo tính thời gian thực (real-time) và tối ưu hóa năng lượng tiêu thụ cho thiết bị đầu cuối hoạt động bằng pin.
+Để đạt được mục tiêu tổng quát đã đề ra, đề tài tập trung triển khai các mục tiêu cụ thể gắn liền với việc xây dựng và hoàn thiện từng thành phần của hệ thống giám sát vận tải quân sự.
 
-Thứ hai, \textbf{thiết kế khối thu thập dữ liệu} tích hợp đa cảm biến. Hệ thống sẽ sử dụng cảm biến DHT22 để giám sát nhiệt độ, độ ẩm; module Neo-6M cho định vị toạ độ GPS; và gia tốc kế ADXL345 nhằm phát hiện các va đập bất thường có thể ảnh hưởng đến an toàn của khí tài.
+Trước hết, đề tài hướng đến việc nghiên cứu và tối ưu hóa kiến trúc phần mềm nhúng cho thiết bị đầu cuối. Thiết bị biên sử dụng vi điều khiển ESP32 đóng vai trò là khối xử lý trung tâm, chịu trách nhiệm tiếp nhận và xử lý dữ liệu thu thập từ các cảm biến tại hiện trường, sau đó tổ chức truyền dữ liệu không dây về hệ thống trung tâm. Trọng tâm của mục tiêu này là đảm bảo khả năng hoạt động thời gian thực, duy trì độ ổn định của quá trình truyền dữ liệu, đồng thời tối ưu hóa mức tiêu thụ năng lượng nhằm kéo dài thời gian hoạt động của thiết bị trong điều kiện sử dụng nguồn pin.
 
-Thứ ba, \textbf{xây dựng cơ sở hạ tầng Back-end và giao diện Frontend}. Hệ thống cần có khả năng thu thập dữ liệu tập trung thông qua giao thức MQTT và hiển thị trực quan các thông số giám sát trên Dashboard (sử dụng nền tảng Firebase và Web App) để phục vụ công tác chỉ huy, điều hành.
+Trên cơ sở đó, phần mềm nhúng được thiết kế để bảo đảm việc đọc dữ liệu từ các cảm biến như DHT22, module định vị GPS Neo-6M và gia tốc kế ADXL345 một cách chính xác và đồng bộ. Dữ liệu sau khi thu thập sẽ được xử lý sơ bộ, đóng gói và truyền đi một cách hiệu quả. Bên cạnh đó, các cơ chế quản lý bộ đệm và điều khiển truyền thông cũng được tối ưu nhằm giảm thiểu độ trễ và nâng cao độ tin cậy của đường truyền trong quá trình vận hành thực tế.
 
+Song song với việc phát triển phần mềm nhúng, đề tài tập trung thiết kế khối thu thập dữ liệu tích hợp đa cảm biến. Khối này có nhiệm vụ cung cấp dữ liệu đầu vào cho toàn bộ hệ thống giám sát, bao gồm các thông số về nhiệt độ và độ ẩm môi trường bên trong phương tiện vận chuyển thông qua cảm biến DHT22, thông tin vị trí và hành trình của phương tiện thông qua module GPS Neo-6M, cũng như dữ liệu rung chấn và va đập được ghi nhận bởi gia tốc kế ADXL345. Việc tích hợp các cảm biến vào một mô-đun thống nhất cho phép hệ thống thu thập dữ liệu một cách đồng bộ, liên tục và kịp thời, từ đó phản ánh chính xác trạng thái vận chuyển đạn dược trong suốt quá trình di chuyển.
+
+Cuối cùng, đề tài hướng đến việc xây dựng hệ thống Back-end và giao diện Frontend phục vụ giám sát tập trung. Dữ liệu từ thiết bị đầu cuối sau khi được truyền về thông qua kênh LoRa sẽ được tiếp nhận tại gateway và chuyển tiếp vào hệ thống trung tâm bằng giao thức MQTT. Tại đây, hệ thống Back-end đảm nhiệm vai trò thu thập, lưu trữ và quản lý dữ liệu trên nền tảng cơ sở dữ liệu Firebase. Trên cơ sở dữ liệu này, giao diện Dashboard được phát triển nhằm hiển thị trực quan các thông số giám sát như vị trí phương tiện, điều kiện môi trường và trạng thái rung chấn, đồng thời phát sinh các cảnh báo khi phát hiện dấu hiệu bất thường. Giao diện này đóng vai trò là đầu ra của hệ thống, hỗ trợ trực tiếp cho công tác giám sát, chỉ huy và ra quyết định trong quá trình vận chuyển đạn dược.
 \section{Đối tượng và phạm vi nghiên cứu}
 
 \subsection{Đối tượng nghiên cứu}
 Đề tài tập trung nghiên cứu sâu vào hai nhóm đối tượng chính:
 \begin{itemize}
     \item \textbf{Về phần cứng:} Vi điều khiển ESP32 đóng vai trò bộ xử lý trung tâm, Module LoRa RA-08H cho truyền thông tầm xa, và các module cảm biến ngoại vi (GPS, DHT22, ADXL345).
-    \item \textbf{Về giải pháp phần mềm:} Các giao thức truyền thông điệp tin cậy (LoRa P2P, MQTT), kỹ thuật lập trình nhúng trên Arduino IDE, ngôn ngữ Python cho các tác vụ cầu nối (bridge), và cơ sở dữ liệu thời gian thực Firebase.
+    \item \textbf{Về giải pháp phần mềm:} Các giao thức truyền thông điệp tin cậy (LoRa P2P, MQTT), kỹ thuật lập trình nhúng trên PlatformIO, ngôn ngữ Python cho các tác vụ cầu nối (bridge), và cơ sở dữ liệu thời gian thực Firebase.
 \end{itemize}
 
 \subsection{Phạm vi triển khai của đề tài}
