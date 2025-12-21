@@ -11,7 +11,7 @@ Sơ đồ khối chức năng của hệ thống được thể hiện trong \au
 
 Toàn bộ hệ thống được cấp điện bởi khối nguồn, đảm bảo cung cấp mức điện áp 5V ổn định cho các khối cảm biến, xử lý, hiển thị và truyền thông. Việc duy trì nguồn điện liên tục và ổn định là yếu tố then chốt để đảm bảo thiết bị có thể giám sát hành trình vận chuyển đạn dược mà không bị gián đoạn.
 
-Khối cảm biến đóng vai trò thu thập dữ liệu môi trường và trạng thái chuyển động của phương tiện. Cảm biến rung giám sát các dao động bất thường trong quá trình vận chuyển, cảm biến DHT20 theo dõi nhiệt độ và độ ẩm nhằm đảm bảo điều kiện bảo quản đạn dược luôn nằm trong ngưỡng an toàn, module GPS cung cấp thông tin vị trí địa lý theo thời gian thực, giúp hệ thống giám sát chính xác lộ trình và phát hiện các sai lệch hướng di chuyển.
+Khối cảm biến đóng vai trò thu thập dữ liệu môi trường và trạng thái chuyển động của phương tiện. Cảm biến rung giám sát các dao động bất thường trong quá trình vận chuyển, cảm biến DHT22 theo dõi nhiệt độ và độ ẩm nhằm đảm bảo điều kiện bảo quản đạn dược luôn nằm trong ngưỡng an toàn, module GPS cung cấp thông tin vị trí địa lý theo thời gian thực, giúp hệ thống giám sát chính xác lộ trình và phát hiện các sai lệch hướng di chuyển.
 
 Dữ liệu sau khi được xử lý tại thiết bị sẽ được truyền đi thông qua khối truyền dữ liệu LoRa/LoRaWAN. Tín hiệu từ các node cảm biến được chuyển đến LoRaWAN Gateway, đóng vai trò cầu nối giữa thiết bị tại hiện trường và không gian lưu trữ trên Cloud. Gateway hỗ trợ quản lý nhiều thiết bị cùng lúc, mã hóa dữ liệu nhận được và chuyển tiếp lên nền tảng server qua giao thức bảo mật MQTT.
 
