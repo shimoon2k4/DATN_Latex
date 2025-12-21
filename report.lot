@@ -1,25 +1,25 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.4.1}{\ignorespaces So sánh các giao thức tầng ứng dụng}}{20}{table.caption.9}%
-\contentsline {table}{\numberline {2.4.2}{\ignorespaces So sánh các công nghệ truyền thông không dây}}{21}{table.caption.10}%
-\contentsline {table}{\numberline {2.4.3}{\ignorespaces So sánh các kiến trúc hệ thống IoT}}{22}{table.caption.11}%
-\contentsline {table}{\numberline {2.5.1}{\ignorespaces Thông số kỹ thuật của ESP32 NodeMCU-32S CH340 Ai-Thinker}}{25}{table.caption.12}%
-\contentsline {table}{\numberline {2.5.2}{\ignorespaces Thông số kỹ thuật của cảm biến nhiệt độ, độ ẩm DHT22}}{26}{table.caption.14}%
-\contentsline {table}{\numberline {2.5.3}{\ignorespaces Thông số kỹ thuật của cảm biến gia tốc 3 trục ADXL345}}{27}{table.caption.16}%
-\contentsline {table}{\numberline {2.5.4}{\ignorespaces Thông số kỹ thuật của module GPS NEO-6MV2}}{28}{table.caption.18}%
-\contentsline {table}{\numberline {2.5.5}{\ignorespaces Thông số kỹ thuật của Kit LoRa Ra-08H Ai-Thinker}}{29}{table.caption.20}%
+\contentsline {table}{\numberline {2.4.1}{\ignorespaces So sánh các giao thức tầng ứng dụng}}{25}{table.caption.14}%
+\contentsline {table}{\numberline {2.4.2}{\ignorespaces So sánh các công nghệ truyền thông không dây}}{26}{table.caption.15}%
+\contentsline {table}{\numberline {2.4.3}{\ignorespaces So sánh các kiến trúc hệ thống IoT}}{27}{table.caption.16}%
+\contentsline {table}{\numberline {2.5.1}{\ignorespaces Thông số kỹ thuật của ESP32 NodeMCU-32S CH340 Ai-Thinker}}{30}{table.caption.17}%
+\contentsline {table}{\numberline {2.5.2}{\ignorespaces Thông số kỹ thuật của cảm biến nhiệt độ, độ ẩm DHT22}}{31}{table.caption.19}%
+\contentsline {table}{\numberline {2.5.3}{\ignorespaces Thông số kỹ thuật của cảm biến gia tốc 3 trục ADXL345}}{32}{table.caption.21}%
+\contentsline {table}{\numberline {2.5.4}{\ignorespaces Thông số kỹ thuật của module GPS NEO-6MV2}}{33}{table.caption.23}%
+\contentsline {table}{\numberline {2.5.5}{\ignorespaces Thông số kỹ thuật của Kit LoRa Ra-08H Ai-Thinker}}{34}{table.caption.25}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.5.1}{\ignorespaces Đặc tả Use-case UC02: Điều phối lộ trình}}{36}{table.caption.23}%
-\contentsline {table}{\numberline {3.5.2}{\ignorespaces Đặc tả Use-case UC03: Nhận lệnh vận chuyển}}{37}{table.caption.24}%
-\contentsline {table}{\numberline {3.5.3}{\ignorespaces Đặc tả Use-case UC04: Cập nhật trạng thái vận chuyển}}{37}{table.caption.25}%
-\contentsline {table}{\numberline {3.5.4}{\ignorespaces Đặc tả Use-case UC05: Giám sát vận chuyển}}{38}{table.caption.26}%
-\contentsline {table}{\numberline {3.5.5}{\ignorespaces Đặc tả Use-case UC06: Phát hiện bất thường và gửi cảnh báo}}{38}{table.caption.27}%
+\contentsline {table}{\numberline {3.5.1}{\ignorespaces Đặc tả Use-case UC02: Điều phối lộ trình}}{42}{table.caption.28}%
+\contentsline {table}{\numberline {3.5.2}{\ignorespaces Đặc tả Use-case UC03: Nhận lệnh vận chuyển}}{43}{table.caption.29}%
+\contentsline {table}{\numberline {3.5.3}{\ignorespaces Đặc tả Use-case UC04: Cập nhật trạng thái vận chuyển}}{43}{table.caption.30}%
+\contentsline {table}{\numberline {3.5.4}{\ignorespaces Đặc tả Use-case UC05: Giám sát vận chuyển}}{44}{table.caption.31}%
+\contentsline {table}{\numberline {3.5.5}{\ignorespaces Đặc tả Use-case UC06: Phát hiện bất thường và gửi cảnh báo}}{44}{table.caption.32}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.5.1}{\ignorespaces Sơ đồ chân kết nối phần cứng Node TX}}{63}{table.caption.40}%
-\contentsline {table}{\numberline {5.5.2}{\ignorespaces Sơ đồ chân kết nối phần cứng Node RX}}{64}{table.caption.41}%
-\contentsline {table}{\numberline {5.6.1}{\ignorespaces Tổng hợp chức năng và vai trò của các thành phần trong hệ thống}}{66}{table.caption.42}%
+\contentsline {table}{\numberline {5.5.1}{\ignorespaces Sơ đồ chân kết nối phần cứng Node TX}}{69}{table.caption.45}%
+\contentsline {table}{\numberline {5.5.2}{\ignorespaces Sơ đồ chân kết nối phần cứng Node RX}}{70}{table.caption.46}%
+\contentsline {table}{\numberline {5.6.1}{\ignorespaces Tổng hợp chức năng và vai trò của các thành phần trong hệ thống}}{72}{table.caption.47}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {6.1.1}{\ignorespaces Kết quả đo đạc Range Test tại KTX Khu A}}{68}{table.caption.43}%
-\contentsline {table}{\numberline {6.2.1}{\ignorespaces Phân rã độ trễ xử lý dữ liệu của hệ thống}}{70}{table.caption.44}%
+\contentsline {table}{\numberline {6.1.1}{\ignorespaces Kết quả đo đạc Range Test tại KTX Khu A}}{74}{table.caption.48}%
+\contentsline {table}{\numberline {6.2.1}{\ignorespaces Phân rã độ trễ xử lý dữ liệu của hệ thống}}{76}{table.caption.50}%
 \addvspace {10\p@ }

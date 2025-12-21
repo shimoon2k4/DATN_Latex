@@ -24,7 +24,7 @@ Cuối cùng, ứng dụng di động đóng vai trò giao diện tương tác v
 \section{Sơ đồ kết nối phần cứng}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\linewidth]{images/week/week_3/hardware-interface.png}
+    \includegraphics[width=0.85\linewidth]{images/chapter_3/hardware_interface.png}
     \caption{Sơ đồ kết nối phần cứng của hệ thống}
     \label{hardware-interface}
 \end{figure}
@@ -64,25 +64,80 @@ Thông qua thiết kế truyền thông dữ liệu này, toàn bộ quá trình
 
 \subsection{Backend}
 
-Backend chịu trách nhiệm thu thập dữ liệu từ các cảm biến, thực hiện mã hoá và truyền dữ liệu, đồng thời giao tiếp với hệ thống giám sát trung tâm. Thành phần này đóng vai trò là nguồn cung cấp dữ liệu cốt lõi cho ứng dụng theo dõi trạng thái vận chuyển trong toàn bộ hệ thống.
+% Backend chịu trách nhiệm thu thập dữ liệu từ các cảm biến, thực hiện mã hoá và truyền dữ liệu, đồng thời giao tiếp với hệ thống giám sát trung tâm. Thành phần này đóng vai trò là nguồn cung cấp dữ liệu cốt lõi cho ứng dụng theo dõi trạng thái vận chuyển trong toàn bộ hệ thống.
 
-Cấu trúc thư mục của Backend được tổ chức rõ ràng nhằm hỗ trợ quá trình phát triển, kiểm thử và triển khai trên vi điều khiển ESP32. Các thành phần chính bao gồm mã nguồn, tài liệu và bộ kiểm thử, được sắp xếp theo từng thư mục chức năng như dưới đây:
+% Cấu trúc thư mục của Backend được tổ chức rõ ràng nhằm hỗ trợ quá trình phát triển, kiểm thử và triển khai trên vi điều khiển ESP32. Các thành phần chính bao gồm mã nguồn, tài liệu và bộ kiểm thử, được sắp xếp theo từng thư mục chức năng như dưới đây:
 
-\begin{itemize}
-    \item \texttt{src/} - Chứa toàn bộ mã nguồn chạy trên ESP32
+% \begin{itemize}
+%     \item \texttt{src/} - Chứa toàn bộ mã nguồn chạy trên ESP32
+%     \begin{itemize}
+%         \item \texttt{main.c} - Vòng lặp chính của chương trình.
+%         \item \texttt{sensors.c/.h} - Thu thập dữ liệu từ GPS, nhiệt độ, độ rung/lắc.
+%         \item \texttt{comm\_mqtt.c/.h}, \texttt{comm\_coap.c/.h} - Giao tiếp bằng giao thức MQTT/CoAP.
+%         \item \texttt{lora\_driver.c/.h} - Truyền dữ liệu qua mạng LoRa.
+%         \item \texttt{security.c/.h} - Thực hiện mã hoá và xác thực thiết bị.
+%         \item \texttt{utils.c/.h} - Các hàm tiện ích dùng chung.
+%     \end{itemize}
+
+%     \item \texttt{tests/} - Chứa các kịch bản kiểm thử cảm biến, truyền thông và bảo mật.
+
+%     \item \texttt{docs/} - Lưu trữ sơ đồ mạch, tài liệu kiến trúc và hướng dẫn triển khai Backend.
+% \end{itemize}
+
+Hệ thống Backend đóng vai trò là "bộ não" trung gian (Middleware) trong kiến trúc Hybrid Cloud-Edge, chịu trách nhiệm tiếp nhận luồng dữ liệu thời gian thực từ các Gateway, 
+thực hiện chuẩn hóa ở mức siêu dữ liệu (metadata) và định dạng lưu trữ, trước khi đồng bộ hóa với cơ sở dữ liệu đám mây. Thay vì xây dựng một máy chủ nguyên khối phức tạp, nhóm nghiên cứu áp dụng mô hình Micro-service đơn nhiệm (Single-responsibility Microservice), trong đó mỗi dịch vụ chỉ đảm nhiệm một luồng xử lý xuyên suốt từ tiếp nhận dữ liệu đến đồng bộ hóa Cloud và sử dụng ngôn ngữ Python, tối ưu hóa cho các tác vụ I/O (Input/Output) liên tục.
+
+\subsubsection{Cấu trúc tổ chức mã nguồn}
+Mã nguồn Backend được tổ chức theo cấu trúc module hóa nhằm đảm bảo tính dễ bảo trì và mở rộng. Cây thư mục dự án được cấu trúc như sau:
+
+\begin{verbatim}
+backend/
+|-- config/
+|   |-- mosquitto.conf        
+|   |-- serviceAccountKey.json 
+|-- logs/
+|   |-- mqtt_bridge_v2.log    
+|-- scripts/
+|   |-- mqtt_to_firestore.py  
+|-- requirements.txt         
+|-- README.md                 
+\end{verbatim}
+
+\subsubsection{Các thành phần chức năng cốt lõi}
+Dịch vụ Backend (được hiện thực trong \texttt{mqtt\_to\_firestore.py}) được thiết kế dựa trên mô hình \textbf{Xử lý đa luồng (Multi-threading)} để đảm bảo không bị nghẽn cổ chai (bottleneck) khi lưu lượng dữ liệu tăng cao.
+
+\begin{enumerate}
+    \item \textbf{Luồng tiếp nhận dữ liệu (MQTT Ingestion Thread):}
     \begin{itemize}
-        \item \texttt{main.c} - Vòng lặp chính của chương trình.
-        \item \texttt{sensors.c/.h} - Thu thập dữ liệu từ GPS, nhiệt độ, độ rung/lắc.
-        \item \texttt{comm\_mqtt.c/.h}, \texttt{comm\_coap.c/.h} - Giao tiếp bằng giao thức MQTT/CoAP.
-        \item \texttt{lora\_driver.c/.h} - Truyền dữ liệu qua mạng LoRa.
-        \item \texttt{security.c/.h} - Thực hiện mã hoá và xác thực thiết bị.
-        \item \texttt{utils.c/.h} - Các hàm tiện ích dùng chung.
+        \item Sử dụng thư viện \texttt{paho-mqtt} để duy trì kết nối liên tục (Keep-alive) với Broker Mosquitto.
+        \item Đăng ký (Subscribe) chủ đề dạng wildcard \texttt{ammo\_transport/+/telemetry} để tự động phát hiện và tiếp nhận dữ liệu từ mọi thiết bị Gateway tham gia mạng mà không cần cấu hình lại code.
     \end{itemize}
 
-    \item \texttt{tests/} - Chứa các kịch bản kiểm thử cảm biến, truyền thông và bảo mật.
-
-    \item \texttt{docs/} - Lưu trữ sơ đồ mạch, tài liệu kiến trúc và hướng dẫn triển khai Backend.
+\item \textbf{Khối xử lý logic (Data Processing Unit):}
+\begin{itemize}
+    \item \textbf{Parser:} Giải mã chuỗi JSON từ payload MQTT và payload lồng (\texttt{raw}). 
+    Hệ thống sử dụng cơ chế \textit{Try--Catch} để phát hiện và loại bỏ các gói tin không hợp lệ  (ví dụ: JSON bị cắt ngắn do nhiễu đường truyền LoRa), nhằm đảm bảo tính toàn vẹn của dữ liệu trước khi lưu trữ.
+    
+    \item \textbf{Data Enrichment:} Bổ sung các siêu dữ liệu (Metadata) phục vụ truy vết và hiển thị,  bao gồm cường độ tín hiệu (\texttt{RSSI}, \texttt{SNR}) từ Gateway, dấu thời gian phía Cloud (\texttt{Firestore SERVER\_TIMESTAMP}), và chuyển đổi tọa độ GPS sang định dạng \texttt{GeoPoint} tương thích với hệ sinh thái Google Maps.
 \end{itemize}
+
+    \item \textbf{Luồng ghi dữ liệu (Database Writer Thread):}
+    \begin{itemize}
+        \item Để tránh việc ghi vào Cloud làm chậm quá trình nhận tin MQTT, hệ thống sử dụng một hàng đợi an toàn luồng (Thread-safe Queue).
+        \item Dữ liệu sau khi xử lý được đưa vào Queue. Một Worker Thread riêng biệt sẽ lấy dữ liệu từ Queue và thực hiện ghi vào Firestore thông qua \texttt{firebase-admin SDK}. Cơ chế này giúp tách biệt (decouple) tốc độ nhận tin và tốc độ ghi dữ liệu lên cơ sở dữ liệu đám mây.
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Cơ chế quản lý lỗi và Log hệ thống}
+Để đảm bảo tính sẵn sàng cao (High Availability) cho hệ thống vận hành liên tục:
+\begin{itemize}
+    \item \textbf{Tự động kết nối lại MQTT:} Backend được lập trình để tự động thử kết nối lại với MQTT Broker khi xảy ra sự cố mạng, sử dụng thuật toán \textit{Exponential Backoff} nhằm tránh tạo tải đột ngột lên hệ thống.
+    \item \textbf{Retry khi ghi Firestore:} Đối với các thao tác ghi dữ liệu lên Firestore, hệ thống áp dụng cơ chế thử lại nhiều lần (Retry with Backoff) ở mức Batch Commit để tăng độ tin cậy khi kết nối Cloud không ổn định.
+    \item \textbf{Logging và giám sát:} Sử dụng thư viện \texttt{logging} kết hợp với thư viện \texttt{RotatingFileHandler} để ghi lại toàn bộ sự kiện hệ thống. File log tự động xoay vòng khi đạt dung lượng 5MB, hỗ trợ truy vết lỗi hiệu quả mà không làm tràn bộ nhớ lưu trữ.
+\end{itemize}
+
+
+
 
 \subsection{Frontend}
 
@@ -119,7 +174,7 @@ Tiếp theo, \autoref{UI2} thể hiện giao diện trang Home, nơi tổng hợ
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{images/week/week9/065_UI_2.jpg}
-    \caption{Các giao diện liên quan đến trang \textbf{Home}}
+    \caption{Các giao diện liên quan đến trang Home}
     \label{UI2}
 \end{figure}
 
@@ -127,7 +182,7 @@ Tiếp theo, \autoref{UI2} thể hiện giao diện trang Home, nơi tổng hợ
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\linewidth]{images/week/week9/065_UI_3.jpg}
-    \caption{Các giao diện liên quan đến trang \textbf{Maps}}
+    \caption{Các giao diện liên quan đến trang Maps}
     \label{UI3}
 \end{figure}
 
@@ -135,7 +190,7 @@ Trong \autoref{UI4}, giao diện Dashboard được thể hiện, cung cấp cá
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.25\linewidth]{images/week/week9/065_UI_4.jpg}
-    \caption{Các giao diện liên quan đến trang \textbf{Dashboard}}
+    \caption{Các giao diện liên quan đến trang Dashboard}
     \label{UI4}
 \end{figure}
 
@@ -143,7 +198,7 @@ Cuối cùng, \autoref{UI5} mô tả trang Profile, nơi người dùng có th�
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.85\linewidth]{images/week/week9/065_UI_5.jpg}
-    \caption{Các giao diện liên quan đến trang \textbf{Profile}}
+    \caption{Các giao diện liên quan đến trang Profile}
     \label{UI5}
 \end{figure}
 

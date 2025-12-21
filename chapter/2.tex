@@ -37,6 +37,11 @@ failure) và làm gia tăng độ trễ trong các hệ thống IoT quy mô lớ
 mở rộng như Cloud Computing và Edge Computing.
 
 \subsection{Điện toán đám mây (Cloud Computing)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/chapter_2/client_server.png}
+    \caption{Minh họa kiến trúc Client--Server}
+\end{figure}
 
 Điện toán đám mây là mô hình xử lý tập trung, trong đó toàn bộ dữ liệu từ các thiết
 bị cảm biến (Device Layer) được truyền trực tiếp về các máy chủ trung tâm (Cloud
@@ -56,6 +61,12 @@ nối không ổn định, hệ thống có thể mất hoàn toàn khả năng 
 làm giảm độ an toàn và độ tin cậy vận hành.
 
 \subsection{Điện toán biên (Edge Computing)}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/chapter_2/edge_computing.png}
+    \caption{Minh họa kiến trúc Edge Computing}
+\end{figure}
 
 Điện toán biên là mô hình phân tán, trong đó năng lực xử lý được di chuyển từ trung
 tâm mạng xuống các thiết bị gần nguồn sinh dữ liệu, gọi là các nút biên (Edge
@@ -253,6 +264,11 @@ thành một lựa chọn phù hợp cho các hệ thống IoT có yêu cầu t�
 web hoặc hệ thống quản lý trung tâm.
 
 \subsubsection{Nguyên lý hoạt động}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/chapter_2/REST(HTTP).png}
+    \caption{Minh hoạ nguyên lý hoạt động của REST (HTTP)}
+\end{figure}
 REST hoạt động dựa trên mô hình client–server, trong đó client (thiết bị IoT,
 gateway hoặc ứng dụng) gửi các yêu cầu HTTP đến server để truy cập hoặc thao tác
 với tài nguyên. Mỗi tài nguyên trong hệ thống được định danh duy nhất bằng một
@@ -329,6 +345,11 @@ cho các hệ thống IoT có dữ liệu phức tạp, đa dạng và yêu cầ
 nhu cầu người dùng.
 
 \subsubsection{Nguyên lý hoạt động}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/chapter_2/graph.png}
+    \caption{Minh hoạ nguyên lý hoạt động của GraphQL}
+\end{figure}
 GraphQL hoạt động dựa trên mô hình client–server, trong đó client gửi một truy vấn
 (query) duy nhất đến server thông qua một endpoint cố định. Truy vấn này mô tả
 chi tiết cấu trúc dữ liệu mong muốn, bao gồm các trường dữ liệu, mối quan hệ và

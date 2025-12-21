@@ -1,59 +1,266 @@
+% % \chapter{Giới thiệu}
+% % Chương này trình bày tổng quan về đề tài, bao gồm bối cảnh, các vấn đề thực tiễn đặt ra và lý do cần thiết phải xây dựng hệ thống giám sát vận chuyển đạn dược ứng dụng IoT. Bên cạnh đó, chương cũng nêu rõ mục tiêu nghiên cứu, phạm vi triển khai và cấu trúc tổng thể của báo cáo. Những nội dung này đóng vai trò định hướng cho toàn bộ đề tài, giúp người đọc hiểu được mục đích, giới hạn và cách thức tổ chức của các phần tiếp theo.
+% % \section{Bối cảnh của đề tài}
+% % Trong bối cảnh hiện nay, nhu cầu hiện đại hóa các hoạt động quản lý và đảm bảo an toàn trong lĩnh vực quân sự ngày càng trở nên cấp thiết. Trong đó, công tác vận chuyển đạn dược là một quy trình có độ rủi ro cao, đòi hỏi sự giám sát chặt chẽ về vị trí, tình trạng môi trường và an toàn kỹ thuật trong suốt quá trình di chuyển. Tuy nhiên, phần lớn hoạt động theo dõi hiện nay vẫn phụ thuộc vào ghi chép thủ công hoặc các phương pháp quản lý truyền thống, dẫn đến hạn chế trong khả năng giám sát theo thời gian thực, chậm trễ trong xử lý sự cố và thiếu tính minh bạch trong quản lý hành trình.
+
+% % Sự phát triển của IoT đã mở ra khả năng tự động hóa giám sát, thu thập dữ liệu liên tục và truyền tải thông tin theo thời gian thực. IoT cho phép tích hợp các cảm biến đo rung, nhiệt độ, vị trí và các tín hiệu khác vào một hệ thống tập trung, hỗ trợ đơn vị quản lý phát hiện bất thường và đưa ra cảnh báo kịp thời. Điều này góp phần nâng cao tính an toàn, độ tin cậy và hiệu quả trong quy trình vận chuyển đạn dược, vốn là một hoạt động đặc biệt nhạy cảm và quan trọng.
+
+% % \section{Mục tiêu nghiên cứu}
+
+% % \section{Mục tiêu nghiên cứu}
+
+% % \subsection{Mục tiêu tổng quát}
+% % Mục tiêu tổng quát của đề tài là nghiên cứu và phát triển một hệ thống giám sát vận tải quân sự hoàn chỉnh dựa trên công nghệ IoT, phục vụ theo dõi liên tục quá trình vận chuyển đạn dược trong điều kiện thực tế. Hệ thống được xây dựng nhằm thu thập dữ liệu tại hiện trường, truyền tải thông tin không dây tầm xa và tổng hợp hiển thị tập trung tại trung tâm chỉ huy, hỗ trợ công tác giám sát và điều hành.
+% % Hệ thống hướng đến việc giám sát toàn diện các yếu tố ảnh hưởng đến an toàn vận chuyển, bao gồm vị trí phương tiện, điều kiện môi trường và trạng thái rung chấn – va đập của khí tài trong suốt hành trình. Trên cơ sở đó, hệ thống cung cấp thông tin trực quan và kịp thời cho người quản lý, góp phần nâng cao mức độ an toàn, tính minh bạch và khả năng kiểm soát trong toàn bộ quá trình vận chuyển đạn dược.
+
+% % \subsection{Mục tiêu cụ thể}
+
+% % Để đạt được mục tiêu tổng quát đã đề ra, đề tài tập trung triển khai các mục tiêu cụ thể gắn liền với việc xây dựng và hoàn thiện từng thành phần của hệ thống giám sát vận tải quân sự.
+
+% % Trước hết, đề tài hướng đến việc nghiên cứu và tối ưu hóa kiến trúc phần mềm nhúng cho thiết bị đầu cuối. Thiết bị biên sử dụng vi điều khiển ESP32 đóng vai trò là khối xử lý trung tâm, chịu trách nhiệm tiếp nhận và xử lý dữ liệu thu thập từ các cảm biến tại hiện trường, sau đó tổ chức truyền dữ liệu không dây về hệ thống trung tâm. Trọng tâm của mục tiêu này là đảm bảo khả năng hoạt động thời gian thực, duy trì độ ổn định của quá trình truyền dữ liệu, đồng thời tối ưu hóa mức tiêu thụ năng lượng nhằm kéo dài thời gian hoạt động của thiết bị trong điều kiện sử dụng nguồn pin.
+
+% % Trên cơ sở đó, phần mềm nhúng được thiết kế để bảo đảm việc đọc dữ liệu từ các cảm biến như DHT22, module định vị GPS Neo-6M và gia tốc kế ADXL345 một cách chính xác và đồng bộ. Dữ liệu sau khi thu thập sẽ được xử lý sơ bộ, đóng gói và truyền đi một cách hiệu quả. Bên cạnh đó, các cơ chế quản lý bộ đệm và điều khiển truyền thông cũng được tối ưu nhằm giảm thiểu độ trễ và nâng cao độ tin cậy của đường truyền trong quá trình vận hành thực tế.
+
+% % Song song với việc phát triển phần mềm nhúng, đề tài tập trung thiết kế khối thu thập dữ liệu tích hợp đa cảm biến. Khối này có nhiệm vụ cung cấp dữ liệu đầu vào cho toàn bộ hệ thống giám sát, bao gồm các thông số về nhiệt độ và độ ẩm môi trường bên trong phương tiện vận chuyển thông qua cảm biến DHT22, thông tin vị trí và hành trình của phương tiện thông qua module GPS Neo-6M, cũng như dữ liệu rung chấn và va đập được ghi nhận bởi gia tốc kế ADXL345. Việc tích hợp các cảm biến vào một mô-đun thống nhất cho phép hệ thống thu thập dữ liệu một cách đồng bộ, liên tục và kịp thời, từ đó phản ánh chính xác trạng thái vận chuyển đạn dược trong suốt quá trình di chuyển.
+
+% % Cuối cùng, đề tài hướng đến việc xây dựng hệ thống Back-end và giao diện Frontend phục vụ giám sát tập trung. Dữ liệu từ thiết bị đầu cuối sau khi được truyền về thông qua kênh LoRa sẽ được tiếp nhận tại gateway và chuyển tiếp vào hệ thống trung tâm bằng giao thức MQTT. Tại đây, hệ thống Back-end đảm nhiệm vai trò thu thập, lưu trữ và quản lý dữ liệu trên nền tảng cơ sở dữ liệu Firebase. Trên cơ sở dữ liệu này, giao diện Dashboard được phát triển nhằm hiển thị trực quan các thông số giám sát như vị trí phương tiện, điều kiện môi trường và trạng thái rung chấn, đồng thời phát sinh các cảnh báo khi phát hiện dấu hiệu bất thường. Giao diện này đóng vai trò là đầu ra của hệ thống, hỗ trợ trực tiếp cho công tác giám sát, chỉ huy và ra quyết định trong quá trình vận chuyển đạn dược.
+% % \section{Đối tượng và phạm vi nghiên cứu}
+
+% % \subsection{Đối tượng nghiên cứu}
+% % Đề tài tập trung nghiên cứu sâu vào hai nhóm đối tượng chính:
+% % \begin{itemize}
+% %     \item \textbf{Về phần cứng:} Vi điều khiển ESP32 đóng vai trò bộ xử lý trung tâm, Module LoRa RA-08H cho truyền thông tầm xa, và các module cảm biến ngoại vi (GPS, DHT22, ADXL345).
+% %     \item \textbf{Về giải pháp phần mềm:} Các giao thức truyền thông điệp tin cậy (LoRa P2P, MQTT), kỹ thuật lập trình nhúng trên PlatformIO, ngôn ngữ Python cho các tác vụ cầu nối (bridge), và cơ sở dữ liệu thời gian thực Firebase.
+% % \end{itemize}
+
+% % \subsection{Phạm vi triển khai của đề tài}
+% % Trong khuôn khổ của đồ án tốt nghiệp, phạm vi nghiên cứu được giới hạn ở các nội dung sau:
+% % \begin{enumerate}
+% %     \item \textbf{Môi trường phát triển:} Tập trung phát triển và kiểm thử trên bộ Kit phần cứng mô phỏng, chưa triển khai trên phương tiện vận tải thực tế quy mô lớn.
+% %     \item \textbf{Kịch bản thử nghiệm:} Thực hiện đo đạc khả năng truyền tin trong phạm vi hẹp (phòng thí nghiệm) và mô phỏng quá trình vận chuyển đạn dược qua các tình huống giả lập.
+% %     \item \textbf{Giới hạn nghiên cứu:} Đề tài tập trung giải quyết bài toán ở tầng ứng dụng (Application Layer) và tầng truyền thông (Network Layer), chưa đi sâu vào các giải pháp bảo mật vật lý chuyên dụng hay thiết kế cơ khí chịu lực cho vỏ hộp thiết bị.
+% % \end{enumerate}
+
+% % \section{Cấu trúc của đề tài}
+% % Đề tài được tổ chức thành bảy chương theo trình tự logic giúp người đọc dễ dàng theo dõi quá trình nghiên cứu và triển khai hệ thống. Mỗi chương đảm nhận một vai trò riêng, từ việc giới thiệu bối cảnh cho đến trình bày lý thuyết nền tảng, phân tích yêu cầu, thiết kế, cài đặt, đánh giá và tổng kết. Cấu trúc này đảm bảo tính mạch lạc và phản ánh đầy đủ các bước thực hiện của đồ án.
+
+% % \textbf{Chương 1 - Giới thiệu:} Tổng quan về đề tài, lý do chọn đề tài và mục tiêu nghiên cứu.
+
+% % \textbf{Chương 2 - Cơ sở lý thuyết:} Trình bày về công nghệ LoRa, vi điều khiển ESP32 và các giao thức liên quan.
+
+% % \textbf{Chương 3 - Phân tích yêu cầu:} Xác định các yêu cầu phi chức năng và chức năng của hệ thống.
+
+% % \textbf{Chương 4 - Thiết kế hệ thống:} Thiết kế kiến trúc phần cứng và phần mềm, sơ đồ khối và luồng dữ liệu.
+
+% % \textbf{Chương 5 - Cài đặt và Triển khai:} Mô tả quá trình lập trình, lắp ráp mạch và cấu hình hệ thống.
+
+% % \textbf{Chương 6 - Kết quả và Đánh giá:} Trình bày kết quả thử nghiệm thực tế và đánh giá hiệu năng.
+
+% % \textbf{Chương 7 - Kết luận và Hướng phát triển:} Tổng kết các kết quả đạt được và đề xuất hướng nghiên cứu tiếp theo.
+% \chapter{Giới thiệu}
+
+% Chương này trình bày tổng quan về đề tài nghiên cứu, bao gồm bối cảnh thực tiễn, định nghĩa bài toán và giải pháp hệ thống đề xuất. Nội dung trọng tâm là phác thảo bức tranh toàn cảnh về hệ thống giám sát vận chuyển đạn dược, làm rõ các thành phần chức năng, luồng dữ liệu và mục tiêu cốt lõi mà đề tài hướng tới giải quyết.
+
+% % ============================================================
+% % 1.1 Đặt vấn đề và Lý do chọn đề tài
+% % ============================================================
+% \section{Đặt vấn đề}
+
+% Trong lĩnh vực hậu cần quân sự, vận chuyển đạn dược và khí tài nổ là quy trình tiềm ẩn rủi ro cao nhất. An toàn của quá trình này phụ thuộc vào hai yếu tố chính: sự tuân thủ lộ trình nghiêm ngặt và sự ổn định của môi trường bảo quản (nhiệt độ, độ ẩm, chấn động).
+
+% Hiện nay, quy trình giám sát phần lớn vẫn dựa vào báo cáo thủ công hoặc các thiết bị định vị GPS dân sự đơn thuần (chỉ báo vị trí, không báo trạng thái hàng hóa). Các giải pháp này bộc lộ những nhược điểm chí tử trong tác chiến hiện đại:
+% \begin{enumerate}
+%     \item \textbf{Độ trễ thông tin:} Chỉ huy không biết tình trạng kiện hàng (ví dụ: nhiệt độ thùng xe tăng cao bất thường) cho đến khi sự cố xảy ra.
+%     \item \textbf{Phụ thuộc hạ tầng:} Các thiết bị GPS thông thường dựa hoàn toàn vào mạng di động (GSM/4G). Tại các vùng biên giới, hải đảo hoặc khu vực bị gây nhiễu, kết nối này thường xuyên bị gián đoạn, dẫn đến "điểm mù" trong giám sát.
+%     \item \textbf{Thiếu cảnh báo đa chiều:} Thiếu sự tương quan giữa dữ liệu vị trí và dữ liệu môi trường để đưa ra các quyết định an toàn kịp thời.
+% \end{enumerate}
+
+% Xuất phát từ nhu cầu thực tiễn đó, đề tài "Nghiên cứu và thiết kế hệ thống IoT giám sát vận chuyển đạn dược sử dụng công nghệ LoRa và kiến trúc Hybrid Cloud-Edge" được thực hiện nhằm xây dựng một giải pháp giám sát tin cậy, tự chủ và có khả năng hoạt động trong môi trường khắc nghiệt thiếu thốn hạ tầng.
+
+% % ============================================================
+% % 1.2 Tổng quan hệ thống đề xuất (Bức tranh chung)
+% % ============================================================
+% \section{Tổng quan về giải pháp hệ thống}
+
+% Để giải quyết các vấn đề nêu trên, nhóm nghiên cứu đề xuất một hệ thống giám sát toàn trình (End-to-End Monitoring System) hoạt động theo mô hình tích hợp Phần cứng - Phần mềm.
+
+% \subsection{Mô hình hoạt động tổng quát}
+% Hệ thống được thiết kế như một chuỗi xử lý dữ liệu khép kín, bao gồm ba khâu chính: \textbf{Thu thập tại biên (Edge) $\rightarrow$ Truyền dẫn tin cậy $\rightarrow$ Quản lý tập trung (Cloud)}.
+
+% \begin{figure}[H]
+%     \centering
+%     % Hãy thay thế bằng sơ đồ khối hệ thống của bạn (hình vẽ có các khối: Xe, Gateway, Cloud, App)
+%     \includegraphics[width=\linewidth]{images/chapter_1/sodotongquat.png}
+%     \caption{Sơ đồ tổng quan kiến trúc hệ thống giám sát vận chuyển}
+%     \label{fig:system_overview}
+% \end{figure}
+% \subsection{Các thành phần và chức năng chính}
+% Hệ thống giải quyết bài toán thông qua sự phối hợp của các thành phần sau:
+
+% \begin{itemize}
+%     \item \textbf{Đầu vào hệ thống (Input):} Là các dữ liệu vật lý thời gian thực thu thập từ phương tiện vận tải, bao gồm:
+%         \begin{itemize}
+%             \item \textit{Vị trí địa lý:} Tọa độ Kinh độ, Vĩ độ(từ GPS).
+%             \item \textit{Môi trường bảo quản:} Nhiệt độ, Độ ẩm bên trong thùng xe.
+%             \item \textit{Trạng thái vật lý:} Gia tốc rung lắc, va đập (Shock detection).
+%         \end{itemize}
+    
+%     \item \textbf{Khối xử lý và Truyền dẫn (Process):}
+%         \begin{itemize}
+%             \item \textit{Tại thiết bị (Sensor Node):} Vi điều khiển thực hiện lọc nhiễu, đóng gói dữ liệu và mã hóa.
+%             \item \textit{Kênh truyền:} Sử dụng công nghệ LoRa P2P (Long Range Point-to-Point) để tạo kênh liên lạc vô tuyến riêng biệt, không phụ thuộc vào sóng điện thoại, đảm bảo truyền tin xa hàng km.
+%             \item \textit{Gateway trung gian:} Tiếp nhận dữ liệu từ LoRa và đồng bộ lên Internet thông qua giao thức MQTT.
+%         \end{itemize}
+        
+%     \item \textbf{Đầu ra hệ thống (Output):}
+%         \begin{itemize}
+%             \item \textit{Giao diện giám sát (Dashboard):} Bản đồ số hiển thị lộ trình di chuyển của đoàn xe.
+%             \item \textit{Cảnh báo tức thời (Alerts):} Thông báo khẩn cấp (âm thanh, màu sắc) trên ứng dụng di động ngay khi các thông số đầu vào vượt ngưỡng an toàn (ví dụ: Nhiệt độ $> 50^\circ C$ hoặc có va chạm mạnh).
+%         \end{itemize}
+% \end{itemize}
+
+% % ============================================================
+% % 1.3 Mục tiêu nghiên cứu
+% % ============================================================
+% \section{Mục tiêu nghiên cứu}
+
+% \subsection{Mục tiêu tổng quát}
+% Xây dựng thành công hệ thống IoT có khả năng giám sát liên tục vị trí và trạng thái hàng hóa vận chuyển, hoạt động ổn định trong điều kiện mạng chập chờn và có cơ chế cảnh báo sớm các nguy cơ mất an toàn.
+
+% \subsection{Mục tiêu cụ thể Giai đoạn 1}
+% \begin{itemize}
+%     \item \textbf{Về phần cứng:} Thiết kế bộ thu thập dữ liệu (Sensor Node) tích hợp đa cảm biến, hoạt động độc lập bằng nguồn pin, kích thước nhỏ gọn để gắn trên phương tiện.
+%     \item \textbf{Về truyền thông:} Làm chủ công nghệ truyền tin LoRa P2P, tối ưu hóa giao thức để đạt khoảng cách truyền xa và tiết kiệm năng lượng.
+%     \item \textbf{Về phần mềm:} Xây dựng ứng dụng di động đa nền tảng (Flutter) và hệ thống Backend (Firebase) có khả năng xử lý dữ liệu thời gian thực với độ trễ thấp (Soft Real-time).
+%     \item \textbf{Về tích hợp:} Chứng minh khả năng hoạt động đồng bộ của toàn bộ quy trình từ cảm biến đến ứng dụng người dùng thông qua các kịch bản thử nghiệm thực tế.
+% \end{itemize}
+
+% % ============================================================
+% % 1.4 Phạm vi và Đối tượng nghiên cứu
+% % ============================================================
+% \section{Phạm vi đề tài}
+
+% \subsection{Phạm vi triển khai}
+% Trong khuôn khổ đồ án tốt nghiệp, hệ thống được triển khai ở quy mô mô hình thử nghiệm (Prototype):
+% \begin{itemize}
+%     \item Số lượng thiết bị: 01 Node giám sát (gắn trên xe máy mô phỏng xe vận tải) và 01 Gateway cố định.
+%     \item Môi trường thử nghiệm: Khuôn viên Đại học Quốc gia TP.HCM (mô phỏng môi trường đô thị và bán đô thị).
+%     \item Dữ liệu: Tập trung vào các thông số cơ bản (GPS, Nhiệt độ, Rung lắc).
+% \end{itemize}
+
+% \subsection{Phạm vi nghiên cứu}
+% % Đề tài tập trung giải quyết bài toán về kiến trúc hệ thống và giao thức truyền tin cũng như có những vấn đề thuộc về giai đoạn 2 của đề tài nên chưa đi sâu vào các vấn đề:
+% % \begin{itemize}
+% %     \item Thiết kế cơ khí vỏ hộp tiêu chuẩn quân sự (chống nước, chống va đập chuẩn IP67).
+% %     \item Các cơ chế bảo mật tầng vật lý chuyên sâu (như nhảy tần chống phá sóng).
+% %     \item Tối ưu hóa năng lượng ở mức phần cứng chuyên dụng (Custom PCB).
+% % \end{itemize}
+% Do tính chất phức tạp và yêu cầu khắt khe về độ tin cậy và bảo mật trong lĩnh vực đặc thù là vận tải quân sự, đề tài giới hạn phạm vi thực hiện trong các nội dung sau:
+
+% \begin{itemize}
+%     \item \textbf{Về phương pháp tiếp cận:} Đề tài tập trung vào việc thiết kế và xây dựng mô hình mẫu (Prototype) để kiểm chứng nguyên lý hoạt động của toàn bộ luồng dữ liệu từ thiết bị biên (Edge) đến ứng dụng người dùng. Nhóm không triển khai thử nghiệm trên phương tiện quân sự thực tế hay sử dụng các thiết bị đã được chứng nhận chuẩn quân sự (ví dụ: MIL-STD) trong giai đoạn này.
+    
+%     \item \textbf{Về chức năng hệ thống:}
+%     \begin{itemize}
+%         \item[+] Xây dựng các chức năng giám sát cốt lõi: Thu thập thời gian thực tọa độ GPS, trạng thái môi trường (nhiệt độ, độ ẩm) và phát hiện các bất thường vật lý (rung lắc, va chạm) dựa trên ngưỡng định sẵn.
+%         \item[+] Xây dựng cơ chế cảnh báo tức thời từ thiết bị lên ứng dụng di động thông qua hạ tầng mạng kết hợp (LoRa và Internet).
+%         \item[+] Hệ thống sử dụng cơ sở dữ liệu NoSQL (cụ thể là Firebase Cloud Firestore) để phù hợp với dữ liệu chuỗi thời gian và kiến trúc hướng sự kiện, không sử dụng các hệ quản trị cơ sở dữ liệu quan hệ (SQL).
+%         \item[+] Không bao gồm các phân hệ phức tạp như: Phân tích dữ liệu nâng cao bằng AI/Machine Learning để dự đoán sự cố, các thuật toán tối ưu hóa lộ trình vận tải, hoặc các cơ chế bảo mật tầng vật lý chuyên sâu (như nhảy tần chống phá sóng).
+%     \end{itemize}
+    
+%     \item \textbf{Về giới hạn phần cứng và hạ tầng:} Hệ thống được triển khai trên các bộ Kit phát triển phổ thông (ESP32, Module LoRa Ra-08H, các cảm biến dân dụng) để mô phỏng chức năng. Môi trường thử nghiệm truyền dẫn LoRa P2P được giới hạn trong phạm vi đô thị/bán đô thị (khu vực Đại học Quốc gia TP.HCM) với khoảng cách dưới 2km, chưa triển khai ở các điều kiện địa hình rừng núi phức tạp hoặc tầm xa hàng chục kilomet.
+% \end{itemize}
 \chapter{Giới thiệu}
-Chương này trình bày tổng quan về đề tài, bao gồm bối cảnh, các vấn đề thực tiễn đặt ra và lý do cần thiết phải xây dựng hệ thống giám sát vận chuyển đạn dược ứng dụng IoT. Bên cạnh đó, chương cũng nêu rõ mục tiêu nghiên cứu, phạm vi triển khai và cấu trúc tổng thể của báo cáo. Những nội dung này đóng vai trò định hướng cho toàn bộ đề tài, giúp người đọc hiểu được mục đích, giới hạn và cách thức tổ chức của các phần tiếp theo.
-\section{Bối cảnh của đề tài}
-Trong bối cảnh hiện nay, nhu cầu hiện đại hóa các hoạt động quản lý và đảm bảo an toàn trong lĩnh vực quân sự ngày càng trở nên cấp thiết. Trong đó, công tác vận chuyển đạn dược là một quy trình có độ rủi ro cao, đòi hỏi sự giám sát chặt chẽ về vị trí, tình trạng môi trường và an toàn kỹ thuật trong suốt quá trình di chuyển. Tuy nhiên, phần lớn hoạt động theo dõi hiện nay vẫn phụ thuộc vào ghi chép thủ công hoặc các phương pháp quản lý truyền thống, dẫn đến hạn chế trong khả năng giám sát theo thời gian thực, chậm trễ trong xử lý sự cố và thiếu tính minh bạch trong quản lý hành trình.
 
-Sự phát triển của IoT đã mở ra khả năng tự động hóa giám sát, thu thập dữ liệu liên tục và truyền tải thông tin theo thời gian thực. IoT cho phép tích hợp các cảm biến đo rung, nhiệt độ, vị trí và các tín hiệu khác vào một hệ thống tập trung, hỗ trợ đơn vị quản lý phát hiện bất thường và đưa ra cảnh báo kịp thời. Điều này góp phần nâng cao tính an toàn, độ tin cậy và hiệu quả trong quy trình vận chuyển đạn dược, vốn là một hoạt động đặc biệt nhạy cảm và quan trọng.
+\section{Lý do chọn đề tài}
+Trong bối cảnh hiện đại hóa quân đội, công tác hậu cần kỹ thuật đóng vai trò then chốt, đặc biệt là quy trình vận chuyển vũ khí, đạn dược và vật liệu nổ. Đây là loại hàng hóa đặc biệt nguy hiểm, nhạy cảm cao với các tác động từ môi trường bên ngoài như nhiệt độ, độ ẩm và các xung lực cơ học (rung, lắc, va đập). Bất kỳ sự cố nào xảy ra trong quá trình vận chuyển không chỉ gây thiệt hại lớn về tài sản, khí tài mà còn đe dọa trực tiếp đến tính mạng con người và an ninh quốc phòng.
 
-\section{Mục tiêu nghiên cứu}
+Hiện nay, các phương pháp giám sát vận tải quân sự truyền thống vẫn còn bộc lộ nhiều hạn chế. Việc giám sát chủ yếu dựa vào báo cáo định kỳ của nhân sự hoặc các thiết bị định vị GPS dân sự phụ thuộc hoàn toàn vào hạ tầng mạng viễn thông (GSM/4G). Tại các khu vực vùng sâu, vùng xa, biên giới, hải đảo hoặc trong các tình huống tác chiến bị gây nhiễu sóng, các hệ thống này thường xuyên mất kết nối, tạo ra "điểm mù" thông tin khiến người chỉ huy không thể nắm bắt tình trạng lô hàng theo thời gian thực. Bên cạnh đó, các giải pháp hiện có thường thiếu khả năng cảnh báo sớm về các bất thường môi trường (nhiệt độ thùng xe tăng cao, rung lắc quá ngưỡng) ngay tại thời điểm xảy ra sự cố.
 
-\section{Mục tiêu nghiên cứu}
+Xuất phát từ thực tiễn trên, việc nghiên cứu và ứng dụng các công nghệ tiên tiến của cuộc Cách mạng công nghiệp 4.0 vào công tác đảm bảo an toàn hậu cần là vô cùng cấp thiết. Đề tài \textbf{"Ứng dụng IoT trong giám sát và điều phối vận chuyển đạn dược"} được đề xuất nhằm giải quyết bài toán giám sát toàn trình, độc lập và tin cậy. Bằng cách kết hợp công nghệ truyền thông vô tuyến tầm xa năng lượng thấp (LoRa) với kiến trúc tính toán lai (Hybrid Cloud-Edge), hệ thống hứa hẹn mang lại giải pháp giám sát liên tục, tự chủ hạ tầng và phản ứng nhanh trước các nguy cơ mất an toàn.
+\section{Tổng quan về giải pháp hệ thống}
 
-\subsection{Mục tiêu tổng quát}
-Mục tiêu tổng quát của đề tài là nghiên cứu và phát triển một hệ thống giám sát vận tải quân sự hoàn chỉnh dựa trên công nghệ IoT, phục vụ theo dõi liên tục quá trình vận chuyển đạn dược trong điều kiện thực tế. Hệ thống được xây dựng nhằm thu thập dữ liệu tại hiện trường, truyền tải thông tin không dây tầm xa và tổng hợp hiển thị tập trung tại trung tâm chỉ huy, hỗ trợ công tác giám sát và điều hành.
-Hệ thống hướng đến việc giám sát toàn diện các yếu tố ảnh hưởng đến an toàn vận chuyển, bao gồm vị trí phương tiện, điều kiện môi trường và trạng thái rung chấn – va đập của khí tài trong suốt hành trình. Trên cơ sở đó, hệ thống cung cấp thông tin trực quan và kịp thời cho người quản lý, góp phần nâng cao mức độ an toàn, tính minh bạch và khả năng kiểm soát trong toàn bộ quá trình vận chuyển đạn dược.
+Để giải quyết các vấn đề nêu trên, nhóm nghiên cứu đề xuất một hệ thống giám sát toàn trình (End-to-End Monitoring System) hoạt động theo mô hình tích hợp Phần cứng - Phần mềm.
 
-\subsection{Mục tiêu cụ thể}
+\subsection{Mô hình hoạt động tổng quát}
+Hệ thống được thiết kế như một chuỗi xử lý dữ liệu khép kín, bao gồm ba khâu chính: \textbf{Thu thập tại biên (Edge) $\rightarrow$ Truyền dẫn tin cậy $\rightarrow$ Quản lý tập trung (Cloud)}.
 
-Để đạt được mục tiêu tổng quát đã đề ra, đề tài tập trung triển khai các mục tiêu cụ thể gắn liền với việc xây dựng và hoàn thiện từng thành phần của hệ thống giám sát vận tải quân sự.
+\begin{figure}[H]
+    \centering
+    % Hãy thay thế bằng sơ đồ khối hệ thống của bạn (hình vẽ có các khối: Xe, Gateway, Cloud, App)
+    \includegraphics[width=0.9\linewidth]{images/chapter_1/sodotongquat.png}
+    \caption{Sơ đồ tổng quan kiến trúc hệ thống giám sát vận chuyển}
+    \label{fig:system_overview}
+\end{figure}
+\subsection{Các thành phần và chức năng chính}
+Hệ thống giải quyết bài toán thông qua sự phối hợp của các thành phần sau:
 
-Trước hết, đề tài hướng đến việc nghiên cứu và tối ưu hóa kiến trúc phần mềm nhúng cho thiết bị đầu cuối. Thiết bị biên sử dụng vi điều khiển ESP32 đóng vai trò là khối xử lý trung tâm, chịu trách nhiệm tiếp nhận và xử lý dữ liệu thu thập từ các cảm biến tại hiện trường, sau đó tổ chức truyền dữ liệu không dây về hệ thống trung tâm. Trọng tâm của mục tiêu này là đảm bảo khả năng hoạt động thời gian thực, duy trì độ ổn định của quá trình truyền dữ liệu, đồng thời tối ưu hóa mức tiêu thụ năng lượng nhằm kéo dài thời gian hoạt động của thiết bị trong điều kiện sử dụng nguồn pin.
-
-Trên cơ sở đó, phần mềm nhúng được thiết kế để bảo đảm việc đọc dữ liệu từ các cảm biến như DHT22, module định vị GPS Neo-6M và gia tốc kế ADXL345 một cách chính xác và đồng bộ. Dữ liệu sau khi thu thập sẽ được xử lý sơ bộ, đóng gói và truyền đi một cách hiệu quả. Bên cạnh đó, các cơ chế quản lý bộ đệm và điều khiển truyền thông cũng được tối ưu nhằm giảm thiểu độ trễ và nâng cao độ tin cậy của đường truyền trong quá trình vận hành thực tế.
-
-Song song với việc phát triển phần mềm nhúng, đề tài tập trung thiết kế khối thu thập dữ liệu tích hợp đa cảm biến. Khối này có nhiệm vụ cung cấp dữ liệu đầu vào cho toàn bộ hệ thống giám sát, bao gồm các thông số về nhiệt độ và độ ẩm môi trường bên trong phương tiện vận chuyển thông qua cảm biến DHT22, thông tin vị trí và hành trình của phương tiện thông qua module GPS Neo-6M, cũng như dữ liệu rung chấn và va đập được ghi nhận bởi gia tốc kế ADXL345. Việc tích hợp các cảm biến vào một mô-đun thống nhất cho phép hệ thống thu thập dữ liệu một cách đồng bộ, liên tục và kịp thời, từ đó phản ánh chính xác trạng thái vận chuyển đạn dược trong suốt quá trình di chuyển.
-
-Cuối cùng, đề tài hướng đến việc xây dựng hệ thống Back-end và giao diện Frontend phục vụ giám sát tập trung. Dữ liệu từ thiết bị đầu cuối sau khi được truyền về thông qua kênh LoRa sẽ được tiếp nhận tại gateway và chuyển tiếp vào hệ thống trung tâm bằng giao thức MQTT. Tại đây, hệ thống Back-end đảm nhiệm vai trò thu thập, lưu trữ và quản lý dữ liệu trên nền tảng cơ sở dữ liệu Firebase. Trên cơ sở dữ liệu này, giao diện Dashboard được phát triển nhằm hiển thị trực quan các thông số giám sát như vị trí phương tiện, điều kiện môi trường và trạng thái rung chấn, đồng thời phát sinh các cảnh báo khi phát hiện dấu hiệu bất thường. Giao diện này đóng vai trò là đầu ra của hệ thống, hỗ trợ trực tiếp cho công tác giám sát, chỉ huy và ra quyết định trong quá trình vận chuyển đạn dược.
-\section{Đối tượng và phạm vi nghiên cứu}
-
-\subsection{Đối tượng nghiên cứu}
-Đề tài tập trung nghiên cứu sâu vào hai nhóm đối tượng chính:
 \begin{itemize}
-    \item \textbf{Về phần cứng:} Vi điều khiển ESP32 đóng vai trò bộ xử lý trung tâm, Module LoRa RA-08H cho truyền thông tầm xa, và các module cảm biến ngoại vi (GPS, DHT22, ADXL345).
-    \item \textbf{Về giải pháp phần mềm:} Các giao thức truyền thông điệp tin cậy (LoRa P2P, MQTT), kỹ thuật lập trình nhúng trên PlatformIO, ngôn ngữ Python cho các tác vụ cầu nối (bridge), và cơ sở dữ liệu thời gian thực Firebase.
+    \item \textbf{Đầu vào hệ thống (Input):} Là các dữ liệu vật lý thời gian thực thu thập từ phương tiện vận tải, bao gồm:
+        \begin{itemize}
+            \item \textit{Vị trí địa lý:} Tọa độ Kinh độ, Vĩ độ(từ GPS).
+            \item \textit{Môi trường bảo quản:} Nhiệt độ, Độ ẩm bên trong thùng xe.
+            \item \textit{Trạng thái vật lý:} Gia tốc rung lắc, va đập (Shock detection).
+        \end{itemize}
+    
+    \item \textbf{Khối xử lý và Truyền dẫn (Process):}
+        \begin{itemize}
+            \item \textit{Tại thiết bị (Sensor Node):} Vi điều khiển thực hiện lọc nhiễu, đóng gói dữ liệu và mã hóa.
+            \item \textit{Kênh truyền:} Sử dụng công nghệ LoRa P2P (Long Range Point-to-Point) để tạo kênh liên lạc vô tuyến riêng biệt, không phụ thuộc vào sóng điện thoại, đảm bảo truyền tin xa hàng km.
+            \item \textit{Gateway trung gian:} Tiếp nhận dữ liệu từ LoRa và đồng bộ lên Internet thông qua giao thức MQTT.
+        \end{itemize}
+        
+    \item \textbf{Đầu ra hệ thống (Output):}
+        \begin{itemize}
+            \item \textit{Giao diện giám sát (Dashboard):} Bản đồ số hiển thị lộ trình di chuyển của đoàn xe.
+            \item \textit{Cảnh báo tức thời (Alerts):} Thông báo khẩn cấp (âm thanh, màu sắc) trên ứng dụng di động ngay khi các thông số đầu vào vượt ngưỡng an toàn (ví dụ: Nhiệt độ $> 50^\circ C$ hoặc có va chạm mạnh).
+        \end{itemize}
+\end{itemize}
+\section{Mục tiêu đề tài}
+\subsection{Mục tiêu tổng quát}
+Xây dựng hệ thống giám sát hành trình và trạng thái kỹ thuật của phương tiện vận chuyển đạn dược dựa trên nền tảng Internet vạn vật (IoT). Hệ thống phải đảm bảo khả năng thu thập dữ liệu thời gian thực, hoạt động ổn định trong điều kiện hạ tầng mạng hạn chế và cung cấp công cụ hỗ trợ ra quyết định kịp thời cho người chỉ huy.
+
+\subsection{Mục tiêu cụ thể Giai đoạn 1}
+Để đạt được mục tiêu tổng quát, đề tài tập trung giải quyết các nhiệm vụ cụ thể sau:
+\begin{itemize}
+    \item \textbf{Nghiên cứu và thiết kế phần cứng (Sensor Node):} Chế tạo thiết bị thu thập dữ liệu tại biên sử dụng vi điều khiển ESP32 và module LoRa Ra-08H. Thiết bị cần tích hợp đa cảm biến (GPS, DHT22, ADXL345) để đo đạc vị trí, nhiệt độ, độ ẩm và gia tốc rung lắc của thùng xe.
+    \item \textbf{Xây dựng giải pháp truyền thông tin cậy:} Hiện thực hóa giao thức truyền tin LoRa P2P (Point-to-Point) để thiết lập kênh liên lạc riêng biệt, không phụ thuộc vào mạng di động, đảm bảo truyền dữ liệu xa và tiết kiệm năng lượng.
+    \item \textbf{Phát triển hệ thống phần mềm quản lý:} Xây dựng hệ thống Backend xử lý trung gian (Middleware) để chuẩn hóa dữ liệu và ứng dụng di động (Mobile App) trên nền tảng Flutter giúp trực quan hóa lộ trình, hiển thị thông số và phát cảnh báo tức thời.
+    \item \textbf{Đánh giá thực nghiệm:} Triển khai mô hình thử nghiệm thực tế để kiểm chứng độ trễ, khoảng cách truyền tin và độ ổn định của hệ thống trong môi trường đô thị.
 \end{itemize}
 
-\subsection{Phạm vi triển khai của đề tài}
-Trong khuôn khổ của đồ án tốt nghiệp, phạm vi nghiên cứu được giới hạn ở các nội dung sau:
-\begin{enumerate}
-    \item \textbf{Môi trường phát triển:} Tập trung phát triển và kiểm thử trên bộ Kit phần cứng mô phỏng, chưa triển khai trên phương tiện vận tải thực tế quy mô lớn.
-    \item \textbf{Kịch bản thử nghiệm:} Thực hiện đo đạc khả năng truyền tin trong phạm vi hẹp (phòng thí nghiệm) và mô phỏng quá trình vận chuyển đạn dược qua các tình huống giả lập.
-    \item \textbf{Giới hạn nghiên cứu:} Đề tài tập trung giải quyết bài toán ở tầng ứng dụng (Application Layer) và tầng truyền thông (Network Layer), chưa đi sâu vào các giải pháp bảo mật vật lý chuyên dụng hay thiết kế cơ khí chịu lực cho vỏ hộp thiết bị.
-\end{enumerate}
+\section{Đối tượng và Phạm vi nghiên cứu}
+\subsection{Đối tượng nghiên cứu}
+\begin{itemize}
+    \item Các thông số ảnh hưởng đến an toàn đạn dược trong vận chuyển: Nhiệt độ, độ ẩm, độ rung, va đập.
+    \item Công nghệ truyền thông không dây tầm xa công suất thấp (LPWAN), trọng tâm là công nghệ LoRa và kỹ thuật điều chế Chirp Spread Spectrum.
+    \item Kiến trúc hệ thống IoT: Mô hình Hybrid Cloud-Edge, giao thức MQTT và cơ sở dữ liệu thời gian thực.
+\end{itemize}
 
-\section{Cấu trúc của đề tài}
-Đề tài được tổ chức thành bảy chương theo trình tự logic giúp người đọc dễ dàng theo dõi quá trình nghiên cứu và triển khai hệ thống. Mỗi chương đảm nhận một vai trò riêng, từ việc giới thiệu bối cảnh cho đến trình bày lý thuyết nền tảng, phân tích yêu cầu, thiết kế, cài đặt, đánh giá và tổng kết. Cấu trúc này đảm bảo tính mạch lạc và phản ánh đầy đủ các bước thực hiện của đồ án.
+\subsection{Phạm vi nghiên cứu}
+Do giới hạn về thời gian và điều kiện thực tế, đề tài giới hạn phạm vi trong các nội dung sau:
+\begin{itemize}
+    \item \textbf{Quy mô triển khai:} Xây dựng mô hình mẫu (Prototype) gồm 01 Node giám sát gắn trên phương tiện và 01 Gateway thu thập dữ liệu.
+    \item \textbf{Môi trường thử nghiệm:} Thực hiện đo đạc và đánh giá tại khu vực Đại học Quốc gia TP.HCM với bán kính truyền thông dưới 1000m trong điều kiện đô thị (NLOS).
+    \item \textbf{Chức năng:} Tập trung vào các chức năng giám sát cơ bản (vị trí, môi trường) và cảnh báo. Các bài toán tối ưu hóa lộ trình phức tạp hay bảo mật tầng vật lý chuyên sâu chưa được đề cập trong giai đoạn này.
+\end{itemize}
 
-\textbf{Chương 1 - Giới thiệu:} Tổng quan về đề tài, lý do chọn đề tài và mục tiêu nghiên cứu.
+\section{Phương pháp nghiên cứu}
+Đề tài sử dụng kết hợp các phương pháp nghiên cứu sau để giải quyết vấn đề:
+\begin{itemize}
+    \item \textbf{Phương pháp nghiên cứu lý thuyết:} Tìm hiểu các tài liệu về đặc tính kỹ thuật của đạn dược, các chuẩn giao tiếp IoT (LoRa, MQTT) và kiến trúc phần mềm hiện đại để lựa chọn giải pháp công nghệ phù hợp.
+    \item \textbf{Phương pháp thiết kế hệ thống:} Áp dụng tư duy thiết kế từ tổng quát đến chi tiết, phân rã hệ thống thành các module chức năng (Thu thập - Truyền dẫn - Xử lý - Hiển thị) để thuận tiện cho việc hiện thực và kiểm thử.
+    \item \textbf{Phương pháp thực nghiệm:} Xây dựng kịch bản kiểm thử (Test Case) để đo đạc các thông số hiệu năng mạng (RSSI, SNR, Packet Loss) và độ trễ toàn trình (End-to-End Latency). Kết quả thực nghiệm được sử dụng để tinh chỉnh tham số cấu hình (Spreading Factor, Bandwidth) nhằm tối ưu hóa hệ thống.
+\end{itemize}
 
-\textbf{Chương 2 - Cơ sở lý thuyết:} Trình bày về công nghệ LoRa, vi điều khiển ESP32 và các giao thức liên quan.
-
-\textbf{Chương 3 - Phân tích yêu cầu:} Xác định các yêu cầu phi chức năng và chức năng của hệ thống.
-
-\textbf{Chương 4 - Thiết kế hệ thống:} Thiết kế kiến trúc phần cứng và phần mềm, sơ đồ khối và luồng dữ liệu.
-
-\textbf{Chương 5 - Cài đặt và Triển khai:} Mô tả quá trình lập trình, lắp ráp mạch và cấu hình hệ thống.
-
-\textbf{Chương 6 - Kết quả và Đánh giá:} Trình bày kết quả thử nghiệm thực tế và đánh giá hiệu năng.
-
-\textbf{Chương 7 - Kết luận và Hướng phát triển:} Tổng kết các kết quả đạt được và đề xuất hướng nghiên cứu tiếp theo.
+\section{Bố cục đồ án}
+Báo cáo được trình bày trong 7 chương:
+\begin{itemize}
+    \item \textbf{Chương 1:} Tổng quan đề tài.
+    \item \textbf{Chương 2:} Cơ sở lý thuyết và công nghệ liên quan.
+    \item \textbf{Chương 3:} Phân tích yêu cầu hệ thống.
+    \item \textbf{Chương 4:} Thiết kế hệ thống.
+    \item \textbf{Chương 5:} Cài đặt và triển khai.
+    \item \textbf{Chương 6:} Kết quả và đánh giá.
+    \item \textbf{Chương 7:} Kết luận và hướng phát triển.
+\end{itemize}
